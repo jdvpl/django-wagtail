@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-participation.css' %}" rel="stylesheet" />
+<!--se toma css de prensa para los videos -->
+<link href="{% static 'css/press_room.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4  animate__animated animate__zoomIn">
+      <div class="ps-md-5 pe-md-5 intro-section">
+        <strong class="title-page-special">{{ page.intro_title }}</strong>
+        {{ page.intro|safe }}
+      </div>
+    </div>
+    {% image page.image original as intro_image %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 animate__animated animate__zoomIn ">
+      <img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4 mb-5">
+  {% for element in page.first_links %}
+  <div class="row align-items-center link-section-container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1 ">
+      <img src="{{ element.value.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+    </div>
+    <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9 link-section-border-bottom">
+      <div class="pt-3 link-section-border-text">
+        <h4>{{ element.value.title }}</h4>
+        {{ element.value.description }}
+      </div>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}" type="button" class=" fs-4 link-section-border-button">Ver más</a>
+      {% endif %}
+      {% if element.value.document.url %}
+      <a href="{{ element.value.document.url }}" type="button" class=" fs-4 link-section-border-button">Ir al Decreto</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- historia -->
+<div class="container mt-4 mb-5">
+    <div class="title-page">
+      {{ page.second_title }}
+    </div>
+      <div class="container mt-4 mb-5 text-start">
+        {{ page.second_text | safe }}
+      </div>
+    </div>
+    <!-- funciones -->
+    <div class="container mt-4 mb-5">
+        <div class="title-page">
+          {{ page.third_title }}
+        </div>
+          <div class="container mt-4 mb-5 text-start">
+            {{ page.third_text | safe }}
+          </div>
+        </div>
+<!-- videos -->
+        {% if page.videos_list %}
+        <div class="container mt-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="title-page">
+                {{ page.videos_list_title }}
+            </div>
+
+            <div class="video-container">
+                {% for childpage in page.videos_list.specific.children|slice:"4" %}
+                {% if forloop.counter0 == 0 %}
+                <div class="video-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="video-responsive">
+                        <iframe src="{{childpage.link_video}}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <h4 class="mt-3">{{childpage.title}}</h4>
+                </div>
+                {% endif %}
+                {% if forloop.counter0 >= 1 %}
+                <div class="video-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="video-responsive">
+                        <iframe src="{{childpage.link_video}}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <hr class="divider">
+                        <a href="{{ page.videos_list.url }}" class=" more-info-button">{{ page.videos_button_title }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mmeoptionsmenu.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/powerbi.min.js' %}"></script>
+
+
+<script>
+  AOS.init();
+  // Power BI endpoints
+  var boards = {
+    "boards": [
+      {
+        "url": "{{ page.link_pbi }}",
+        "id": "board_one"
+      },
+      {
+        "url": "{{ page.second_link_pbi }}",
+        "id": "board_two"
+      }
+    ]
+  }
+</script>
+<script type="text/javascript" src="{% static 'js/power_bi_boards.js' %}"></script>
+{% endblock extra_js %}

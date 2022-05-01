@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/calendar/flatpickr.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/calendar/monthSelectstyle.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/calendar/material_blue.css' %}" rel="stylesheet" type="text/css">
+
+<link href="{% static 'css/press_room_subpage.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/dataTables.bootstrap5.min.css' %}" rel="stylesheet" type="text/css">
+
+<style>
+    #tabledataset {
+        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 1200px) {
+        #tabledataset {
+            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 576px) {
+        #tabledataset {
+            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+</style>
+
+{% endblock extra_css %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="title-page">
+        Presentaciones
+    </div>
+
+    {# search block is defined in MME\templates\blocks\search_block.html #}
+    {% include "blocks/search_block.html" with parent=site_root calling_page=self %}
+
+    <div class="container mt-4">
+        <table id="dataset" class="" style="width:100%">
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tabledataset">
+                {% if posts %}
+                {% for blog in posts %}
+                <tr>
+                    <td>
+                        <a href="{{ blog.url }}">
+                            <div class="container mt-4">
+                                <div class="row">
+                                    {% image blog.image fill-350x250-c50 as image %}
+                                    <img src="{{ image.url }}" class="img-fluid" alt="{{ image.alt }}">
+                                    <p class="video-list-item-title"> {{ blog.title }} </p>
+                                </div>
+                            </div>
+                        </a>
+
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <div class="col-md-12">
+                    <p>Lo sentimos, aun no tenemos noticias registradas.</p>
+                </div>
+                {% endif %}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+<script src="{% static 'js/calendar/flatpickr.js' %}"></script>
+<script src="{% static 'js/calendar/es.js' %}"></script>
+<script src="{% static 'js/calendar/rangePlugin.js' %}"></script>
+<script src="{% static 'js/calendar/monthSelect.js' %}"></script>
+<script src="{% static 'js/calendar/modernizr.js' %}"></script>
+
+<script src="{% static 'js/datatables/dataTablesCore.js' %}"></script>
+<script src="{% static 'js/datatables/dataTables.min.js' %}"></script>
+<script src="{% static 'js/datatables/dataTables.bootstrap5.min.js' %}"></script>
+<script src="{% static 'js/unit_results_subastas.js' %}"></script>
+
+<script>
+    AOS.init();
+    let page = "{{'misional.SubastasDocumentoUnidadPage'|safe}}";
+    let pageitems = "{{9 |safe}}";
+</script>
+{% endblock extra_js %}

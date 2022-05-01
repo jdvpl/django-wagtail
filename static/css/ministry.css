@@ -1,0 +1,92 @@
+.section-ministry{
+    display: flex;
+    flex-direction: row-reverse;
+   
+}
+.section-ministry h1{
+    margin:0;
+    position: relative;
+
+    font-size: 2.8rem;
+    font-weight: bold;
+    line-height:70px;
+}
+.section-ministry h1:after{
+    content:'';
+    position:absolute;
+    height:4px;
+    width:80px;
+    background: var(  --bs-success);
+    bottom:0;
+    left:0;
+}
+
+.section-ministry  .section-text {
+    font-family: 'Work Sans', sans-serif;
+    padding-left: 50px;
+    padding-right: 100px;
+    padding-top: 20px;
+}
+
+.section-text p{
+    font-weight: normal;
+    font-weight: 400;
+}
+
+.section-card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.section-card .card{
+    flex-wrap: wrap;
+   max-width:296px;
+   padding-left:20px;
+   padding-right:20px;
+   padding-top:20px; 
+   margin:2rem;
+   box-shadow: 0px 1px 20px 0px grey;
+}
+
+.section-card .card h2,.section-ministry h1{
+    color: var(--bs-blue);
+}
+
+@media (max-width:1364px){
+    .section-ministry{
+        display: flex;
+        flex-direction: column;
+       
+    }
+
+    .section-ministry .section-imagen{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+ @media (max-width:1023px){
+    .section-card{
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
+    .section-card .card{
+        max-width:100%;
+        margin:1rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+
+    }
+    .section-ministry .section-imagen img{
+        max-width:90vw;
+        height:auto;
+    }
+ }
+
+ @media (max-width: 768px){
+    .section-ministry  .section-text {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 15px;
+    }
+ }

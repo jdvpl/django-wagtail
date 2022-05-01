@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container">
+  <strong class="title-page-special">{{ page.title }}</strong>
+</div>
+{% if page.corporate_culture %}
+<div class="container ">
+    <div class="gaps-container">
+        {% for element in page.corporate_culture %}
+            <div class="gap-item d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="gaps-card m-3 rounded w-100">
+                    {% image element.value.image original as cc_image %}
+                    <img src="{{ cc_image.url }}" class="gaps-card-img" alt="{{ element.value.alt_text }}" >
+                    <div class="gaps-card-content-large">
+                        <div class="m-2">
+                            <strong class="title-page-special">{{ element.value.name }}</strong>
+                            <div class="gaps-text-large">
+                                {{ element.value.paragraph_block }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if page.corporate_culture_objetives %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="title-page text-start">
+        {{ page.section_title }}
+    </div>
+    <nav class="mme-taps">
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        {% for element in page.corporate_culture_objetives %}
+          {% if forloop.counter0 == 0 %}
+            <button class="nav-link active" id="tab-{{ forloop.counter0 }}" data-bs-toggle="tab" data-bs-target="#tap{{ forloop.counter0 }}" type="button"
+            role="tab" aria-controls="tramites" aria-selected="true">
+          {% else %}
+            <button class="nav-link" id="tab-{{ forloop.counter0 }}" data-bs-toggle="tab" data-bs-target="#tap{{ forloop.counter0 }}" type="button"
+              role="tab" aria-controls="medicion" aria-selected="false">
+          {% endif %}
+          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.name }}</div>
+            </button>
+        {% endfor %}
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      {% for element in page.corporate_culture_objetives %}
+          {% if forloop.counter0 == 0 %}
+            <div class="tab-pane fade show active" id="tap{{ forloop.counter0 }}" role="tabpanel" aria-labelledby="tap{{ forloop.counter0 }}">
+          {% else %}
+            <div class="tab-pane fade" id="tap{{ forloop.counter0 }}" role="tabpanel" aria-labelledby="tap{{ forloop.counter0 }}">
+          {% endif %}
+              <div class="mme-taps-content">{{ element.value.paragraph_block }}</div>
+            </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% endblock content %}
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+    
+    <script>
+        AOS.init();
+    </script>
+    
+{% endblock extra_js %}

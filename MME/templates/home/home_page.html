@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load static wagtailimages_tags navigation_tags i18n wagtailcore_tags %}
+{% load static %}
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-sector-company.css' %}" rel="stylesheet" />
+<link href="{% static 'css/press_room.css' %}" rel="stylesheet" />
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}" media="screen" />
+
+{% endblock extra_css %}
+
+{% block content %}
+<!--Inicio seccion Noticias-->
+<div class="container">
+    <strong class="title-page-special">{{ page.title }}</strong>
+</div>
+{% if page.news_list %}
+<div class="container">
+    <div class="title-page">
+        {{ page.news_list_title }}
+    </div>
+
+    <div class="row mt-5">
+        {% for childpage in page.news_list.specific.children|slice:"1" %}
+        {% if forloop.counter0 == 0 %}
+        <div class="col-xxl-7 col-xl-7 col-lg-12  col-md-12 col-sm-12 main-news-container animate__animated
+                    animate__zoomIn">
+            <a href='{{childpage.url}}' class="link-main-news">
+                <div class="row">
+                    <div class="col-xxl-12 col-xl-12 col-lg-12 align-items-center image-zoom-container">
+                        <div class="zoom-container">
+                            {% image childpage.image original as image %}
+                            <img src="{{ image.url }}" class="img-fluid " alt="...">
+                        </div>
+                    </div>
+                    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="main-news-title">{{childpage.title}}</p>
+                            <div>
+                                <svg class="press-room-svg">
+                                    <image xlink:href="{% static 'images/prensa/mano.svg' %}" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="main-news-subtitle">
+                            {{ childpage.date_published }}.
+                            {% if childpage.authors %}
+                            {% for author in childpage.authors %}
+                            {{ author.organization_title }}
+                            {% endfor %}
+                            {% endif %}
+                            , {{ childpage.city }}.
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        {% endif %}
+        {% endfor %}
+        <div class="col-xxl-5 col-xl-5 col-lg-12 col-md-12 col-sm-12 ps-4 animate__animated animate__zoomIn">
+            <div class="row">
+                <div class="d-flex justify-content-start align-items-center">
+                    <svg class="press-room-svg">
+                        <image xlink:href="{% static 'images/prensa/opciones.svg' %}" />
+                    </svg>
+                    <p class="news-info-list">Seleccione la noticia que desea consultar:</p>
+                </div>
+            </div>
+            <div class="row">
+
+                {% for childpage in page.news_list.specific.children|slice:"4" %}
+                {% if forloop.counter0 >= 1 %}
+                <a href="{{childpage.url}}" class="link-second-news">
+                    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12  news-list">
+                        <div class="news-list-title">{{childpage.title}}</div>
+                        <p class="news-list-subtitle">
+                            {{ childpage.date_published }}.
+                            {% if childpage.authors %}
+                            {% for author in childpage.authors %}
+                            {{ author.organization_title }}
+                            {% endfor %}
+                            {% endif %}
+                            , {{ childpage.city }}.
+                        </p>
+                    </div>
+                </a>
+
+                {% endif %}
+                {% endfor %}
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-5">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <hr class="divider">
+                        <a href="{{ page.news_list.url }}" class="more-info-button">{{ page.news_button_title }}</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if page.information_systems %}
+<div class="container-fluid mme-section-container d-flex justify-content-center align-items-center">
+    <p class="mme-section-title">{{ page.interest_title }}</p>
+</div>
+<div class="swiper systems-swiper">
+    <div class="swiper-wrapper systems">
+        {% for element in page.interest_places %}
+        <a href="{{ element.value.url }}" class="swiper-slide system" title="{{ element.value.caption }}">
+            {% image element.value.image original as slider_image %}
+            <img src="{{ slider_image.url }}" alt="{{ element.value.alt_text }}">
+        </a>
+        {% endfor %}
+    </div>
+    <div class="swiper-pagination-systems"></div>
+</div>
+{% endif %}
+
+{% if page.information_systems %}
+<div class="container-fluid mme-section-container d-flex justify-content-center align-items-center">
+    <p class="mme-section-title">{{ page.systems_title }}</p>
+</div>
+<div class="swiper systems-swiper">
+    <div class="swiper-wrapper systems">
+        {% for element in page.information_systems %}
+        <a href="{{ element.value.url }}" class="swiper-slide system" title="{{ element.value.caption }}">
+            {% image element.value.image original as slider_image %}
+            <img src="{{ slider_image.url }}" alt="{{ element.value.alt_text }}">
+        </a>
+        {% endfor %}
+    </div>
+    <div class="swiper-pagination-systems"></div>
+</div>
+{% endif %}
+
+{% if page.gallery_list %}
+<div class="container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="title-page">
+        {{ page.gallery_list_title }}
+    </div>
+    <div class="gallery-container" id="galleryList">
+        {% for childpage in page.gallery_list.specific.children|slice:"5" %}
+        <div class="gallery-item" data-aos="fade-up" data-aos-delay="100">
+            {% image childpage.image fill-1920x600 as image %}
+            <a href="{{childpage.url}}" class="image-item" data-sub-html="<h4>{{childpage.title}}</h4>">
+                <img class="gallery-img shadow-lg" src="{{ image.url }}">
+                <h5 class="gallery-title">{{childpage.title}}</h5>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <hr class="divider">
+                <a href="{{ page.gallery_list.url }}" class="more-info-button">{{ page.gallery_button_title }}</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="container">
+    {% comment %} <div class ="col-8" {% endcomment %}
+        <iframe name="embed-feed" title="Yammer" 
+        src="https://web.yammer.com/embed/users/eyJfdHlwZSI6IlVzZXIiLCJpZCI6IjY5MjIzNjQ2ODIyNCJ9?header=true&footer=false&hideNetworkName=false&theme=light" 
+        style="border: 0px; overflow: hidden; width: 100%; height: 100%; min-height: 600px;">
+        </iframe>
+    {% comment %} </div> {% endcomment %}
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/press_room.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-affiliated-entities.js' %}"></script>
+
+
+<script type="text/javascript" src="{% static 'pb/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/powerbi.min.js' %}"></script>
+
+
+<script>
+    AOS.init();
+    // Power BI endpoints
+    var boards = {
+        "boards": [
+            {
+                "url": "{{ page.link_pbi }}",
+                "id": "board_one"
+            }
+        ]
+    }
+</script>
+<script type="text/javascript" src="{% static 'js/power_bi_boards.js' %}"></script>
+
+<script>
+    var linksContainer = document.getElementById("linksContainer");
+    /**
+     * Function to resize the reportContainer div to the size of the user's browser window
+     */
+    function reportWindowSize() {  
+        var widthBuffer = 40;
+        var heightBuffer = (window.innerHeight / 3) * 2.5;
+        linksContainer.style.height = (heightBuffer) + "px";
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        var swiper = new Swiper(".systems-swiper", {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            slidesPerGroup: 3,
+            loop: true,
+            loopFillGroupWithBlank: false,
+            pagination: {
+                el: ".swiper-pagination-systems",
+                clickable: true,
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 5,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 5,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                },
+                1366: {
+                    slidesPerView: 4,
+                    spaceBetween: 10,
+                },
+            }
+        });
+    })
+
+    window.onresize = reportWindowSize;
+    window.onload = reportWindowSize;
+</script>
+{% endblock extra_js %}

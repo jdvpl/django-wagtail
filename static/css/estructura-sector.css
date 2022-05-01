@@ -1,0 +1,163 @@
+:root {
+  --mme-green-filter: invert(75%) sepia(61%) saturate(1339%) hue-rotate(130deg)
+  brightness(98%) contrast(95%);
+  --mme-blue: #3366cc;
+}
+
+.e-col {
+    flex: 0 0 auto;
+    width: 50%;
+}
+
+.sector-content {
+    margin-bottom: 30px;
+}
+
+.struct-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 20px;
+}
+
+.img-ads-size {
+    width: 225px;
+    height: 225px;
+}
+
+.btn-effect {
+    cursor: pointer;
+    filter: var(--mme-green-filter);
+}
+
+.btn-ads-box {
+    float: right;
+    width: 245px;
+    height: 273px;
+    border-left: lightgray solid 4px;
+    text-align: center;
+    font-weight: bold;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.btn-ads-box:hover {
+    background-color: #36c;
+}
+
+.btn-ads-box:hover > .btn-effect {
+    filter: brightness(0) invert(1);
+}
+
+.btn-ads-box:hover > span {
+    color: white;
+}
+
+.active-item {
+    background-color: #36c;
+    color: white;
+}
+
+.active-img {
+    filter: brightness(0) invert(1);
+}
+
+.btn-vin-box {
+    float: left;
+    width: 245px;
+    height: 273px;
+    text-align: center;
+    font-weight: bold;
+    padding: 0 10px;
+    border-left: lightgray solid 4px;
+    border-right: lightgray solid 4px;
+    cursor: pointer;
+}
+
+.btn-vin-box:hover {
+    background-color: #36c;
+}
+
+.btn-vin-box:hover > .btn-effect {
+    filter: brightness(0) invert(1);
+}
+
+.btn-vin-box:hover > span {
+    color: white;
+}
+
+.img-ads-container {
+    text-align: right;
+    padding-right: 0;
+}
+
+.img-vin-container {
+    text-align: left;
+    padding-left: 0;
+}
+
+.img-slider-container {
+    height: auto;
+}
+
+.slider-secundary {
+    display: flex;
+    justify-content: space-between;
+    height: 163px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+    .img-ads-size {
+        width: 170px;
+        height: 170px;
+    }
+
+    .btn-ads-box {
+        width: 235px;
+        height: 230px;
+    }
+
+    .btn-vin-box {
+        width: 235px;
+        height: 230px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 479px) {
+    .e-col {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .img-ads-size {
+        width: 170px;
+        height: 170px;
+    }
+
+    .btn-ads-box {
+        width: 235px;
+        height: 230px;
+        float: none;
+        margin: 0 auto;
+        border-right: lightgray solid 4px;
+    }
+
+    .btn-vin-box {
+        width: 235px;
+        height: 230px;
+        float: none;
+        margin: 0 auto;
+    }
+
+    .img-ads-container {
+        text-align: center;
+        padding: 10px;
+    }
+    
+    .img-vin-container {
+        text-align: center;
+        padding: 10px;
+    }
+}

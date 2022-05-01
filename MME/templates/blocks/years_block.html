@@ -1,0 +1,5 @@
+{% load wagtailcore_tags %}
+
+{% for year in years %}
+<option value="{{ forloop.counter }}">{{ year }}</option>
+{% endfor %}

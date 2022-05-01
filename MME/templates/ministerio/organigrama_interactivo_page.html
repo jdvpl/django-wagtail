@@ -1,0 +1,1370 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/organizationchart.css' %}" rel="stylesheet" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+{#----------------------------------------------------#}
+{# Define titulo #}
+<div class="container">
+    <div class="title-page">
+        {{ page.title }}
+    </div>
+</div>
+{#----------------------------------------------------#}
+
+
+<div class="container">
+    <div class="d-flex justify-content-end">
+        <a href={{ page.document_file.url }}>
+        <svg class="file-dw">
+            <image xlink:href="{% static 'images/archivo-pdf.svg' %}">
+        </svg>
+    </a>
+    </div>
+</div>
+
+<div class="container oc-container " id="movil-chart" style="display: none">
+
+    <div class="d-flex justify-content-center">
+        <canvas id="canvas-movil" height="4440" style="z-index:-2"></canvas>
+    </div>
+
+    {% if page.despacho_ministerio_minas_energia %}
+    {% if page.despacho_ministerio_minas_energia.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_ministerio_minas_energia.url }}" class="functionary-link ">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="minister-mobile-320-479" id="minister-movil">
+            <svg class="outline-minister-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_ministerio_minas_energia.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle" alt="...">
+            <div class="minister-functionary-description-320-479">
+                <p class="functionary-position  ">{{ page.despacho_ministerio_minas_energia }}</p>
+                <div class="d-flex justify-content-end">
+                    <div class="divider ">
+                    </div>
+                </div>
+                <p class="name fst-italic">{{ page.despacho_ministerio_minas_energia.specific.name }}</p>
+                
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.despacho_viceministro_minas %}
+    {% if page.despacho_viceministro_minas.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_viceministro_minas.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="viceminister-mines-mobile-320-479" id="fun-movil-1">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_viceministro_minas.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479">
+                <p class="functionary-position">{{ page.despacho_viceministro_minas }}</p>
+                <div class="d-flex justify-content-end">
+                    <div class="divider">
+                    </div>
+                    {% if page.despacho_viceministro_minas.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.despacho_viceministro_minas.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.despacho_viceministro_energia %}
+    {% if page.despacho_viceministro_energia.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_viceministro_energia.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}        
+    <div class="viceminister-energy-mobile-320-479" id="fun-movil-2">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_viceministro_energia.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479 ">
+                <p class="functionary-position">{{ page.despacho_viceministro_energia }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider">
+                    </div>
+                    {% if page.despacho_viceministro_energia.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.despacho_viceministro_energia.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.despacho_secretario_general %}
+    {% if page.despacho_secretario_general.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_secretario_general.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}   
+        <div class="general-secretary-mobile-320-479" id="fun-movil-3">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_secretario_general.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479">
+                <p class="functionary-position">{{ page.despacho_secretario_general }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider">
+                    </div>
+                    {% if page.despacho_secretario_general.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>  
+                </div>
+                <p class="name fst-italic">{{ page.despacho_secretario_general.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_unidad_resultados %}
+    {% if page.grupo_unidad_resultados.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_unidad_resultados.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %} 
+        <div class="results-unit-group-mobile-320-479" id="fun-movil-4">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_unidad_resultados.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479">
+                <p class="functionary-position">{{ page.grupo_unidad_resultados }}</p>
+                <div class="d-flex justify-content-end">
+                    <div class="divider">
+                    </div>
+                    {% if page.grupo_unidad_resultados.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg> 
+                </div>
+                <p class="name fst-italic">{{ page.grupo_unidad_resultados.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_comunicacion_prensa %}
+    {% if page.grupo_comunicacion_prensa.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_comunicacion_prensa.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %} 
+        <div class="communication-press-group-mobile-320-479" id="fun-movil-5">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_comunicacion_prensa.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479">
+                <p class="functionary-position ">{{ page.grupo_comunicacion_prensa }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider">
+                    </div>
+                    {% if page.grupo_comunicacion_prensa.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg> 
+                </div>
+                <p class="name fst-italic">{{ page.grupo_comunicacion_prensa.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_gestion_estrategica_sector_extractivo %}
+    {% if page.grupo_gestion_estrategica_sector_extractivo.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_gestion_estrategica_sector_extractivo.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %} 
+        <div class="strategic-management-group-mobile-320-479" id="fun-movil-6">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_gestion_estrategica_sector_extractivo.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479">
+                <p class="functionary-position">{{ page.grupo_gestion_estrategica_sector_extractivo }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider ">
+                    </div>
+                    {% if page.grupo_gestion_estrategica_sector_extractivo.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg> 
+                </div>
+                <p class="name fst-italic">{{ page.grupo_gestion_estrategica_sector_extractivo.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_asuntos_legislativos %}
+    {% if page.grupo_asuntos_legislativos.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_asuntos_legislativos.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="legislative-affairs-group-mobile-320-479" id="fun-movil-7">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_asuntos_legislativos.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479 ">
+                <p class="functionary-position ">{{ page.grupo_asuntos_legislativos }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider ">
+                    </div>
+                    {% if page.grupo_asuntos_legislativos.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.grupo_asuntos_legislativos.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_asuntos_ambientales_sociales %}
+    {% if page.oficina_asuntos_ambientales_sociales.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_asuntos_ambientales_sociales.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="office-environmental-social-affairs-mobile-320-479" id="fun-movil-8">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_asuntos_ambientales_sociales.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479 ">
+                <p class="functionary-position ">{{ page.oficina_asuntos_ambientales_sociales }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider ">
+                    </div>
+                    {% if page.oficina_asuntos_ambientales_sociales.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_asuntos_ambientales_sociales.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_asuntos_regulatorios_empresariales %}
+    {% if page.oficina_asuntos_regulatorios_empresariales.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_asuntos_regulatorios_empresariales.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="office-regulatory-business-affairs-mobile-320-479" id="fun-movil-9">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_asuntos_regulatorios_empresariales.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479 ">
+                <p class="functionary-position ">{{ page.oficina_asuntos_regulatorios_empresariales }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider ">
+                    </div>
+                    {% if page.oficina_asuntos_regulatorios_empresariales.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_asuntos_regulatorios_empresariales.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_asesora_juridica %}
+    {% if page.oficina_asesora_juridica.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_asesora_juridica.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="legal-advisory-office-mobile-320-479" id="fun-movil-10">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_asesora_juridica.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479 ">
+                <p class="functionary-position ">{{ page.oficina_asesora_juridica }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider ">
+                    </div>
+                    {% if page.oficina_asesora_juridica.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_asesora_juridica.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_control_interno %}
+    {% if page.oficina_control_interno.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_control_interno.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="internal-control-office-mobile-320-479" id="fun-movil-11">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_control_interno.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479 ">
+                <p class="functionary-position ">{{ page.oficina_control_interno }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider ">
+                    </div>
+                    {% if page.oficina_control_interno.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_control_interno.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_planeacion_gestion_internacional %}
+    {% if page.oficina_planeacion_gestion_internacional.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_planeacion_gestion_internacional.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="international-planning-management-office-mobile-320-479" id="fun-movil-12">
+            <svg class="outline-functionary-320-479">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_planeacion_gestion_internacional.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-320-479" alt="...">
+            <div class="functionary-description-second--320-479 ">
+                <p class="functionary-position ">{{ page.oficina_planeacion_gestion_internacional }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider ">
+                    </div>
+                    {% if page.oficina_planeacion_gestion_internacional.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_planeacion_gestion_internacional.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+</div>
+
+<div class="container oc-container" id="tablet-chart" style="display: none">
+    <div class="d-flex justify-content-center">
+        <canvas id="canvas-tablet" height="2400" style="z-index:-2"></canvas>
+    </div>
+    {% if page.despacho_ministerio_minas_energia %}
+    {% if page.despacho_ministerio_minas_energia.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_ministerio_minas_energia.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="minister-tablet768-1023" id="minister-tablet">
+            <svg class="outline-minister-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_ministerio_minas_energia.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle" alt="...">
+            <div class="functionary-description-768-1023 mt-3">
+                <p class="functionary-position m-0 ">{{ page.despacho_ministerio_minas_energia }}</p>
+                <div class="d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                </div>
+                <p class="name fst-italic">{{ page.despacho_ministerio_minas_energia.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.despacho_viceministro_minas %}
+    {% if page.despacho_viceministro_minas.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_viceministro_minas.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="viceminister-mines-tablet768-1023">
+            
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_viceministro_minas.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-first-768-1023 mt-3">
+                <p class="functionary-position m-0 ">{{ page.despacho_viceministro_minas }}</p>
+                <div class="d-flex justify-content-end">
+                    {% if page.despacho_viceministro_minas.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                    <div class="divider m-0">
+                    </div>
+                </div>
+                <p class="name fst-italic ms-3">{{ page.despacho_viceministro_minas.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.despacho_viceministro_energia %}
+    {% if page.despacho_viceministro_energia.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_viceministro_energia.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="viceminister-energy-tablet768-1023">
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_viceministro_energia.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-first-768-1023 mt-3">
+                <p class="functionary-position m-0">{{ page.despacho_viceministro_energia }}</p>
+                <div class=" d-flex justify-content-end">
+                    {% if page.despacho_viceministro_energia.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                    <div class="divider m-0">
+                    </div>
+
+                </div>
+                <p class="name fst-italic">{{ page.despacho_viceministro_energia.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.despacho_secretario_general %}
+    {% if page.despacho_secretario_general.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_secretario_general.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="general-secretary-tablet768-1023" id="general-secretary-tablet">
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_secretario_general.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-first-768-1023 mt-3">
+                <p class="functionary-position m-0">Despacho del Secretario General</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.despacho_secretario_general.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.despacho_secretario_general.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_unidad_resultados %}
+    {% if page.grupo_unidad_resultados.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_unidad_resultados.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="results-unit-group-tablet768-1023">
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_unidad_resultados.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-second-768-1023 mt-3">
+                <p class="functionary-position m-0 ">{{ page.grupo_unidad_resultados }}</p>
+                <div class="d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.grupo_unidad_resultados.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.grupo_unidad_resultados.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_comunicacion_prensa %}
+    {% if page.grupo_comunicacion_prensa.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_comunicacion_prensa.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="communication-press-group-tablet768-1023">
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_comunicacion_prensa.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-second-768-1023 mt-3">
+                <p class="functionary-position m-0">{{ page.grupo_comunicacion_prensa }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.grupo_comunicacion_prensa.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.grupo_comunicacion_prensa.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_gestion_estrategica_sector_extractivo %}
+    {% if page.grupo_gestion_estrategica_sector_extractivo.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_gestion_estrategica_sector_extractivo.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="strategic-management-group-tablet768-1023">
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_gestion_estrategica_sector_extractivo.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-second-768-1023 mt-3">
+                <p class="functionary-position m-0">{{ page.grupo_gestion_estrategica_sector_extractivo }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.grupo_gestion_estrategica_sector_extractivo.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.grupo_gestion_estrategica_sector_extractivo.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_asuntos_legislativos %}
+    {% if page.grupo_asuntos_legislativos.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_asuntos_legislativos.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="legislative-affairs-group-tablet768-1023">
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_asuntos_legislativos.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-second-768-1023 mt-3">
+                <p class="functionary-position m-0">{{ page.grupo_asuntos_legislativos }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.grupo_asuntos_legislativos.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.grupo_asuntos_legislativos.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_asuntos_ambientales_sociales %}
+    {% if page.oficina_asuntos_ambientales_sociales.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_asuntos_ambientales_sociales.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="office-environmental-social-affairs-tablet768-1023">
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_asuntos_ambientales_sociales.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-second-768-1023 mt-3">
+                <p class="functionary-position m-0">{{ page.oficina_asuntos_ambientales_sociales }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.oficina_asuntos_ambientales_sociales.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_asuntos_ambientales_sociales.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_asuntos_regulatorios_empresariales %}
+    {% if page.oficina_asuntos_regulatorios_empresariales.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_asuntos_regulatorios_empresariales.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="office-regulatory-business-affairs-tablet768-1023">
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_asuntos_regulatorios_empresariales.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-second-768-1023 mt-3">
+                <p class="functionary-position m-0">{{ page.oficina_asuntos_regulatorios_empresariales }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.oficina_asuntos_regulatorios_empresariales.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_asuntos_regulatorios_empresariales.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_asesora_juridica %}
+    {% if page.oficina_asesora_juridica.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_asesora_juridica.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="legal-advisory-office-tablet768-1023">
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_asesora_juridica.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-second-768-1023 mt-3">
+                <p class="functionary-position m-0">{{ page.oficina_asesora_juridica }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.oficina_asesora_juridica.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_asesora_juridica.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_control_interno %}
+    {% if page.oficina_control_interno.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_control_interno.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="internal-control-office-tablet768-1023">
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_control_interno.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-second-768-1023 mt-3">
+                <p class="functionary-position m-0">{{ page.oficina_control_interno }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.oficina_control_interno.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_control_interno.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_planeacion_gestion_internacional %}
+    {% if page.oficina_planeacion_gestion_internacional.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_planeacion_gestion_internacional.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="international-planning-management-office-tablet768-1023">
+            <svg class="outline-functionary-768-1023">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_planeacion_gestion_internacional.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-768-1023" alt="...">
+            <div class="functionary-description-second-768-1023 mt-3">
+                <p class="functionary-position m-0">{{ page.oficina_planeacion_gestion_internacional }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.oficina_planeacion_gestion_internacional.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_planeacion_gestion_internacional.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+</div>
+
+<div class="container  oc-container" id="desktop-chart" style="display: none">
+    <div class="d-flex justify-content-center">
+        <canvas id="canvas-desktop"  height="1300" style="z-index:-2"></canvas>
+    </div>
+
+    {% if page.despacho_ministerio_minas_energia %}
+    {% if page.despacho_ministerio_minas_energia.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_ministerio_minas_energia.url }}" class="functionary-link ">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="minister-desktop1400" id="minister-desktop">
+            <svg class="outline-minister-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_ministerio_minas_energia.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle" alt="...">
+            <div class="minister-functionary-description-1366 mt-3">
+                <p class="functionary-position m-0 ">{{ page.despacho_ministerio_minas_energia }}</p>
+                <div class="">
+                    <div class="divider m-0">
+                    </div>
+                </div>
+                <p class="name fst-italic">{{ page.despacho_ministerio_minas_energia.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+
+    {% if page.despacho_viceministro_minas %}
+    {% if page.despacho_viceministro_minas.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_viceministro_minas.url }}" class="functionary-link"></a>
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="viceminister-mines-desktop1400">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_viceministro_minas.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-left-1366 mt-3">
+                <p class="functionary-position m-0">{{ page.despacho_viceministro_minas }}</p>
+                <div class=" d-flex justify-content-end">
+                    {% if page.despacho_viceministro_minas.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                    <div class="divider m-0">
+                    </div>
+
+                </div>
+                <p class="name fst-italic">{{ page.despacho_viceministro_minas.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+
+    {% if page.despacho_viceministro_energia %}
+    {% if page.despacho_viceministro_energia.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_viceministro_energia.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="viceminister-energy-desktop1400">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_viceministro_energia.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-left-1366 mt-3">
+                <p class="functionary-position m-0">{{ page.despacho_viceministro_energia }}</p>
+                <div class=" d-flex justify-content-end">
+                    {% if page.despacho_viceministro_energia.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                    <div class="divider m-0">
+                    </div>
+
+                </div>
+                <p class="name fst-italic">{{ page.despacho_viceministro_energia.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.despacho_secretario_general %}
+    {% if page.despacho_secretario_general.specific.staff_list|length > 0 %}
+    <a href="{{ page.despacho_secretario_general.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="general-secretary-desktop1400">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.despacho_secretario_general.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-right-1366 mt-3">
+                <p class="functionary-position m-0">{{ page.despacho_secretario_general }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.despacho_secretario_general.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.despacho_secretario_general.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_unidad_resultados %}
+    {% if page.grupo_unidad_resultados.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_unidad_resultados.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="results-unit-group-desktop1400" id="results-unit-group-desktop">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_unidad_resultados.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-1366 mt-3">
+                <p class="functionary-position m-0 ">{{ page.grupo_unidad_resultados }}</p>
+                <div class="d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.grupo_unidad_resultados.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.grupo_unidad_resultados.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_comunicacion_prensa %}
+    {% if page.grupo_comunicacion_prensa.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_comunicacion_prensa.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="communication-press-group-desktop1400" id="communication-press-group">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_comunicacion_prensa.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-1366 mt-3">
+                <p class="functionary-position m-0">{{ page.grupo_comunicacion_prensa }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.grupo_comunicacion_prensa.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.grupo_comunicacion_prensa.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_gestion_estrategica_sector_extractivo %}
+    {% if page.grupo_gestion_estrategica_sector_extractivo.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_gestion_estrategica_sector_extractivo.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="strategic-management-group-desktop1400" id="strategic-management-group-desktop">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_gestion_estrategica_sector_extractivo.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-1366 mt-3">
+                <p class="functionary-position m-0">{{ page.grupo_gestion_estrategica_sector_extractivo }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.grupo_gestion_estrategica_sector_extractivo.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.grupo_gestion_estrategica_sector_extractivo.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.grupo_asuntos_legislativos %}
+    {% if page.grupo_asuntos_legislativos.specific.staff_list|length > 0 %}
+    <a href="{{ page.grupo_asuntos_legislativos.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="legislative-affairs-group-desktop1400" id="legislative-affairs-group-desktop">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.grupo_asuntos_legislativos.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-1366 mt-3">
+                <p class="functionary-position m-0">{{ page.grupo_asuntos_legislativos }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.grupo_asuntos_legislativos.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.grupo_asuntos_legislativos.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_asuntos_ambientales_sociales %}
+    {% if page.oficina_asuntos_ambientales_sociales.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_asuntos_ambientales_sociales.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="office-environmental-social-affairs-desktop1400" id="office-environmental-social-affairs-desktop">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_asuntos_ambientales_sociales.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-1366 mt-3">
+                <p class="functionary-position m-0">{{ page.oficina_asuntos_ambientales_sociales }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.oficina_asuntos_ambientales_sociales.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_asuntos_ambientales_sociales.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_asuntos_regulatorios_empresariales %}
+    {% if page.oficina_asuntos_regulatorios_empresariales.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_asuntos_regulatorios_empresariales.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="office-regulatory-business-affairs-desktop1400" id="office-regulatory-business-affairs-desktop">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_asuntos_regulatorios_empresariales.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-1366 mt-3">
+                <p class="functionary-position m-0">{{ page.oficina_asuntos_regulatorios_empresariales }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.oficina_asuntos_regulatorios_empresariales.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_asuntos_regulatorios_empresariales.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_asesora_juridica %}
+    {% if page.oficina_asesora_juridica.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_asesora_juridica.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="legal-advisory-office-desktop1400" id="legal-advisory-office-desktop">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_asesora_juridica.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-1366 mt-3">
+                <p class="functionary-position m-0">{{ page.oficina_asesora_juridica }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.oficina_asesora_juridica.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_asesora_juridica.specific.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_control_interno %}
+    {% if page.oficina_control_interno.specific.staff_list|length > 0 %}
+    <a href="{{ page.oficina_control_interno.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="internal-control-office-desktop1400" id="internal-control-office-desktop">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_control_interno.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-1366 mt-3">
+                <p class="functionary-position m-0">{{ page.oficina_control_interno }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.oficina_control_interno.specific.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_control_interno.specific.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+    {% if page.oficina_planeacion_gestion_internacional %}
+    {% if page.oficina_planeacion_gestion_internacional.staff_list|length > 0 %}
+    <a href="{{ page.oficina_planeacion_gestion_internacional.url }}" class="functionary-link">
+    {% else %}
+    <a class="functionary-link">
+    {% endif %}
+        <div class="international-planning-management-office-desktop1400" id="international-planning-management-office-desktop">
+            <svg class="outline-functionary-1366 ">
+                <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+            </svg>
+            {% image page.oficina_planeacion_gestion_internacional.specific.image original as functionary_image %}
+            <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img-1366" alt="...">
+            <div class="functionary-description-1366 mt-3">
+                <p class="functionary-position m-0">{{ page.oficina_planeacion_gestion_internacional }}</p>
+                <div class=" d-flex justify-content-end">
+                    <div class="divider m-0">
+                    </div>
+                    {% if page.oficina_planeacion_gestion_internacional.staff_list|length > 0 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" 
+                        class="bi bi-plus-circle-fill divider-icon" viewBox="0 0 16 16">
+                    {% endif %}
+                    <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="name fst-italic">{{ page.oficina_planeacion_gestion_internacional.specific.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+
+</div>
+
+
+<div style="height: 50px">
+    <div class="mh-100" style="width: 100px; height: 300px"></div>
+</div>
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/organizationchar.js' %}"></script>
+<script src="{% static 'js/html2canvas.min.js' %}" crossorigin="anonymous"></script>
+<script>
+    AOS.init();
+</script>
+{% endblock extra_js %}

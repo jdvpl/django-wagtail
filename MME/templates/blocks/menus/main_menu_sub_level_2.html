@@ -1,0 +1,14 @@
+
+{% load menu_tags %}
+
+{% for item in menu_items %}
+<li>
+    <hr class="mme-dropdown-divider">
+</li>
+<li>
+    <a class="dropdown-item" href="{{ item.href }}">{{ item.text }}</a>
+</li>
+{% endfor %}
+<li>
+    <hr class="mme-dropdown-divider">
+</li>

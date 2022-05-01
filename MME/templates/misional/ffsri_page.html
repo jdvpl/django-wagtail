@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/contratacion-accordion.css' %}" rel="stylesheet" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 animate__animated animate__zoomIn">
+      <div class="intro-section ul-list list-ul">
+        <strong class="title-page-special">{{ page.title }}</strong>
+        {{ page.intro|richtext }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="title-page">
+    {{ page.block_title }}
+  </div>
+  <div class="num-columnas-ul list-ul">
+    {{ page.block_intro|richtext }}
+  </div>
+</div>
+
+{% if page.list_one %}
+{% for block in page.list_one %}
+{% with parentID=forloop.counter0 %}
+<div class="container" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.title_list_one }}
+  </div>
+  {% if page.block.value.title %}
+  <div class="title-page">
+    {{ block.value.title }}
+  </div>
+  {% endif %}
+  <div class="accordion container" id="accordion{{ parentID }}">
+    {% for element in block.value.subitems %}
+    {% if forloop.counter0 == 0 %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ parentID }}{{ forloop.counter0 }}">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse{{ parentID }}{{ forloop.counter0 }}" aria-expanded="true" aria-controls="tramites">
+          {{ element.title }}
+        </button>
+      </h2>
+      <div id="collapse{{ parentID }}{{ forloop.counter0 }}" class="accordion-collapse collapse show left-dotted-border"
+        aria-labelledby="heading{{ parentID }}{{ forloop.counter0 }}" data-bs-parent="#accordion{{ parentID }}">
+        <div class="accordion-body ">
+          <div class="row m-0 p-0 list-ul">
+            {{ element.description|richtext }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ parentID }}{{ forloop.counter0 }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse{{ parentID }}{{ forloop.counter0 }}" aria-expanded="false"
+          aria-controls="collapseThree">
+          {{ element.title }}
+        </button>
+      </h2>
+      <div id="collapse{{ parentID }}{{ forloop.counter0 }}" class="accordion-collapse collapse left-dotted-border"
+        aria-labelledby="heading{{ parentID }}{{ forloop.counter0 }}" data-bs-parent="#accordion{{ parentID }}">
+        <div class="accordion-body">
+          <div class="row m-0 p-0 list-ul">
+            {{ element.description|richtext }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endwith %}
+{% endfor %}
+{% endif %}
+
+
+<div class="container" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.block_two_title }}
+  </div>
+  <div class="list-ul">
+    {{ page.block_two_intro|richtext }}
+  </div>
+</div>
+
+<div class="container" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.block_three_title }}
+  </div>
+  <div class="list-ul">
+    {{ page.block_three_intro|richtext }}
+  </div>
+
+  {% if page.list_two %}
+  {% for block in page.list_two %}
+  {% with parentID=forloop.counter0 %}
+  <div class="container">
+
+    {% if page.block.value.title %}
+    <div class="title-page">
+      {{ block.value.title }}
+    </div>
+    {% endif %}
+    <div class="accordion container" id="accordion-two{{ parentID }}">
+      {% for element in block.value.subitems %}
+      {% if forloop.counter0 == 0 %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading{{ parentID }}{{ forloop.counter0 }}">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse-two{{ parentID }}{{ forloop.counter0 }}" aria-expanded="true"
+            aria-controls="tramites">
+            {{ element.title }}
+          </button>
+        </h2>
+        <div id="collapse-two{{ parentID }}{{ forloop.counter0 }}"
+          class="accordion-collapse collapse show left-dotted-border"
+          aria-labelledby="heading{{ parentID }}{{ forloop.counter0 }}" data-bs-parent="#accordion-two{{ parentID }}">
+          <div class="accordion-body ">
+            <div class="row m-0 p-0 list-ul">
+              {{ element.description|richtext }}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading{{ parentID }}{{ forloop.counter0 }}">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse-two{{ parentID }}{{ forloop.counter0 }}" aria-expanded="false"
+            aria-controls="collapseThree">
+            {{ element.title }}
+          </button>
+        </h2>
+        <div id="collapse-two{{ parentID }}{{ forloop.counter0 }}"
+          class="accordion-collapse collapse left-dotted-border"
+          aria-labelledby="heading{{ parentID }}{{ forloop.counter0 }}" data-bs-parent="#accordion-two{{ parentID }}">
+          <div class="accordion-body">
+            <div class="row m-0 p-0 list-ul">
+              {{ element.description|richtext }}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endwith %}
+  {% endfor %}
+  {% endif %}
+</div>
+
+<div class="container" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.title_list_three }}
+  </div>
+
+  {% if page.list_three %}
+  {% for block in page.list_three %}
+  {% with parentID=forloop.counter0 %}
+  <div class="container">
+
+    {% if page.block.value.title %}
+    <div class="title-page">
+      {{ block.value.title }}
+    </div>
+    {% endif %}
+    <div class="accordion container" id="accordion-three{{ parentID }}">
+      {% for element in block.value.subitems %}
+      {% if forloop.counter0 == 0 %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading{{ parentID }}{{ forloop.counter0 }}">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse-three{{ parentID }}{{ forloop.counter0 }}" aria-expanded="true"
+            aria-controls="tramites">
+            {{ element.title }}
+          </button>
+        </h2>
+        <div id="collapse-three{{ parentID }}{{ forloop.counter0 }}"
+          class="accordion-collapse collapse show left-dotted-border"
+          aria-labelledby="heading{{ parentID }}{{ forloop.counter0 }}" data-bs-parent="#accordion-three{{ parentID }}">
+          <div class="accordion-body ">
+            <div class="row m-0 p-0 list-ul">
+              {{ element.description|richtext }}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading{{ parentID }}{{ forloop.counter0 }}">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse-three{{ parentID }}{{ forloop.counter0 }}" aria-expanded="false"
+            aria-controls="collapseThree">
+            {{ element.title }}
+          </button>
+        </h2>
+        <div id="collapse-three{{ parentID }}{{ forloop.counter0 }}"
+          class="accordion-collapse collapse left-dotted-border"
+          aria-labelledby="heading{{ parentID }}{{ forloop.counter0 }}" data-bs-parent="#accordion-three{{ parentID }}">
+          <div class="accordion-body">
+            <div class="row m-0 p-0 list-ul">
+              {{ element.description|richtext }}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endwith %}
+  {% endfor %}
+  {% endif %}
+
+</div>
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mmeoptionsmenu.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+
+<script>
+  AOS.init();
+</script>
+
+
+
+{% endblock extra_js %}

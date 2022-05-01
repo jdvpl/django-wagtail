@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load navigation_tags %}
+{% load static %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+
+{% endblock extra_css %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12  animate__animated animate__zoomIn">
+            <div class="intro-section">
+                <strong class="title-page-special">{{ page.title }}</strong>
+            </div>
+        </div>
+    </div>
+
+
+    {# mme_menu is defined in MME\templates\blocks\mme_menu.html #}
+    {% include "blocks/sitemap_mme_menu.html" with parent=site_root calling_page=self %}
+</div>
+
+
+{% endblock content %}

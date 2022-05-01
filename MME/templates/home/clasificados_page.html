@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load static wagtailimages_tags navigation_tags i18n wagtailcore_tags %}
+{% load static %}
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+{% endblock extra_css %}
+
+{% block content %}
+
+Login
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script>
+    AOS.init();    
+</script>
+
+{% endblock extra_js %}

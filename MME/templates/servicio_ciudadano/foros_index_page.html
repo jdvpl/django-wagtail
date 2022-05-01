@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/calendar/flatpickr.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/calendar/monthSelectstyle.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/calendar/material_blue.css' %}" rel="stylesheet" type="text/css">
+
+<link href="{% static 'css/press_room_subpage.css' %}" rel="stylesheet"  type="text/css">
+<link href="{% static 'css/dataTables.bootstrap5.min.css' %}" rel="stylesheet"  type="text/css">
+
+<style>
+    #tabledataset {
+        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 1200px) {
+        #tabledataset {
+            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (max-width: 576px) {
+        #tabledataset {
+            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+
+
+</style>
+
+{% endblock extra_css %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5  animate__animated animate__zoomIn">
+            <div class="ps-5 pe-5 intro-section">
+                <strong class="title-page-special">{{ page.intro_title }}</strong>
+                {{ page.intro|safe }}
+            </div>
+        </div>
+        {% if page.link_video != None and page.link_video|length > 0 %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7  animate__animated animate__zoomIn">
+            <div>
+                <iframe src="{{ page.link_video }}" frameborder="0" height="550" width="100%" allowfullscreen></iframe>
+            </div>
+        </div>
+        {% else %}
+        {% image page.image original as intro_image %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 animate__animated animate__zoomIn ">
+            <img class="img-fluid" src="{{ intro_image.url }}">
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container">
+        
+    {# search block is defined in MME\templates\blocks\search_block.html #}
+    {% include "blocks/search_block.html" with parent=site_root calling_page=self %}
+
+    <div class="container mt-4">
+        <table id="dataset" class="" style="width:100%">
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tabledataset">
+                {% if posts %}
+                {% for blog in posts %}
+                    <tr>
+                        <td>
+                            <a href="{{ blog.url }}">
+                                <div class="container mt-4">
+                                    <div class="row">
+                                        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                            <h4 class="news-subtitle news-list-item-title"> {{ blog.title }} </h4>
+                                            <hr class="divider-gallery">
+                                            <p class="fs-5 lh-sm news-list-item-text">
+                                                {{ blog.introduction }}
+                                            </p>
+                                            <p class="fs-6">
+                                                Sector: {% if blog.sectors %}
+                                                            {% for sector in blog.sectors %}
+                                                                    {{ sector.sector_title }}
+                                                            {% endfor %}
+                                                {% endif %}
+                                            </p>
+                                            <p class="fs-6">
+                                                Fecha Inicio: {{ blog.start_date }}<br> 
+                                                Fecha Fin: {{ blog.end_date }} 
+                                            </p>
+                                        </div>
+        
+                                    </div>
+                                </div>
+                            </a>
+        
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-12">
+                    <p>Lo sentimos, aun no tenemos noticias registradas.</p>
+                </div>
+            {% endif %}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+<script src="{% static 'js/calendar/flatpickr.js' %}"></script>
+<script src="{% static 'js/calendar/es.js' %}"></script>
+<script src="{% static 'js/calendar/rangePlugin.js' %}"></script>
+<script src="{% static 'js/calendar/monthSelect.js' %}"></script>
+<script src="{% static 'js/calendar/modernizr.js' %}"></script>
+
+<script src="{% static 'js/datatables/dataTablesCore.js' %}"></script>
+<script src="{% static 'js/datatables/dataTables.min.js' %}"></script>
+<script src="{% static 'js/datatables/dataTables.bootstrap5.min.js' %}"></script>
+<script src="{% static 'js/searchdataforos.js' %}"></script>
+
+<script>
+    AOS.init();
+    let page="{{'servicio_ciudadano.ForosPage'|safe}}";
+    let pageitems="{{10 |safe}}";
+</script>
+{% endblock extra_js %}

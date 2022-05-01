@@ -1,0 +1,79 @@
+.leaflet-top {
+    z-index: 999 !important;
+}
+.modal-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000000e0;
+    z-index: 999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-video.hide {
+    display: none;
+}
+
+.modal-video .modal-video-body {
+    position: relative;
+}
+
+.modal-video .btn-close-modal {
+    color: #FFFFFF;
+    position: absolute;
+    background-color: unset;
+    background: unset;
+    font-size: 3em;
+    box-shadow: none;
+    border: none;
+    width: 50px;
+    height: 50px;
+    z-index: 99;
+    top: -20px;
+    right: -15px;
+    border-radius: 100%;
+    background-color: #000000;
+    opacity: 0.5;
+    border: 1px solid #FFFFFF;
+}
+
+.modal-video .btn-close-modal:hover {
+    opacity: 1;
+}
+
+.modal-video .btn-close-modal:active {
+    transform: scale(0.9)
+}
+
+.modal-video .btn-close-modal span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -54%);
+}
+
+.modal-video .modal-video-body {
+    width: 70%;
+}
+
+.modal-video .modal-video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+}
+
+.modal-video .modal-video-container .video-js {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.vjs-control-bar {
+    display: none !important;
+}

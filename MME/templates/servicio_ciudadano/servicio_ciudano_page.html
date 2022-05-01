@@ -1,0 +1,446 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-participation.css' %}" rel="stylesheet" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+        <div id="carouselHomeMME" class="carousel slide carousel-mme carousel-fade" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+              {% for element in page.slider %}
+                {% if forloop.counter0 == 0 %}
+                <button type="button" data-bs-target="#carouselHomeMME" data-bs-slide-to="{{ forloop.counter0 }}"
+                    class="active" aria-current="true" aria-label="Slide {{ forloop.counter0 }}"></button>
+                {% elif forloop.counter0 >= 1 %}
+                <button type="button" data-bs-target="#carouselHomeMME" data-bs-slide-to="{{ forloop.counter0 }}"
+                    aria-label="Slide {{ forloop.counter0 }}"></button>
+                {% endif %}
+              {% endfor %}
+          </div>
+          <div class="carousel-inner">
+              {% for element in page.slider %}
+                {% if forloop.counter0 == 0 %}
+                  {% if element.value.video  %}
+                    <div class="carousel-item active" data-bs-interval="3000">
+                      <div  class="video-responsive">
+                        <iframe src="{{ element.value.video }}" frameborder="0"
+                         allowfullscreen></iframe>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div class="carousel-item active" data-bs-interval="3000">
+                        <a href="{{ element.value.url }}" title="{{ element.value.alt_text }}">
+                            {% image element.value.image fill-2000x1200-c100 as slider_image %}
+                            <img src="{{ slider_image.url }}" alt="{{ element.value.alt_text }}" class="img-fluid">
+                        </a>
+                    </div>
+                  {% endif %}
+                {% elif forloop.counter0 >= 1 %}
+                  {% if element.value.video  %}
+                    <div class="carousel-item " data-bs-interval="3000">
+                      <div  style="height:640px">
+                        <iframe src="{{ element.value.video }}" frameborder="0" height="640" width="100%" allowfullscreen></iframe>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div class="carousel-item" data-bs-interval="3000">
+                      <a href="{{ element.value.url }}" title="{{ element.value.alt_text }}">
+                          {% image element.value.image fill-2000x1200-c100 as slider_image %}
+                          <img src="{{ slider_image.url }}" alt="{{ element.value.alt_text }}" class="img-fluid">
+                      </a>
+                    </div>
+                  {% endif %}
+
+                {% endif %}
+              {% endfor %}
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselHomeMME" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselHomeMME" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+          </button>
+      </div>
+      </div>
+
+
+
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5 small-order-1 animate__animated animate__zoomIn">
+          <div class="ps-5 pe-5 intro-section">
+              <strong class="title-page-special">{{ page.intro_title }}</strong>
+              <p>{{ page.intro|safe }} </p>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+{% if page.channel_list %}
+  <div class="container mt-5">
+    <div class="title-page">
+      {{ page.channel_list_title }}
+    </div>
+
+    <div class="row mme-item-card-content ms-1">
+      {% for element in page.channel_list %}
+        <div class="col-sm-12 col-md-6 col-lg-4  gy-4 mme-item-card">
+          <div data-aos="fade-up" data-aos-delay="100" class="aos-init aos-animate">
+            {% if element.value.subitems %}
+              <a data-bs-toggle="modal" data-bs-target="#Modal{{ forloop.counter0 }}">
+                <div>
+                    <svg class="mme-item-card-icon rounded mx-auto d-block">
+                        <image xlink:href="{{ element.value.icono.url }}" />
+                    </svg>
+                </div>
+                <div class="mme-item-text-content">
+                  <p class="text-center mme-item-card-text  lh-1 ">
+                      {{ element.value.title }}
+                  </p>
+                </div>
+              </a>
+            {% elif element.value.document.url %}
+              <a href="{{ element.value.document.url }}" class="remove-a-styles">
+                <div>
+                    <svg class="mme-item-card-icon rounded mx-auto d-block">
+                        <image xlink:href="{{ element.value.icono.url }}" />
+                    </svg>
+                </div>
+                <div class="mme-item-text-content">
+                  <p class="text-center mme-item-card-text  lh-1 ">
+                      {{ element.value.title }}
+                  </p>
+                </div>
+              </a>
+            {% elif element.value.url %}
+              <a href="{{ element.value.url }}" class="remove-a-styles">
+                <div>
+                    <svg class="mme-item-card-icon rounded mx-auto d-block">
+                        <image xlink:href="{{ element.value.icono.url }}" />
+                    </svg>
+                </div>
+                <div class="mme-item-text-content">
+                  <p class="text-center mme-item-card-text  lh-1 ">
+                      {{ element.value.title }}
+                  </p>
+                </div>
+              </a>
+            {% else %}
+              <a data-bs-toggle="modal" data-bs-target="#Modal{{ forloop.counter0 }}">
+                <div>
+                    <svg class="mme-item-card-icon rounded mx-auto d-block">
+                        <image xlink:href="{{ element.value.icono.url }}" />
+                    </svg>
+                </div>
+                <div class="mme-item-text-content">
+                  <p class="text-center mme-item-card-text  lh-1 ">
+                      {{ element.value.title }}
+                  </p>
+                </div>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+
+      <!-- Modal -->
+      {% for element in page.channel_list %}
+        {% if element.value.url == None and element.value.document.url == None %}
+          <div class="modal fade" id="Modal{{ forloop.counter0 }}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content" style="background-color: var(--mme-blue);color:white">
+                <div class="modal-header">
+                  <h5 class="modal-title text-center" id="exampleModalLabel">
+                    {{ element.value.title }}
+                  </h5>
+                  <button type="button" class="btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="background-color: white;color:black">
+                  <p class="fs-5">
+                    {{ element.value.description }}
+                  </p>
+                  {% if element.value.subitems %}
+                    <div class="list-group">
+                      {% for subitems in element.value.subitems %}
+                        {% if subitems.url %}
+                          <a class="list-group-item list-group-item-action" href="{{ subitems.url }}">{{ subitems.name }}</a>
+                        {% elif subitems.document.url %}
+                          <a class="list-group-item list-group-item-action" href="{{ subitems.document.url }}">{{ subitems.name }}</a>
+                        {% else %}
+                          <a class="list-group-item list-group-item-action">{{ subitems.name }}</a>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+      <!-- Modal -->
+    </div>
+  </div>
+{% endif %}
+
+{% if page.participation_list %}
+  <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="title-page">
+      {{ page.participation_list_title }}
+    </div>
+
+    <!-- Swiper -->
+    <div class="swiper-container-mme-participation">
+      <div class="swiper-container mme-swiper">
+          <div class="swiper-wrapper">
+            {% for element in page.participation_list %}
+              <div class="swiper-slide" >
+                  <div class="slider-card">
+                      <div class="p-4">
+                          <div class="d-flex justify-content-start">
+                              <svg class="mme-item-card-icon ">
+                                  <image xlink:href="{{ element.value.icono.url }}" />
+                              </svg>
+                          </div>
+                          <p class="cards-slider-title text-start">{{ element.value.title }}</p>
+                          <p class="cards-slider-text text-start">
+                            {{ element.value.description }}
+                          </p>
+                          {% if element.value.url  %}
+                            <div class="d-flex justify-content-between align-items-center">
+                                <hr class="divider">
+                                <a href="{{ element.value.url }}" class="btn cards-slider-room-button">Ver más</a>
+                            </div>
+                          {% endif %}
+                      </div>
+                  </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <!-- <div class="swiper-pagination"></div> -->
+          </div>
+          <div class="swiper-button-next">
+              <i class="bi bi-chevron-compact-right swiper-button-icon"></i>
+          </div>
+          <div class="swiper-button-prev">
+              <i class="bi bi-chevron-compact-left swiper-button-icon"></i>
+          </div>
+    </div>
+    <!-- Swiper -->
+
+  </div>
+{% endif %}
+
+{% if page.services_list %}
+  <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="title-page">
+      {{ page.services_list_title }}
+    </div>
+    <nav class="mme-taps">
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        {% for element in page.services_list %}
+          {% if forloop.counter0 == 0 %}
+            <button class="nav-link active" id="services-tab-{{ forloop.counter0 }}" data-bs-toggle="tab" data-bs-target="#tap{{ forloop.counter0 }}" type="button"
+            role="tab" aria-controls="tramites" aria-selected="true">
+            <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+            </button>
+          {% else %}
+            <button class="nav-link" id="services-tab-{{ forloop.counter0 }}" data-bs-toggle="tab" data-bs-target="#tap{{ forloop.counter0 }}" type="button"
+              role="tab" aria-controls="medicion" aria-selected="false">
+              <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      {% for element in page.services_list %}
+          {% if forloop.counter0 == 0 %}
+            <div class="tab-pane fade show active" id="tap{{ forloop.counter0 }}" role="tabpanel" aria-labelledby="tap{{ forloop.counter0 }}">
+              <p class="mt-4">{{ element.value.description }}</p>
+              {% if element.value.url %}
+                <a href="{{ element.value.url }}">Mas información (+)</a>
+              {% endif %}
+            </div>
+          {% else %}
+            <div class="tab-pane fade" id="tap{{ forloop.counter0 }}" role="tabpanel" aria-labelledby="tap{{ forloop.counter0 }}">
+              <p class="mt-4">{{ element.value.description }}</p>
+              {% if element.value.url %}
+                <a href="{{ element.value.url }}">Mas información (+)</a>
+              {% endif %}
+            </div>
+          {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% if page.briefcase_list %}
+  <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="title-page">
+      {{ page.briefcase_list_title }}
+    </div>
+    <div class="wrapper-mme-menu">
+      <div class="mme-menu-options">
+        {% for element in page.briefcase_list %}
+          {% if forloop.counter0 == 0 %}
+            <div class="mme-menu-option active" data-bs-target="content_item{{ forloop.counter0 }}">
+              {{ element.value.caption }}
+            </div>
+            <div class="mme-menu-content-movil">
+              <div class="mme-menu-content-item active" id="movilcontent_item{{ forloop.counter0 }}">
+                <div class="row ">
+                  <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 content-item-image">
+                    {% if element.value.icono %}
+                      <svg class="mme-item-card-icon rounded mx-auto d-block">
+                        <image xlink:href="{{ element.value.icono.url }}" />
+                      </svg>
+                    {% else %}
+                      {% image element.value.image original as briefcase_image %}
+                      <img src="{{ briefcase_image.url }}">
+                    {% endif %}
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8">
+                    <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+                    <p class="fs-5 text-start">
+                      {{ element.value.main_description }}
+                    </p>
+
+                  </div>
+                  <div class="col-12">
+                    <p class="mt-3 text-start">
+                      {{ element.value.second_description }}
+                    </p>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <div class="mme-menu-option" data-bs-target="content_item{{ forloop.counter0 }}">
+              {{ element.value.caption }}
+            </div>
+            <div class="mme-menu-content-movil">
+              <div class="mme-menu-content-item" id="movilcontent_item{{ forloop.counter0 }}">
+                <div class="row ">
+                  <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 content-item-image">
+                    {% if element.value.icono %}
+                      <svg class="mme-item-card-icon rounded mx-auto d-block">
+                        <image xlink:href="{{ element.value.icono.url }}" />
+                      </svg>
+                    {% else %}
+                      {% image element.value.image original as briefcase_image %}
+                      <img src="{{ briefcase_image.url }}">
+                    {% endif %}
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8">
+                    <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+                    <p class="fs-5 text-start">
+                      {{ element.value.main_description }}
+                    </p>
+
+                  </div>
+                  <div class="col-12">
+                    <p class="mt-3 text-start">
+                      {{ element.value.second_description }}
+                    </p>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+
+      </div>
+      <div class="mme-menu-content ">
+        {% for element in page.briefcase_list %}
+          {% if forloop.counter0 == 0 %}
+            <div class="mme-menu-content-item active" id="content_item{{ forloop.counter0 }}">
+              <div class="row ">
+                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 content-item-image">
+                  {% if element.value.icono %}
+                    <svg class="mme-item-card-icon rounded mx-auto d-block">
+                      <image xlink:href="{{ element.value.icono.url }}" />
+                    </svg>
+                  {% else %}
+                    {% image element.value.image original as briefcase_image %}
+                    <img src="{{ briefcase_image.url }}">
+                  {% endif %}
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8">
+                  <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+                  <p class="fs-5 text-start">
+                    {{ element.value.main_description }}
+                  </p>
+                </div>
+                <div class="col-12">
+                  <p class="mt-3 text-start">
+                    {{ element.value.second_description }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          {% else %}
+              <div class="mme-menu-content-item" id="content_item{{ forloop.counter0 }}">
+                <div class="row ">
+                  <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 content-item-image">
+                    {% if element.value.icono %}
+                      <svg class="mme-item-card-icon rounded mx-auto d-block">
+                        <image xlink:href="{{ element.value.icono.url }}" />
+                      </svg>
+                    {% else %}
+                      {% image element.value.image original as briefcase_image %}
+                      <img src="{{ briefcase_image.url }}">
+                    {% endif %}
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8">
+                    <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+                    <p class="fs-5 text-start">
+                      {{ element.value.main_description }}
+                    </p>
+                  </div>
+                  <div class="col-12">
+                    <p class="mt-3 text-start">
+                      {{ element.value.second_description }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+{% endblock content %}
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/swiper/swiper-bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/swiper/swiper-participation.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/mmeoptionsmenu.js' %}"></script>
+    <script>
+        AOS.init();
+    </script>
+
+{% endblock extra_js %}

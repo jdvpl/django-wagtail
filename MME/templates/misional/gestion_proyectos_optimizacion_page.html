@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12  animate__animated animate__zoomIn">
+      <div>
+        <strong class="title-page-special">{{ page.title }}</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% if page.form_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+
+  <div>
+    {{ page.form_intro|richtext }}
+  </div>
+  <nav class="mme-taps">
+    <div class="nav nav-tabs" id="nav-tab-form" role="tablist">
+      {% for element in page.form_list %}
+      {% if forloop.counter0 == 0 %}
+      <button class="nav-link show active" id="form_list-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap-form{{ forloop.counter0 }}" type="button" role="tab" aria-controls="tramites"
+        aria-selected="true">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% else %}
+      <button class="nav-link" id="form_list-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap-form{{ forloop.counter0 }}" type="button" role="tab" aria-controls="medicion"
+        aria-selected="false">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent-form">
+    {% for element in page.form_list %}
+    {% if forloop.counter0 == 0 %}
+    <div class="tab-pane fade show show active" id="tap-form{{ forloop.counter0 }}" role="tabpanel"
+      aria-labelledby="tap{{ forloop.counter0 }}">
+      {% else %}
+      <div class="tab-pane fade" id="tap-form{{ forloop.counter0 }}" role="tabpanel"
+        aria-labelledby="tap{{ forloop.counter0 }}">
+        {% endif %}
+        <p class="mt-4">{{ element.value.description }}</p>
+        {% if element.value.url %}
+        <a href="{{ element.value.url }}">Mas información (+)</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+<script>
+  AOS.init();
+
+</script>
+
+{% endblock extra_js %}

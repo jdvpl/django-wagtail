@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5 small-order-1 animate__animated animate__zoomIn">
+            <div class="ps-md-5 pe-md-5 intro-section">
+                <strong class="title-page-special">{{ page.intro_title }}</strong>
+                {{ page.intro|safe }}
+            </div>
+        </div>
+        {% if page.link_video != None and page.link_video|length > 0 %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+            <div class="video-responsive">
+                <iframe src="{{ page.link_video }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        {% else %}
+        {% image page.image original as intro_image %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+            <img class="img-fluid " src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+<!-- Primera secion de cards-->
+{% if page.second_links %}
+<div class="container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="justify-content-evenly flex-wrap row">
+        {% for element in page.second_links %}
+                  <div class="col-md-12 col-lg-12 col-xl-12">
+                  <div class="shadow py-md-4 px-md-4 py-sm-36 px-sm-3">
+                {% if element.value.icono %}
+                <div class="d-flex justify-content-start">
+                    <svg class="mme-item-card-icon">
+                        <image xlink:href="{{ element.value.icono.url }}" alt="element.value.alt_text" />
+                    </svg>
+                </div>
+                {% endif %}
+                <p class="cards-slider-title text-start mt-4">{{ element.value.title }}</p>
+                <div class="">
+                    {{ element.value.description|safe }}
+                </div>
+                {% if element.value.url %}
+                <div class="d-flex justify-content-between align-items-center">
+                    <hr class="divider">
+                    <a href="{{ element.value.url }}" class="btn cards-slider-room-button">Ver más</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+
+<div class="container">
+
+    <div class="title-page">
+        {{ page.title_pbi }}
+    </div>
+    <div class="row">
+        {% if page.link_pbi != None and page.link_pbi|length > 0 %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  ">
+            <div class="ratio ratio-16x9" id="board_one"></div>
+        </div>
+        {% else %}
+        {% image page.image original as intro_image %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  ">
+            <img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+        </div>
+        {% endif %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4  ">
+            <div class="ps-md-5 pe-md-5 intro-section">
+                {{ page.intro_pbi|richtext }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if page.second_links_two %}
+<div class="container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="justify-content-evenly flex-wrap row">
+        {% for element in page.second_links_two %}
+        <div class="element-card col-md-4 col-xl-3">
+            <div class="py-md-4 px-md-4 py-sm-36 px-sm-3">
+                {% if element.value.icono %}
+                <div class="d-flex justify-content-start">
+                    <svg class="mme-item-card-icon ">
+                        <image xlink:href="{{ element.value.icono.url }}" alt="element.value.alt_text" />
+                    </svg>
+                </div>
+                {% endif %}
+                <p class="cards-slider-title text-start mt-4">{{ element.value.title }}</p>
+                <div class="cards-slider-text text-start">
+                    {{ element.value.description|safe }}
+                </div>
+                {% if element.value.url %}
+                <div class="d-flex justify-content-between align-items-center">
+                    <hr class="divider">
+                    <a href="{{ element.value.url }}" class="btn cards-slider-room-button">Ver más</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="container">
+    <div class="title-page">
+        {{ page.title_pbi_two }}
+    </div>
+    <div class="row">
+        {% if page.link_pbi_two != None and page.link_pbi_two|length > 0 %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  ">
+            <div class="ratio ratio-16x9" id="board_two"></div>
+        </div>
+        {% else %}
+        {% image page.image original as intro_image %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  ">
+            <img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+        </div>
+        {% endif %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4  ">
+            <div class="ps-md-5 pe-md-5 intro-section">
+                {{ page.intro_pbi_two|richtext }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        {% if page.link_pbi_three %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-4  ">
+            <div class="ratio ratio-16x9" id="board_three"></div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        {% if page.link_pbi_four %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-4  ">
+            <div class="ratio ratio-16x9" id="board_four"></div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        {% if page.link_pbi_five %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-4  ">
+            <div class="ratio ratio-16x9" id="board_five"></div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        {% if page.link_pbi_six %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-4  ">
+            <div class="ratio ratio-16x9" id="board_six"></div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/powerbi.min.js' %}"></script>
+
+
+<script>
+    AOS.init();
+    // Power BI endpoints
+    var boards = {
+        "boards": [
+            {
+                "url": "{{ page.link_pbi }}",
+                "id": "board_one"
+            },
+            {
+                "url": "{{ page.link_pbi_two }}",
+                "id": "board_two"
+            },
+            {
+                "url": "{{ page.link_pbi_three }}",
+                "id": "board_three"
+            },
+            {
+                "url": "{{ page.link_pbi_four }}",
+                "id": "board_four"
+            },
+            {
+                "url": "{{ page.link_pbi_five }}",
+                "id": "board_five"
+            },
+            {
+                "url": "{{ page.link_pbi_six }}",
+                "id": "board_six"
+            },
+        ]
+    }
+</script>
+<script type="text/javascript" src="{% static 'js/power_bi_boards.js' %}"></script>
+{% endblock extra_js %}

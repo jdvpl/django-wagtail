@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-participation.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4  animate__animated animate__zoomIn">
+      <div class="ps-md-5 pe-md-5 intro-section">
+        <strong class="title-page-special">{{ page.intro_title }}</strong>
+        {{ page.intro|safe }}
+      </div>
+    </div>
+    {% if page.link_pbi != None and page.link_pbi|length > 0 %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  animate__animated animate__zoomIn">
+      <div class="ratio ratio-16x9" id="board_one"></div>
+    </div>
+    {% else %}
+    {% image page.image original as intro_image %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 animate__animated animate__zoomIn ">
+      <img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if page.cards_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.cards_list_title }}
+  </div>
+
+  <!-- Swiper -->
+  <div class="swiper-container-mme-participation">
+    <div class="swiper-container mme-swiper">
+      <div class="swiper-wrapper">
+        {% for element in page.cards_list %}
+        <div class="swiper-slide">
+          <div class="slider-card">
+            <div class="p-4">
+              <p class="cards-slider-title text-start">{{ element.value.title }}</p>
+              <p class="cards-slider-text-small text-start">
+                {{ element.value.description }}
+              </p>
+              {% if element.value.document.url %}
+              <div class="d-flex justify-content-between align-items-center">
+                <hr class="divider">
+                <a href="{{ element.value.document.url }}" class="btn cards-slider-room-button">Más Información
+                </a>
+              </div>
+              {% endif %}
+              {% if element.value.url %}
+              <div class="d-flex justify-content-between align-items-center">
+                <hr class="divider">
+                <a href="{{ element.value.url }}" class="btn cards-slider-room-button-moreinfo">Más Información
+                </a>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- <div class="swiper-pagination"></div> -->
+    </div>
+    <div class="swiper-button-next">
+      <i class="bi bi-chevron-compact-right swiper-button-icon"></i>
+    </div>
+    <div class="swiper-button-prev">
+      <i class="bi bi-chevron-compact-left swiper-button-icon"></i>
+    </div>
+  </div>
+  <!-- Swiper -->
+
+</div>
+{% endif %}
+
+<div class="container">
+  <div class="title-page">
+    {{ page.second_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 small-order-1 animate__animated animate__zoomIn">
+      {% if page.second_link_pbi != None and page.second_link_pbi|length > 0 %}
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 ratio ratio-16x9 animate__animated animate__zoomIn"
+        id="board_two">
+      </div>
+      {% else %}
+      {% image page.second_image original as second_image %}
+      <img class="img-fluid" src="{{ second_image.url }}" alt="{{ page.second_alt_text }}">
+      {% endif %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 small-order-1 animate__animated animate__zoomIn">
+      {% if page.third_link_pbi != None and page.third_link_pbi|length > 0 %}
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 ratio ratio-16x9  animate__animated animate__zoomIn"
+        id="board_three">
+      </div>
+      {% else %}
+      {% image page.third_image original as third_image %}
+      <img class="img-fluid" src="{{ third_image.url }}" alt="{{ page.third_alt_text }}">
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/powerbi.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/swiper/swiper-bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-participation.js' %}"></script>
+
+<script>
+  AOS.init();
+  // Power BI endpoints
+  var boards = {
+    "boards": [
+
+      {
+        "url": "{{ page.second_link_pbi }}",
+        "id": "board_two"
+      },
+      {
+        "url": "{{ page.third_link_pbi }}",
+        "id": "board_three"
+      }
+    ]
+  }
+</script>
+<script type="text/javascript" src="{% static 'js/power_bi_boards.js' %}"></script>
+
+{% endblock extra_js %}

@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-participation.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4  animate__animated animate__zoomIn">
+      <div class="ps-md-5 pe-md-5 intro-section">
+        <strong class="title-page-special">{{ page.intro_title }}</strong>
+        <div>{{ page.intro|safe }} <img src="{% static 'images/misional/legalidad_8000.PNG'  %}" class="img-fluid" /> </div>
+      </div>
+    </div>
+    {% if page.link_pbi != None and page.link_pbi|length > 0 %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  animate__animated animate__zoomIn">
+      <div class="ratio ratio-16x9" id="board_one"></div>
+    </div>
+    {% else %}
+    {% image page.image original as intro_image %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 animate__animated animate__zoomIn ">
+      <img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container">
+  <div class="title-page">
+    {{ page.second_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 small-order-1 animate__animated animate__zoomIn">
+      {% if page.second_link_pbi != None and page.second_link_pbi|length > 0 %}
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 ratio ratio-16x9 animate__animated animate__zoomIn"
+        id="board_two">
+      </div>
+      {% else %}
+      {% image page.second_image original as second_image %}
+      <img class="img-fluid" src="{{ second_image.url }}" alt="{{ page.second_alt_text }}">
+      {% endif %}
+    </div>
+    <div
+      class="col-sm-12 col-md-12 col-lg-12 col-xl-4 small-order-1 animate__animated animate__zoomIn convencional-text">
+      <div class="ps-2 pe-2 intro-section">
+        {{ page.second_intro|safe }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if page.menu_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.menu_list_title }}
+  </div>
+  <div class="wrapper-mme-menu">
+    <div class="mme-menu-options">
+      {% for element in page.menu_list %}
+      {% if forloop.counter0 == 0 %}
+      <div class="mme-menu-option show active" data-bs-target="content_item{{ forloop.counter0 }}">
+        {{ element.value.caption }}
+      </div>
+      <div class="mme-menu-content-movil">
+        <div class="mme-menu-content-item show active" id="movilcontent_item{{ forloop.counter0 }}">
+          <div class="row ">
+            <div class="col-sm-12 col-md-12">
+              <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+              <p class="fs-5 text-start">
+                {{ element.value.main_description }}
+              </p>
+
+            </div>
+            <div class="col-12">
+              <p class="mt-3 text-start">
+                {{ element.value.second_description }}
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="mme-menu-option" data-bs-target="content_item{{ forloop.counter0 }}">
+        {{ element.value.caption }}
+      </div>
+      <div class="mme-menu-content-movil">
+        <div class="mme-menu-content-item" id="movilcontent_item{{ forloop.counter0 }}">
+          <div class="row ">
+            <div class="col-sm-12 col-md-12">
+              <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+              <p class="fs-5 text-start">
+                {{ element.value.main_description }}
+              </p>
+
+            </div>
+            <div class="col-12">
+              <p class="mt-3 text-start">
+                {{ element.value.second_description }}
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+
+    </div>
+    <div class="mme-menu-content">
+      {% for element in page.menu_list %}
+      {% if forloop.counter0 == 0 %}
+      <div class="mme-menu-content-item show active" id="content_item{{ forloop.counter0 }}">
+        <div class="row ">
+          <div class="col-sm-12 col-md-12 ">
+            <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+            <p class="fs-5 text-start">
+              {{ element.value.main_description }}
+            </p>
+          </div>
+          <div class="col-12">
+            <p class="mt-3 text-start">
+              {{ element.value.second_description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="mme-menu-content-item" id="content_item{{ forloop.counter0 }}">
+        <div class="row ">
+          <div class="col-sm-12 col-md-12 ">
+            <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+            <p class="fs-5 text-start">
+              {{ element.value.main_description }}
+            </p>
+          </div>
+          <div class="col-12">
+            <p class="mt-3 text-start">
+              {{ element.value.second_description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="container mt-4 mb-5">
+  <div class="title-page">
+    {{ page.third_title }}
+  </div>
+  {% for element in page.third_links %}
+  <div class="row align-items-center link-section-container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1 ">
+      <img src="{{ element.value.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+    </div>
+    <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9 link-section-border-bottom">
+      <div class="pt-3 link-section-border-text">
+        <h4>{{ element.value.title }}</h4>
+        {{ element.value.description }}
+      </div>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}" type="button" class=" fs-4 link-section-border-button">Ver más</a>
+      {% endif %}
+      {% if element.value.document.url %}
+      <a href="{{ element.value.document.url }}" type="button" class=" fs-4 link-section-border-button">Descargar</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="container mt-4 mb-5">
+  <div class="title-page">
+    {{ page.fourth_title }}
+  </div>
+  {% for element in page.fourth_links %}
+  <div class="row align-items-center link-section-container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-sm-12 col-md-4 col-lg-4 ">
+      {% image page.fourth_image original as intro_image %}
+      <img src="{{ intro_image.url }}" class="img-fluid" alt="{{ page.fourth_alt_text }}">
+    </div>
+    <div class="col-sm-12 col-md-7 col-lg-6 link-section-border-bottom">
+      <div class="link-section-border-text">
+        <h4>{{ element.value.title }}</h4>
+        {{ element.value.description }}
+      </div>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}" type="button" class=" fs-4 link-section-border-button">Ver más</a>
+      {% endif %}
+      {% if element.value.document.url %}
+      <a href="{{ element.value.document.url }}" type="button" class=" fs-4 link-section-border-button">Descargar</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<div class="container mt-4 mb-5">
+  {{ page.fourth_intro|richtext }}
+</div>
+
+
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mmeoptionsmenu.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/powerbi.min.js' %}"></script>
+
+
+<script>
+  AOS.init();
+  // Power BI endpoints
+  var boards = {
+    "boards": [
+      {
+        "url": "{{ page.link_pbi }}",
+        "id": "board_one"
+      },
+      {
+        "url": "{{ page.second_link_pbi }}",
+        "id": "board_two"
+      }
+    ]
+  }
+</script>
+<script type="text/javascript" src="{% static 'js/power_bi_boards.js' %}"></script>
+{% endblock extra_js %}

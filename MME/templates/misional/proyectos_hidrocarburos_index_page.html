@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/energia_mapa.css' %}" rel="stylesheet" />
+<link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
+<link href="{% static 'css/modal-video.css' %}" rel="stylesheet" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+
+<!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==" crossorigin="" /> -->
+
+<!-- <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />  -->
+
+<link href="{% static 'js/Leaflet.markercluster/dist/MarkerCluster.css' %}" rel="stylesheet" />
+<link href="{% static 'js/Leaflet.markercluster/dist/MarkerCluster.Default.css' %}" rel="stylesheet" />
+
+
+{% endblock extra_css %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="title-page">
+        {{ page.title }}
+    </div>
+</div>
+
+<div class="map-content">
+    <div class="map-container">
+        <div class="map-container">
+            <nav class="nav-container">
+                <div class="selector-container">
+                    <div class="selector-content">
+                        <i class="fas fa-bolt"></i>
+                        <span class="label">Energía</span>
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+                <div class="nav-header-title-content">
+                    <h1 class="title">Cierre de Brechas</h1>
+                </div>
+                <div class="nav-search-content">
+                    <input id="search" type="search" class="input-search" placeholder="Departamento" value="" />
+                    <button class="button-search" onclick="searchDepartament(this)">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </nav>
+            <section class="body-content">
+                <div id="left-panel" class="left-panel">
+                    <a class="header-mobile" href="#lastsection">
+                        <div class="ref-header"></div>
+                    </a>
+                    <div class="image-container">
+                        <img src="{% static 'images/energia/imagen.jpg' %}" class="image-item" id="imageItem" />
+                    </div>
+                    <div class="title-detail" id="lastsection">
+                        <h2 class="title" id="title">Cargando...</h2>
+                    </div>
+                    <div class="details-container">
+                        <p class="description" id="description">
+                            Cargando...
+                        </p>
+                        <div class="stadistics-content">
+                            <div class="stadistic-item">
+                                <h3 class="title">Proyectos</h3>
+                                <img src="{% static 'images/energia/CierreBrechas_EnergyProyectos.svg' %}"
+                                    class="image" />
+                                <label class="number" id="numProjects">0</label>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="stadistic-item">
+                                <h3 class="title">Proyectos</h3>
+                                <img src="{% static 'images/energia/CierreBrechas_Usuarios.svg' %}" class="image" />
+                                <label class="number" id="numUsers">240</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <div id='loading'>
+                        <img width="70%" src="https://www.coinupapp.com/images/coinup-loading1.gif" />
+                    </div>
+                    <div id="mapContainer" class="map-container">
+                        <!-- Aquí va el mapa -->
+                        <div id="map"></div>
+                    </div>
+                    <div class="zoom-widget">
+                        <button class="btn-zoom plus">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="btn-zoom plus">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                    <div class="button-resume">
+                        <h3 class="title" id="titleMobile">Título</h3>
+                        <p class="description" id="descriptionMobile"> jsdklfjsad klñfs dlfsadklfsadjf sad jfsad sfj
+                            ksad fsdaj fsakld jfsdakl
+                            fksadl fklsad fjksad fklñ</p>
+                    </div>
+                    <div class="button-widget">
+                        <ul class="widget-items">
+                            <li class="widget-item">
+                                <a href="#" class="widget-link">
+                                    <img src="{% static 'images/energia/CierreBrechas_EnergyFilters.svg' %}"
+                                        class="widget-icon" />
+                                </a>
+                            </li>
+                            <li class="widget-item">
+                                <a href="#" class="widget-link">
+                                    <img src="{% static 'images/energia/CierreBrechas_EnergyPanelWhite.svg' %}"
+                                        class="widget-icon" />
+                                    <label class="label-widget">Celdas Fotovoltaticas</label>
+                                </a>
+                            </li>
+                            <li class="widget-item">
+                                <a href="#" class="widget-link">
+                                    <img src="{% static 'images/energia/CierreBrechas_EnergyTurbinaWhite.svg' %}"
+                                        class="widget-icon" />
+                                    <label class="label-widget">Eólica</label>
+                                </a>
+                            </li>
+                            <li class="widget-item">
+                                <a href="#" class="widget-link">
+                                    <img src="{% static 'images/energia/CierreBrechas_EnergyTraditionalWhite.svg' %}"
+                                        class="widget-icon" />
+                                    <label class="label-widget">Tradicional</label>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div class="modal-video" id="videoModal">
+    <div class="modal-video-body">
+        <button class="btn-close-modal" title="Cerrar" id="btnCloseModal"><span>&times;</span></button>
+        <div class="modal-video-container">
+            <video id="videoPlayer" class="video-js" controls preload="auto" data-setup="{}" autoplay>
+                <source src="{% static '/videos/hidrocarburos.mp4' %}" type="video/mp4" />
+                <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider upgrading to a
+                    web browser that
+                    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                </p>
+            </video>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+
+<script src="{% static 'js/leaflet.js' %}"></script>
+<script src="{% static 'js/Leaflet.markercluster/dist/leaflet.markercluster.js' %}"></script>
+
+<!-- <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js" integrity="sha512-WXoSHqw/t26DszhdMhOXOkI7qCiv5QWXhH9R7CgvgZMHz1ImlkVQ3uNsiQKu5wwbbxtPzFXd1hK4tzno2VqhpA==" crossorigin=""></script>
+<script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script> -->
+
+
+<script src="{% static 'js/map_builder.js' %}"></script>
+<script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>
+<script src="{% static 'js/modal-video.js' %}"></script>
+
+<script>
+    let page = "{{'misional.ProyectosHidrocarburosPage'|safe}}";
+    let index = "{{'misional.ProyectosHidrocarburosIndexPage'|safe}}";
+</script>
+{% endblock extra_js %}

@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/functionary.css' %}">
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/organizationchart.css' %}" rel="stylesheet" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+{#----------------------------------------------------#}
+{# Define titulo #}
+<div class="container">
+    <div class="title-page">
+        Organigrama
+    </div>
+</div>
+{#----------------------------------------------------#}
+
+<div class="container">
+    <h1></h1>
+    <div style="height: 100px">
+        <div class="mh-100" style="width: 100px; height: 100px"></div>
+    </div>
+</div>
+
+<div class="container animate__animated
+            animate__zoomIn">
+    <div class="functionary-container">
+        <div class="functionary-item funcionary-main ">
+
+            <div class="functionary-description-container">
+                <div class="functionary-description-item ">
+                    <div class="mh-100" style="width: 100px; height: 200px"></div>
+                </div>
+                <div class="functionary-description-item ">
+                    <div class="ms-4 mt-4 functionary-description">
+                        <svg class="outline-functionary">
+                            <image xlink:href="{% static 'images/circulo_outline-01.svg' %}" />
+                        </svg>
+                        {% image page.image original as functionary_image %}
+                        <img src="{{ functionary_image.url }}" class="rounded-circle functionary-img" alt="...">
+                    </div>
+                </div>
+                <div class="functionary-description-item ">
+                    <div class="functionary-description-text">
+                        <div class="d-flex justify-content-center align-items-end text-center title">
+                            {{ page.title }}
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-center text-center name">
+                            {{ page.name }}
+                        </div>
+                    </div>
+                </div>
+                <div class="functionary-description-item ">
+                    <div class="mh-100" style="width: 100px; height: 200px"></div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="functionary-item functionaries-list ">
+            <div class="accordion m-5" id="accordionStaff" data-aos="fade-up" data-aos-delay="100">
+                {% for element in page.staff_list %}
+                    {% with parentID=forloop.counter0 %}
+                        {% if element.value.personal|length == 0 %}
+                            <div class="mt-5">
+                                <div class="accordion-header" id="heading{{ parentID }}">
+                                    <button type="button" class="accordion-button-functionary-none">
+                                        <div class="ms-3 text-start d-flex align-items-end accordion-header-title-main ">
+                                            {{ element.value.position }}
+                                        </div>
+                                        <hr>
+                                        <div class="ms-3 text-start accordion-header-title-second">
+                                            {{ element.value.name }}
+                                            {{ element.value.position }} Cargo
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        {% elif element.value.personal|length >= 1 %}
+                            {% if parentID == 0 %}
+                                <div class="mt-5">
+                                    <div class="accordion-header" id="heading{{ parentID }}">
+                                    <button type="button" class="accordion-button-functionary" data-bs-toggle="collapse"
+                                        data-bs-target="#collapse{{ parentID }}" aria-expanded="true" aria-controls="collapse{{ parentID }}">
+                                        <div class="ms-3 text-start d-flex align-items-end accordion-header-title-main ">
+                                            {{ element.value.position }}
+                                        </div>
+                                        <hr>
+                                        <div class="ms-3  text-start accordion-header-title-second">
+                                            {{ element.value.name }}
+                                        </div>
+                                    </button>
+                                    </div>
+                                    <div id="collapse{{ parentID }}" class="accordion-collapse collapse show" aria-labelledby="heading{{ parentID }}"
+                                    data-bs-parent="#accordionStaff">
+                                    <div class="accordion-body bg-white ms-1 me-4 mt-4">
+                                        <ul>
+                                            {% for people in element.value.personal %}
+                                            <li>{{ people.group }}<br>{{ people.name }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    </div>
+                                </div>
+                            {% elif parentID >= 1  %}
+                                <div class="mt-5">
+                                    <div class="accordion-header" id="heading{{ parentID }}">
+                                    <button class="accordion-button-functionary collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapse{{ parentID }}" aria-expanded="false" aria-controls="collapse{{ parentID }}">
+                                        <div class="ms-3 text-start d-flex align-items-end accordion-header-title-main ">
+                                            {{ element.value.position }}
+                                        </div>
+                                        <hr>
+                                        <div class="ms-3  text-start accordion-header-title-second">
+                                            {{ element.value.name }}
+                                        </div>
+                                    </button>
+                                    </div>
+                                    <div id="collapse{{ parentID }}" class="accordion-collapse collapse" aria-labelledby="heading{{ parentID }}"
+                                    data-bs-parent="#accordionStaff">
+                                    <div class="accordion-body bg-white ms-1 me-4 mt-4">
+                                        <ul>
+                                            {% for people in element.value.personal %}
+                                            <li>{{ people.group }}<br>{{ people.name }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    </div>
+                                </div>
+
+                            {% endif %}
+
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <hr class="divider">
+                <script>
+                    document.write('<a href="' + document.referrer + '" class="press-room-button">Regresar</a>');
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div style="height: 50px">
+    <div class="mh-100" style="width: 100px; height: 300px"></div>
+</div>
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/organizationchar.js' %}"></script>
+<script src="{% static 'js/html2canvas.min.js' %}" crossorigin="anonymous"></script>
+<script>
+    AOS.init();
+</script>
+{% endblock extra_js %}

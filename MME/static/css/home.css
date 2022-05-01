@@ -1,0 +1,349 @@
+
+.img-size {
+    height: 490px;
+    width: 100%;
+}
+
+.item-position-center {
+    display: inline-block;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.span-box {
+    width: 100%;
+}
+
+.span-box-size{
+    width: 100%;
+    height: 550px;
+    font-size: 14px;
+    box-shadow: 0 0 5px 0 #3d404c;
+    align-items: baseline;
+    justify-content: center;
+    align-content: center;
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.title-page {
+    font-size: 25px !important;
+    color: #36c;
+    font-weight: bold;
+}
+
+.title-page {
+    font-family: "Work Sans", sans-serif;
+    font-size: 16pt;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: auto;
+    border-bottom: 3pt solid #068c69;
+    padding-left: 0px !important;
+  }
+
+  .title-spc {
+    font-size: 35px !important;
+  }
+
+  .btn-size {
+    width: 100%;
+    height: 58px;
+    margin-top: 5px;
+    background-color: #d4d4d4;
+    color: black;
+    border: none;
+    margin-top: 0 !important;
+    font-weight: bold;
+  }
+
+  .btn-size:hover {
+    background-color: #068c69;
+    color: white;
+  }
+
+.corr-bre-box {
+  margin-top: 20px !important;
+  margin: 0 auto;
+}
+
+/*Tablet1 version*/
+@media (min-width: 1024px) and (max-width: 1365px) {
+    .container-gallery{
+        margin-top: 10px;
+        margin-bottom: 20px;
+        width: 50% !important;
+    }
+
+    .img-size {
+        height: 400px;
+        width: 380px;
+    }
+
+    .span-box {
+        width: 100%;
+      }
+    
+      .font-span{
+        font-size: 12px !important;
+      }
+    
+      .span-box-size{
+        width: 380px;
+        height: 460px;
+        margin: 0 auto;
+    }
+
+    .btn-size {
+        width: 380px;
+        height: 58px;
+      }
+}
+
+/*Tablet2 version*/
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container-gallery{
+        margin-top: 10px;
+        margin-bottom: 20px;
+        width: 100% !important;
+    }
+
+    .img-size {
+        height: 550px;
+        width: 480px;
+    }
+
+    .span-box {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+    
+      .span-box-size{
+        width: 480px;
+        height: 610px;
+      }
+
+      .btn-size {
+        width: 480px;
+        height: 58px;
+      }
+}
+
+/*Movil Version*/
+@media (max-width: 320px) {
+    .space-img {
+        margin-bottom: 20px;
+    }
+}
+
+/*Movil1 version*/
+@media (min-width: 480px) and (max-width: 767px) {
+    .container-gallery{
+        margin-bottom: 20px;
+        width: 100% !important;
+    }
+
+    .img-size {
+        height: 350px;
+        width: 100%;
+    }
+
+    .span-box {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+    
+      .span-box-size{
+        width: 100%;
+        height: 410px;
+      }
+    
+      .title-page {
+        margin-left: 0px !important;
+      }
+
+      .btn-size {
+        width: 100%;
+        height: 58px;
+      }
+}
+
+/*Movil2 version*/
+@media (min-width: 320px) and (max-width: 479px) {
+    .container-gallery{
+        margin-bottom: 20px;
+        width: 100% !important;
+    }
+
+    .img-size {
+        height: 300px;
+        width: 100%;
+    }
+
+    .span-box {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+    
+      .span-box-size{
+        width: 100%;
+        height: 600px;
+      }
+      .title-page {
+        margin-left: 0px !important;
+      }
+
+      .btn-size {
+        width: 100%;
+        height: 58px;
+      }
+}
+
+.widget-info {
+  background-color: rgba(51, 102, 204, 0.85);
+  position: absolute;
+  padding: 1rem;
+  left: 0;
+  right: 10%;
+  left: 10%;
+  bottom: 1rem;
+}
+.widget-info hr {
+  margin: 0.2rem;
+}
+.widget-info b {
+  font-size: 1.25em;
+}
+.widget-info b, .widget-info p, .widget-info p * {
+  color: #FFFFFF;
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+}
+.system-information img {
+  height: 100%;
+  object-fit: cover;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.systems-swiper .swiper-pagination-systems{
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    width: max-content;
+}
+.systems-swiper .swiper-pagination-systems .swiper-pagination-bullet{
+    width: 30px;
+    height: 30px;
+    background-color: var(--mme-green);
+}
+
+.swiper {
+  width: 80%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.swiper-wrapper.systems {
+    margin-bottom: 30px;
+}
+
+.swiper-slide.system {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;      
+  height: 110px;
+  position: relative;
+}
+
+.swiper-slide.system img {
+  left: 0;
+  right: 0;
+  position: absolute;
+  display: block;
+  filter: none;
+  width: calc(100% - 5px);
+  height: calc(100% - 5px);
+  object-fit: contain;
+  opacity: 0.3;
+}
+.swiper-slide.system img:hover {
+    opacity: 1;
+}
+
+.gap-item .gaps-card {
+  background-color: #5f249f;
+  border-radius: 15px !important;
+}
+.gaps-card , .gaps-card *{
+  text-decoration: none;
+  cursor: pointer;
+}
+.gap-item .gaps-card .gaps-text,
+.gap-item .gaps-card .title-page-special {
+  color: #FFFFFF;
+}
+
+.gaps-container {
+  grid-gap: 34px;
+}
+
+.gap-item .text-container {
+  padding: 15px 25px;
+}
+
+.gap-item .gaps-card .gaps-text {
+  min-height: unset;
+  margin-bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.gap-item .gaps-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.gap-item .gaps-card .title-page-special::after {
+  border-color: #51efeb;
+}
+
+.gap-item .image-content {
+  position: relative;
+  height: 100%;
+}
+
+.gap-item .image-content .gaps-card-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0 0 15px 15px;
+}

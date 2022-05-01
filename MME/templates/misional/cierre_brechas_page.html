@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5 small-order-1 animate__animated animate__zoomIn">
+          <div class="ps-md-5 pe-md-5 intro-section mt-md-5">
+              <strong class="title-page-special">{{ page.intro_title }}</strong>
+              {{ page.intro|safe }}
+          </div>
+        </div>
+        {% if page.link_video != None and page.link_video|length > 0 %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+            <div class="video-responsive mb-2">
+                <iframe src="{{ page.link_video }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        {% else %}
+        {% image page.image original as intro_image %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+            <img class="img-fluid " src="{{ intro_image.url }}" alt="{{ page.alt_text }}" >
+        </div>
+        {% endif %}
+        
+    </div>
+</div>
+
+<div class="container-fluid pt-0">
+    <div class="row" data-aos="fade-up" data-aos-delay="100">
+        <a href="{{ page.document_file.url }}">
+            <div class="col-sm-12 col-md-12 col-lg-12 text-over-image-container">
+                {% image page.image_link fill-1920x375 as link_image %}
+                <img src="{{link_image.url }}" class="cropped-link">
+                <div class="text-over-image-border">
+                    <h2 class="text-over-image-text"> {{ page.text_link|safe }} </h2>
+                </div>
+                <svg class="text-over-image-icon">
+                    <image xlink:href="{% static 'assets/seleccionar.svg' %}" />
+                </svg>
+
+            </div>
+        </a>
+    </div>
+</div>
+
+
+
+{% if page.cards %}
+    <div class="container mt-4 mb-5">
+    <div class="title-page">
+      {{ page.cards_title }}
+    </div>
+        <div class="gaps-container align-items-center">
+    {% for element in page.cards %}
+                <div class="gap-item d-flex justify-content-center gap-item-link" data-aos="fade-up" data-aos-delay="100">
+                <div class="gaps-card m-3 rounded">
+        {% image element.value.image original as link_image %}
+        <img src="{{link_image.url }}" alt="element.value.alt_text" class="img-fluid">
+        <div class="gaps-card-content-small">
+            <div class="m-2">
+                <a class="title-page-special nav-link" href="{{ element.value.url }}">{{ element.value.name }} </a>
+            </div>
+        </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+{% endif %}
+
+
+{% endblock content %}
+
+{% block extra_js %}
+  <script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+  <script>
+    AOS.init();
+  </script>
+{% endblock extra_js %}

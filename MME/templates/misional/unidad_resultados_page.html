@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-participation.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row ">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4  animate__animated animate__zoomIn">
+      <div class="ps-md-5 pe-md-5 intro-section ">
+        <strong class="title-page-special">{{ page.intro_title }}</strong>
+        {{ page.intro|safe }}
+      </div>
+
+      <div class="link-section-border-bottom-unidad mt-5">
+        {% if page.link_mapa %}
+        <div>
+          <a href="{{ page.link_mapa }}" class="link-section-border-button-unidad">{{ page.button_title }}</a>
+        </div>
+        {% endif %}
+        {% if page.document_mapa %}
+
+        <a href="{{ page.document_mapa.url }}" class="link-section-border-button-unidad">{{ page.button_title }}</a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if page.link_pbi != None and page.link_pbi|length > 0 %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  animate__animated animate__zoomIn">
+      <div class="ratio ratio-16x9" id="board_one"></div>
+    </div>
+    {% else %}
+    {% image page.image original as intro_image %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 animate__animated animate__zoomIn ">
+      <img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container-fluid pt-5">
+  <div class="row" data-aos="fade-up" data-aos-delay="100">
+    {% for element in page.featured_link %}
+    <a href="{{ element.value.url }}">
+      {% endfor %}
+
+      <div class="col-sm-12 col-md-12 col-lg-12 text-over-image-container">
+        {% image page.image_link fill-1920x375 as link_image %}
+        <img src="{{link_image.url }}" class="cropped-link">
+        <div class="text-over-image-border">
+          <h2 class="text-over-image-text"> {{ page.text_link|safe }} </h2>
+        </div>
+        <svg class="text-over-image-icon">
+          <image xlink:href="{% static 'assets/seleccionar.svg' %}" />
+        </svg>
+
+      </div>
+    </a>
+  </div>
+</div>
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/powerbi.min.js' %}"></script>
+
+<script>
+  AOS.init();
+  // Power BI endpoints
+  var boards = {
+    "boards": [
+      {
+        "url": "{{ page.link_pbi }}",
+        "id": "board_one"
+      }
+    ]
+  }
+</script>
+<script type="text/javascript" src="{% static 'js/power_bi_boards.js' %}"></script>
+
+{% endblock extra_js %}

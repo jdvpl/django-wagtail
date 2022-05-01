@@ -1,0 +1,99 @@
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% if page.events_list %}
+<link href="{% static 'css/calendar/flatpickr.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/calendar/material_blue.css' %}" rel="stylesheet" type="text/css">
+
+
+<div class="row">
+    <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 ">
+        <div class="events-calendar ">
+            <input type="text" id="eventsDate" class="mt-5">
+            <div class="d-flex justify-content-start align-items-center pt-2">
+                <p class='event-description ms-2'></p>
+                <p class="event-description-text ms-2">Eventos programados</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12 ">
+
+        <div id="carouselEventsMME" class="carousel slide carousel-mme carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                {% for childpage in page.events_list.specific.children|slice:"10" %}
+                {% if forloop.counter0 == 0 %}
+                <button type="button" data-bs-target="#carouselEventsMME" data-bs-slide-to="{{ forloop.counter0 }}"
+                    class="active" aria-current="true" aria-label="Slide {{ forloop.counter0 }}"></button>
+                {% elif forloop.counter0 >= 1 %}
+                <button type="button" data-bs-target="#carouselEventsMME" data-bs-slide-to="{{ forloop.counter0 }}"
+                    aria-label="Slide {{ forloop.counter0 }}"></button>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="carousel-inner">
+                {% for childpage in page.events_list.specific.children|slice:"10" %}
+                {% image childpage.image original as slider_image %}
+                {% if forloop.counter0 == 0 %}
+                <div class="carousel-item active" data-bs-interval="3000">
+                    <a href="{{ childpage.url }}" title="{{ childpage.title }}">
+                        <img src="{{ slider_image.url }}" alt="{{ childpage.title }}" class="img-carousel">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ childpage.date_published }}</h5>
+                        <p>{{ childpage.title }}</p>
+                    </div>
+                </div>
+                {% elif forloop.counter0 >= 1 %}
+                <div class="carousel-item" data-bs-interval="3000">
+                    <a href="{{ childpage.url }}" title="{{ childpage.title }}">
+                        <img src="{{ slider_image.url }}" alt="{{ childpage.title }}" class="img-carousel">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ childpage.date_published }}</h5>
+                        <p>{{ childpage.title }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselEventsMME"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselEventsMME"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+    </div>
+    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-5 ">
+        <div class="d-flex justify-content-between align-items-center">
+            <hr class="divider">
+            <a href="{{page.events_list.url}}" class="more-info-button">{{ page.events_button_title }}</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal Events -->
+<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="background-color: var(--mme-blue);color:white">
+            <div id="modalContent">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Events -->
+
+
+<script src="{% static 'js/calendar/flatpickr.js' %}"></script>
+<script src="{% static 'js/calendar/es.js' %}"></script>
+<script src="{% static 'js/events/events.js' %}"></script>
+{% endif %}

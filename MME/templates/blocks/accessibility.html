@@ -1,0 +1,120 @@
+{% load static i18n wagtailcore_tags %}
+<div class="container">
+    <div class="row ">
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-5 col-xxl-4" style="padding-left:0px">
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'images/logo-ppal-new.png' %}" class="logo-ppal ">
+            </a>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 ">
+            <div class="btn-group" role="group" aria-label="Button group mme accessibility">
+                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Mapa del sitio">
+                    <svg class="tool-box-header">
+                        <a class="icon_circle icon-fa-envelope" href="/mapa-del-sitio">
+                            <image xlink:href="{% static 'images/mapa.svg' %}" src="{% static 'images/mapa.svg' %}"
+                                width='26' height='26' />
+                        </a>
+                    </svg>
+                </div>
+                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Contáctenos">
+                    <svg class="tool-box-header">
+                        <a class="icon_circle icon-fa-envelope" href="/servicio-al-ciudadano" title="Contáctenos">
+                            <image xlink:href="{% static 'images/correo.svg' %}" src="{% static 'images/correo.svg' %}"
+                                width='26' height='26' />
+                        </a>
+                    </svg>
+                </div>
+                {% if page %}
+                {% if page.get_translations|length > 1 %}
+                <div class="btn-group" role="group">
+                    <div data-bs-placement="top" title="Idioma" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg class="tool-box-header">
+                            <image xlink:href="{% static 'images/ingles.svg' %}" src="{% static 'images/ingles.svg' %}"
+                                width='26' height='26' />
+                        </svg>
+                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        {% for translation in page.get_translations.live %}
+                        {% get_language_info for translation.locale.language_code as lang %}
+                        <li>
+                            <div class="d-flex d-flex justify-content-start  align-items-center accessibility-option"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title=" {{ lang.name_local }}">
+                                <a href="{% pageurl translation %}" rel="alternate" hreflang="{{ language_code }}">
+                                    <h6 class="mt-1 ms-4 text-capitalize"> {{ lang.name_local }}</h6>
+                                </a>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% endif %}
+                <div class="btn-group" role="group">
+                    <div data-bs-placement="top" title="Opciones de accesibilidad" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <svg class="tool-box-header">
+                            <image xlink:href="{% static 'images/accesibilidad.svg' %}"
+                                src="{% static 'images/accesibilidad.svg' %}" width='26' height='26' />
+                        </svg>
+                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <li>
+                            <div class="d-flex d-flex justify-content-start  align-items-center  accessibility-option"
+                                id="contrast" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Cambiar niveles de contraste">
+                                <svg class="accessibility-option-icon mt-2 ms-2">
+                                    <image xlink:href="{% static 'assets/contrast.svg' %}"
+                                        src="{% static 'assets/contrast.svg' %}" />
+                                </svg>
+                                <h6 class="mt-1">Contraste</h6>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex d-flex justify-content-start align-items-center  accessibility-option"
+                                id="reducefontsize" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Reducir el tamaño del texto">
+                                <svg class="accessibility-option-icon mt-2 ms-2">
+                                    <image xlink:href="{% static 'assets/less_size.svg' %}"
+                                        src="{% static 'assets/less_size.svg' %}" />
+                                </svg>
+                                <h6 class="mt-1">Reducir letra</h6>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex justify-content-start align-items-center  accessibility-option"
+                                id="normalfontsize" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Restaurar el tamaño del texto">
+                                <svg class="accessibility-option-icon mt-2 ms-2">
+                                    <image xlink:href="{% static 'assets/more_size.svg' %}"
+                                        src="{% static 'assets/more_size.svg' %}" />
+                                </svg>
+                                <h6 class="mt-1">Letra normal</h6>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex justify-content-start align-items-center  accessibility-option"
+                                id="increasefontsize" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Aumentar el tamaño del texto">
+                                <svg class="accessibility-option-icon mt-2 ms-2">
+                                    <image xlink:href="{% static 'assets/more_size.svg' %}"
+                                        src="{% static 'assets/more_size.svg' %}" />
+                                </svg>
+                                <h6 class="mt-1">Aumentar letra</h6>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3 col-xxl-4">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="rounded-end search-field" placeholder="Búsqueda" name="q">
+                    <button class="btn btn-default rounded-start search-button" type="submit"><i
+                            class="bi bi-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

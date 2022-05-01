@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags navigation_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-sector-company.css' %}" rel="stylesheet" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container">
+    <strong class="title-page-special">{{ page.title }}</strong>
+</div>
+
+
+<div class="container">
+    <div class="wrapper-icon-menu-mme">
+        <div class="icon-menu-mme-header">
+            <div class="row icon-menu-mme-options">
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-12 col-sm-12 mt-3 icon-menu-mme-option active"
+                    data-bs-target="icon-menu-mme-option-0">
+                    <div class="d-flex justify-content-center align-items-center mt-4">
+                        <svg class="icon-menu-mme-option-svg">
+                            <image xlink:href="{{ page.sector_entities_logo.url }}" />
+                        </svg>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center mt-3">
+                        <h5 class="icon-menu-mme-option-title">{{ page.sector_entities_title }}</h5>
+                    </div>
+                </div>
+                <div class="icon-menu-mme-option-mobil-content">
+                    <div class="icon-menu-mme-option-content active"
+                        id="icon-menu-mme-option-0-mobil">
+                        <div class="title-page text-start">
+                        </div>
+                        <div class="container-fluid">
+                            
+                            {# affiliated_entities_block are defined in  MME\templates\blocks\affiliated_entities_mobil_block.html #}
+                            {% get_affiliated_entities_mobil_block %}
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-12 col-sm-12 mt-3 icon-menu-mme-option"
+                    data-bs-target="icon-menu-mme-option-1">
+                    <div class="d-flex justify-content-center align-items-center mt-4">
+                        <svg class="icon-menu-mme-option-svg">
+                            <image xlink:href="{{ page.related_entities_logo.url }}" />
+                        </svg>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center mt-3">
+                        <h5 class="icon-menu-mme-option-title">{{ page.related_entities_title }}</h5>
+                    </div>
+                </div>
+
+                <div class="icon-menu-mme-option-mobil-content">
+                    <div class="icon-menu-mme-option-content"
+                        id="icon-menu-mme-option-1-mobil">
+                        <div class="title-page text-start">
+                        </div>
+                        <div class="container-fluid">
+                            
+                            {# related_entities_mobil_block are defined in  MME\templates\blocks\related_entities_mobil_block.html #}
+                            {% get_related_entities_mobil_block %}
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="icon-menu-mme-container">
+
+        <div class="icon-menu-mme-option-content active" id="icon-menu-mme-option-0">
+            <div class="title-page text-start">
+            </div>
+            <div class="container-fluid">
+                
+                {# affiliated_entities_block are defined in MME\templates\blocks\affiliated_entities_block.html #}
+                {% get_affiliated_entities_block %}
+                
+            </div>
+
+        </div>
+        <div class="icon-menu-mme-option-content" id="icon-menu-mme-option-1">
+            <div class="title-page text-start">
+            </div>
+            <div class="container-fluid">
+                
+                {# affiliated_entities_block are defined in MME\templates\blocks\related_entities_block.html #}
+                {% get_related_entities %}
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-affiliated-entities.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-affiliated-entities-mobil.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-related-company.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-related-company-mobil.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/icon-menu-entities.js' %}"></script>
+<script>
+    AOS.init();
+</script>
+
+{% endblock extra_js %}

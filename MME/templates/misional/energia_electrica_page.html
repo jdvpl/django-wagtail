@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5 small-order-1 animate__animated animate__zoomIn">
+          <div class="ps-md-5 pe-md-5 intro-section">
+              <strong class="title-page-special">{{ page.intro_title }}</strong>
+              {{ page.intro|safe }}
+          </div>
+        </div>
+        {% if page.link_video != None and page.link_video|length > 0 %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+            <div class="video-responsive">
+                <iframe src="{{ page.link_video }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        {% else %}
+        {% image page.image original as intro_image %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+            <img class="img-fluid " src="{{ intro_image.url }}" alt="{{ page.alt_text }}" >
+        </div>
+        {% endif %}
+        
+    </div>
+</div>
+
+{% if page.second_links %}
+<div class="container mt-5" data-aos="fade-up" data-aos-delay="100">
+  <div class="justify-content-evenly flex-wrap row">
+      {% for element in page.second_links %}
+      <div class="element-card col-md-4 col-xl-3">
+          <div class="py-md-4 px-md-4 py-sm-36 px-sm-3">
+              {% if element.value.icono %}
+              <div class="d-flex justify-content-start">
+                  <svg class="mme-item-card-icon ">
+                      <image xlink:href="{{ element.value.icono.url }}" alt="element.value.alt_text" />
+                  </svg>
+              </div>
+              {% endif %}
+              <p class="cards-slider-title text-start mt-4">{{ element.value.title }}</p>
+              <div class="cards-slider-text text-start">
+                  {{ element.value.description|safe }}
+              </div>
+              {% if element.value.url %}
+              <div >
+                  <a href="{{ element.value.url }}">Mas información (+)</a>
+              </div>
+              {% endif %}
+          </div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="container">
+    <div class="title-page">
+      {{ page.second_title }}
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 small-order-1 animate__animated animate__zoomIn">
+        {% if page.second_link_pbi != None and page.second_link_pbi|length > 0 %}
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 ratio ratio-16x9 animate__animated animate__zoomIn" id="board_two">
+          </div>
+        {% else %}
+          {% image page.second_image original as second_image %}
+          <img class="img-fluid" src="{{ second_image.url }}" alt="{{ page.second_alt_text }}">
+        {% endif %}
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4 small-order-1 animate__animated animate__zoomIn convencional-text">
+        <div class="ps-2 pe-2 intro-section">
+          {{ page.second_intro|safe }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/powerbi.min.js' %}"></script>
+
+
+<script>
+  AOS.init();
+   // Power BI endpoints
+  var boards ={
+      "boards": [
+        {
+          "url": "{{ page.second_link_pbi }}",
+          "id": "board_two"
+        }
+      ]
+    }
+</script>
+<script type="text/javascript" src="{% static 'js/power_bi_boards.js' %}"></script>
+{% endblock extra_js %}

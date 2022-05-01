@@ -1,0 +1,502 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-participation.css' %}" rel="stylesheet" />
+<link href="{% static 'css/auditoria-interna-accordion.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4  animate__animated animate__zoomIn">
+      <div class="ps-md-5 pe-md-5 intro-section">
+        <strong class="title-page-special">{{ page.intro_title }}</strong>
+        {{ page.intro|safe }}
+      </div>
+    </div>
+    {% if page.link_pbi != None and page.link_pbi|length > 0 %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  animate__animated animate__zoomIn">
+      <div class="ratio ratio-16x9" id="board_one"></div>
+    </div>
+    {% else %}
+    {% image page.image original as intro_image %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 animate__animated animate__zoomIn ">
+      <img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if page.menu_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="wrapper-mme-menu">
+    <div class="mme-menu-options">
+      {% for element in page.menu_list %}
+      {% if forloop.counter0 == 0 %}
+      <div class="mme-menu-option2 show active2" data-bs-target="content_item{{ forloop.counter0 }}a">
+        {{ element.value.caption }}
+      </div>
+      <div class="mme-menu-content-movil">
+        <div class="mme-menu-content-item2 show active2" id="movilcontent_item{{ forloop.counter0 }}a">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 ">
+              <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+              <p class="fs-5 text-start">
+                {{ element.value.main_description }}
+              </p>
+
+            </div>
+            <div class="col-12">
+              <p class="mt-3 text-start">
+                {{ element.value.second_description }}
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="mme-menu-option2" data-bs-target="content_item{{ forloop.counter0 }}a">
+        {{ element.value.caption }}
+      </div>
+      <div class="mme-menu-content-movil">
+        <div class="mme-menu-content-item2" id="movilcontent_item{{ forloop.counter0 }}a">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 ">
+              <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+              <p class="fs-5 text-start">
+                {{ element.value.main_description }}
+              </p>
+
+            </div>
+            <div class="col-12">
+              <p class="mt-3 text-start">
+                {{ element.value.second_description }}
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+
+    </div>
+    <div class="mme-menu-content ">
+      {% for element in page.menu_list %}
+      {% if forloop.counter0 == 0 %}
+      <div class="mme-menu-content-item2 show active2" id="content_item{{ forloop.counter0 }}a">
+        <div class="row ">
+          <div class="col-sm-12 col-md-12 ">
+            <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+            <p class="fs-5 text-start">
+              {{ element.value.main_description }}
+            </p>
+          </div>
+          <div class="col-12">
+            <p class="mt-3 text-start">
+              {{ element.value.second_description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="mme-menu-content-item2" id="content_item{{ forloop.counter0 }}a">
+        <div class="row ">
+          <div class="col-sm-12 col-md-12 ">
+            <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+            <p class="fs-5 text-start">
+              {{ element.value.main_description }}
+            </p>
+          </div>
+          <div class="col-12">
+            <p class="mt-3 text-start">
+              {{ element.value.second_description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+{% if page.cards_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.cards_list_title }}
+  </div>
+
+  <!-- Swiper -->
+    <div class="swiper-container-mme-participation">
+    <div class="swiper-container mme-swiper">
+      <div class="swiper-wrapper">
+        {% for element in page.cards_list %}
+        <div class="swiper-slide">
+          <div class="slider-card">
+            <div class="p-4">
+              <p class="cards-slider-title text-start">{{ element.value.title }}</p>
+              <p class="cards-slider-text-small text-start">
+                {{ element.value.description }}
+              </p>
+              {% if element.value.document.url %}
+              <div class="d-flex justify-content-between align-items-center">
+                <hr class="divider">
+                <a href="{{ element.value.document.url }}" class="btn cards-slider-room-button">Ver más</a>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- <div class="swiper-pagination"></div> -->
+    </div>
+    <div class="swiper-button-next" style="margin-left: 0;">
+      <i class="bi bi-chevron-compact-right swiper-button-icon"></i>
+    </div>
+    <div class="swiper-button-prev">
+      <i class="bi bi-chevron-compact-left swiper-button-icon"></i>
+    </div>
+  </div>
+  <!-- Swiper -->
+
+</div>
+{% endif %}
+
+<div class="container mt-4 mb-5">
+  <div class="title-page">
+    {{ page.manual_links_title }}
+  </div>
+  <div>
+    {{ page.manual_intro|richtext }}
+  </div>
+  {% for element in page.manual_links %}
+  <div class="row align-items-center link-section-container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1 ">
+      <img src="{{ element.value.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+    </div>
+    <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9 link-section-border-bottom">
+      <div class="fs-5 pt-3 link-section-border-text">
+        <h4>{{ element.value.title }}</h4>
+        {{ element.value.description }}
+      </div>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}" type="button" class=" fs-4 link-section-border-button">Ver más</a>
+      {% endif %}
+      {% if element.value.document.url %}
+      <a href="{{ element.value.document.url }}" type="button" class=" fs-4 link-section-border-button">Consultar
+        Resolución</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="container mt-4 mb-5">
+  <div class="title-page">
+    {{ page.salary_links_title }}
+  </div>
+  {% for element in page.salary_links %}
+  <div class="row align-items-center link-section-container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1 ">
+      <img src="{{ element.value.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+    </div>
+    <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9 link-section-border-bottom">
+      <div class="fs-5 pt-3 link-section-border-text">
+        <h4>{{ element.value.title }}</h4>
+        {{ element.value.description }}
+      </div>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}" type="button" class=" fs-4 link-section-border-button">Ver más</a>
+      {% endif %}
+      {% if element.value.document.url %}
+      <a href="{{ element.value.document.url }}" type="button" class=" fs-4 link-section-border-button">Consultar
+        Decreto</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if page.post_list %}
+<div class="container mt-4">
+  <div class="title-page">
+    {{ page.post_title }}
+  </div>
+  <div>
+    {{ page.post_intro|richtext }}
+  </div>
+  <div class="accordion container" id="accordionExample">
+    {% for element in page.post_list %}
+    {% if forloop.counter0 == 0 %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ forloop.counter0 }}">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse{{ forloop.counter0 }}" aria-expanded="true" aria-controls="tramites">
+          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+        </button>
+      </h2>
+      <div id="collapse{{ forloop.counter0 }}" class="accordion-collapse collapse show"
+        aria-labelledby="heading{{ forloop.counter0 }}" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+
+          {% for subitem in element.value.subitems %}
+         <div class ="num-columnas2">
+          {{ subitem.description|richtext }}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ forloop.counter0 }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseThree">
+          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+        </button>
+      </h2>
+      <div id="collapse{{ forloop.counter0 }}" class="accordion-collapse collapse"
+        aria-labelledby="heading{{ forloop.counter0 }}" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          {% for subitem in element.value.subitems %}
+          {{ subitem.description|richtext }}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="container">
+  <div class="title-page">
+    {{ page.job_title }}
+  </div>
+  <div>
+    {{ page.job_intro|richtext }}
+  </div>
+</div>
+
+{% if page.sheets_list %}
+<div class="container mt-4">
+  <div class="title-page">
+    {{ page.sheets_title }}
+  </div>
+  <div>
+    {{ page.sheets_intro|richtext }}
+  </div>
+  <div class="accordion container" id="accordion-sheets">
+    {% for element in page.sheets_list %}
+    {% if forloop.counter0 == 0 %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ forloop.counter0 }}">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-sheets{{ forloop.counter0 }}" aria-expanded="true" aria-controls="tramites">
+          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+        </button>
+      </h2>
+      <div id="collapse-sheets{{ forloop.counter0 }}" class="accordion-collapse collapse show"
+        aria-labelledby="heading{{ forloop.counter0 }}" data-bs-parent="#accordion-sheets">
+        <div class="accordion-body">
+          <div class="table-responsive">
+            <table class="table-bordered w-100 table">
+                           
+              <tr class="table-head">
+                <th>Nombre Aspirante</th>
+                <th>Cargo</th>
+                <th>Fecha de publicacion</th>
+              </tr>
+              {% for subitem in element.value.subitems %}
+              <tr>
+                {% if subitem.document.url %}
+                <td class=" text-right"><a href="{{subitem.document.url }}">{{ subitem.name }}</a></td>
+                {% else %}
+                <td class=" text-right">{{ subitem.name }}</td>
+                {% endif %}
+                <td class=" text-center">{{ subitem.position|richtext }}</td>
+                <td class=" text-center">{{ subitem.date }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ forloop.counter0 }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse-sheets{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseThree">
+          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+        </button>
+      </h2>
+      
+      <div id="collapse-sheets{{ forloop.counter0 }}" class="accordion-collapse collapse"
+        aria-labelledby="heading{{ forloop.counter0 }}" data-bs-parent="#accordion-sheets">
+        <div class="accordion-body">
+          <div class="accordion-body">
+            <div>{{ element.value.intro }}</div>
+            <div class="table-responsive">
+              <table class="table-bordered w-100 table">
+              {% if 'Lista' in element.value.title %}             
+              <tr class="table-head">
+                <th>Aplicacion</th>
+                <th>Resolución</th>
+                <th>Fecha de resolución</th>
+                <th>Estado</th>
+              </tr>
+              {% for subitem in element.value.subitems %}
+                <tr>
+                <td class=" text-right">{{ subitem.aplicacion }}</td>
+                {% if subitem.document.url %}
+                <td class=" text-right"><a href="{{subitem.document.url }}">{{ subitem.name }}</a></td>
+                {% else %}
+                <td class=" text-right">{{ subitem.name }}</td>
+                {% endif %}
+                <td class=" text-center">{{ subitem.date }}</td>
+                <td class=" text-center">{{ subitem.position|richtext }}</td>
+              </tr>
+              {% endfor %}
+
+              {% else %}
+                            
+                <tr class="table-head">
+                  <th>Nombre Aspirante</th>
+                  <th>Cargo</th>
+                  <th>Fecha de publicacion</th>
+                </tr>
+                {% for subitem in element.value.subitems %}
+                <tr>
+                {% if subitem.document.url %}
+                <td class=" text-right"><a href="{{subitem.document.url }}">{{ subitem.name }}</a></td>
+                {% else %}
+                <td class=" text-right">{{ subitem.name }}</td>
+                {% endif %}
+                  <td class=" text-center">{{ subitem.position|richtext }}</td>
+                  <td class=" text-center">{{ subitem.date }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+              </table>
+              <div>{{ element.value.piedp }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="container-fluid pt-5">
+  <div class="row" data-aos="fade-up" data-aos-delay="100">
+    <a href="{{ page.featured_link }}">
+      <div class="col-sm-12 col-md-12 col-lg-12 text-over-image-container">
+        {% image page.image_link fill-1920x375 as link_image %}
+        <img src="{{ link_image.url }}" class="cropped-link">
+        <div class="text-over-image-border">
+          <h2 class="text-over-image-text"> {{ page.text_link|safe }} </h2>
+        </div>
+        <svg class="text-over-image-icon">
+          <image xlink:href="{% static 'assets/seleccionar.svg' %}" />
+        </svg>
+
+      </div>
+    </a>
+  </div>
+</div>
+
+
+<!-- vinculacion a terceros -->
+<div class="accordion container" id="accordion-sheets2">
+  <div class="title-page">
+    {{ page.sheets_title2 }}
+  </div>
+  {% for element in page.sheets_list2 %}
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading{{ forloop.counter0 }}">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#collapse-sheets2{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseThree">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.titulo }}</div>
+      </button>
+    </h2>
+    <div id="collapse-sheets2{{ forloop.counter0 }}" class="accordion-collapse collapse"
+      aria-labelledby="heading{{ forloop.counter0 }}" data-bs-parent="#accordion-sheets2">
+      <div class="accordion-body">
+            <table class="table-bordered w-100 table">
+            <tr class="table-head">
+              <th>Título</th>
+              <th>Fecha de publicacion</th>
+              <th>Documento</th>
+            </tr>
+            
+            {% for subitem in element.value.subitems %}
+            <tr>
+              <td class=" text-right">{{ subitem.title }}</td>
+              <td class=" text-center">{{ subitem.date }}</td>
+              <td class=" text-center"><a href="{{ subitem.document.url }}">{{ subitem.document }}</a></td>
+            </tr>
+            {% endfor %}
+           
+          </table>
+      </div>
+    </div>
+    </div>
+    {% endfor %}
+    </div>
+  
+
+
+
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/powerbi.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/swiper/swiper-bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-participation.js' %}"></script>
+
+<script>
+  AOS.init();
+  // Power BI endpoints
+  var boards = {
+    "boards": [
+      {
+        "url": "{{ page.link_pbi }}",
+        "id": "board_one"
+      },
+      {
+        "url": "{{ page.second_link_pbi }}",
+        "id": "board_two"
+      },
+      {
+        "url": "{{ page.third_link_pbi }}",
+        "id": "board_three"
+      }
+    ]
+  }
+</script>
+<script type="text/javascript" src="{% static 'js/power_bi_boards.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mmeoptionsmenu.js' %}"></script>
+
+{% endblock extra_js %}

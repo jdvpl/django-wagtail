@@ -1,0 +1,49 @@
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags navigation_tags %}
+
+<div class="container advanced-search-container mt-5">
+    <div class="border border-2 rounded p-4 ">
+        <p class="advanced-search-label">Busqueda </p>
+        <div class="row">
+            <div class="col">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="keywords"
+                        placeholder="Palabras clave: Energía, Petroleo">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-sm-12 col-lg-3 mt-2">
+                <select class="form-select" id="sector" aria-label="">
+                    <option value="0" selected>Seleccione un sector</option>
+                    {# get_sectors_mme is defined in apps\common\templatetags\navigation_tags.py #}
+                    {% get_sectors_mme %}
+                </select>
+            </div>
+            <div class="col-sm-6 col-lg-2 mt-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Desde" id="startTime">
+                    <span class="input-group-text"><i class="bi bi-calendar-week"></i></span>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-2 mt-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Hasta" id="endTime">
+                    <span class="input-group-text"><i class="bi bi-calendar-week"></i></span>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-2 mt-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Mes - Año" id="month">
+                    <span class="input-group-text"><i class="bi bi-calendar-week"></i></span>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mt-2">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-success w-100 ms-1 me-1 button-filter-data" id="filterData">Buscar</button>
+                    <button type="button" class="btn btn-success w-100 ms-1 me-1 button-filter-data" id="clearForm">Limpiar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

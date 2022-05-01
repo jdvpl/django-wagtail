@@ -1,0 +1,19 @@
+{% load static wagtailcore_tags menu_tags wagtailuserbar i18n wagtailcore_tags %}
+     
+{% if page %}
+    {% for translation in page.get_translations.live %}
+        {% get_language_info for translation.locale.language_code as lang %}
+        {% if lang.name_local == 'Español' %}
+            {% flat_menu 'english_menu' max_levels=3 template="blocks/sitemap/main_menu.html" sub_menu_templates="blocks/sitemap/main_menu_sub.html, blocks/sitemap/main_menu_sub_level_2.html" %}
+        {% elif lang.name_local == 'Ingles' %}
+            {% flat_menu 'spanish_menu' max_levels=3 template="blocks/sitemap/main_menu.html" sub_menu_templates="blocks/sitemap/main_menu_sub.html, blocks/sitemap/main_menu_sub_level_2.html" %}
+        {% else %}
+            {% main_menu max_levels=3 template="blocks/sitemap/main_menu.html" sub_menu_templates="blocks/sitemap/main_menu_sub.html, blocks/sitemap/main_menu_sub_level_2.html" %}
+        {% endif %}
+    {% endfor %}    
+    {# if page does not have translations #}
+    {% if page.get_translations|length == 0 %}
+        {% main_menu max_levels=3 template="blocks/sitemap/main_menu.html" sub_menu_templates="blocks/sitemap/main_menu_sub.html, blocks/sitemap/main_menu_sub_level_2.html" %}
+    {% endif %}
+{% endif %}
+

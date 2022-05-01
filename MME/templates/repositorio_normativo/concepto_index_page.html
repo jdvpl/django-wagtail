@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/calendar/flatpickr.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/calendar/monthSelectstyle.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/calendar/material_blue.css' %}" rel="stylesheet" type="text/css">
+
+<link href="{% static 'css/press_room_subpage.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/dataTables.bootstrap5.min.css' %}" rel="stylesheet" type="text/css">
+
+
+
+{% endblock extra_css %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="title-page">
+        {{ page.title }}
+    </div>
+
+    {# search block is defined in MME\templates\blocks\concept_search_block.html #}
+    {% include "blocks/concept_search_block.html" with parent=site_root calling_page=self %}
+
+    <div class="container mt-4">
+        <table id="dataset" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Sector</th>
+                    <th>Año concepto</th>
+                    <th>Número de Radicado</th>
+                    <th>Fecha radicado</th>
+                    <th>Norma</th>
+                    <th>Peticionario</th>
+                    <th>Tema/Asunto</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody id="tabledataset">
+                {% if posts %}
+
+                {% for item in posts %}
+                <tr>
+                    <td>{{ item.sectors_list_str }}</td>
+                    <td>{{ item.year_list_str }}</td>
+                    <td>{{ item.settled_number }}</td>
+                    <td>{{ item.settled_date }}</td>
+                    <td>{{ item.norm }}</td>
+                    <td>{{ item.petitioner }}</td>
+                    <td>{{ item.subject }}</td>
+                    <td>
+                        <a class="btn btn btn-success" href="{{ item.url }}">Ver más</a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                {% else %}
+                <div class="col-md-12">
+                    <p>Lo sentimos, aun no tenemos registros.</p>
+                </div>
+                {% endif %}
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+<script src="{% static 'js/calendar/flatpickr.js' %}"></script>
+<script src="{% static 'js/calendar/es.js' %}"></script>
+<script src="{% static 'js/calendar/rangePlugin.js' %}"></script>
+<script src="{% static 'js/calendar/monthSelect.js' %}"></script>
+<script src="{% static 'js/calendar/modernizr.js' %}"></script>
+
+<script src="{% static 'js/datatables/dataTablesCore.js' %}"></script>
+<script src="{% static 'js/datatables/dataTables.min.js' %}"></script>
+<script src="{% static 'js/datatables/dataTables.bootstrap5.min.js' %}"></script>
+<script src="{% static 'js/concept_search.js' %}"></script>
+
+<script>
+    AOS.init();
+    let page = "{{'repositorio_normativo.ConceptoPage'|safe}}";
+    let pageitems = "{{20 |safe}}";
+</script>
+{% endblock extra_js %}

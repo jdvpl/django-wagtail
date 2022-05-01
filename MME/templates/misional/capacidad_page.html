@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load navigation_tags wagtailimages_tags wagtailcore_tags %}
+
+{% load static %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/noticia.css' %}" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+
+
+
+{% endblock extra_css %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="title-page">
+        Noticias
+    </div>
+
+    <div class="row">
+        <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12">
+            <div class="row mt-3">
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12  animate__animated animate__zoomIn">
+                    <div class="row">
+                        <div class="col-xxl-12 col-xl-12 col-lg-12 align-items-center image-zoom-container">
+                            <div class="zoom-container">
+                                {% image page.image original as image %}
+                                <img src="{{ image.url }}" class="img-fluid " alt="{{ page.title }}">
+                            </div>
+                        </div>
+                    </div>
+        
+                </div>
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-4 animate__animated animate__zoomIn">
+                    <strong class="title-page-news"> {{ page.title }} </strong>
+                    <p class="fs-6">
+                        {{ page.date_published }}.
+                        {% if page.authors %}
+                                    {% for author in page.authors %}
+                                            {{ author.organization_title }}
+                                    {% endfor %}
+                        {% endif %}
+                        , {{ page.city }}.
+                        <br>
+                        Sector: {% if page.sectors %}
+                                    {% for sector in page.sectors %}
+                                            {{ sector.sector_title }}
+                                    {% endfor %}
+                                {% endif %}
+                        </p>
+        
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-xxl-12 col-xl-12 col-lg-12  col-md-12 col-sm-12">
+                    <p class="fs-4 lh-sm news-justify-text">
+                        {{ page.introduction }}
+                    </p>
+                   
+                    {{ page.body }}
+        
+                    
+                </div>
+            </div>
+
+            <div class="sharing-wrapper d-flex align-items-center p-2">
+                    <div class="sharing-item">
+                        <p>Compartir:</p>
+                    </div>
+                    <div class="sharing-item">
+                        <a href="https://api.whatsapp.com/send?text={{ page.title }} {{ request.META.HTTP_HOST }}{{ page.url }}" target="_blank">
+                            <svg class="sharing-svg">
+                                <image xlink:href="{% static 'assets/whatsapp.svg' %}" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="sharing-item">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.META.HTTP_HOST }}{{ page.url }}" target="_blank">
+                            <svg class="sharing-svg">
+                                <image xlink:href="{% static 'assets/facebook.svg' %}" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="sharing-item">
+                        <a href="https://twitter.com/intent/tweet?text={{ page.title }} {{ request.META.HTTP_HOST }}{{ page.url }}" target="_blank">
+                            <svg class="sharing-svg">
+                                <image xlink:href="{% static 'assets/twitter.svg' %}" />
+                            </svg>
+                        </a>
+                    </div>
+            </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 mt-3">
+            <div class="interesting-news-container">
+                <div class="interesting-news-header">
+                    <div class="d-flex justify-content-start align-items-center">
+                        <svg class="interesting-news-svg">
+                            <image xlink:href="{% static 'images/prensa/opciones.svg' %}" />
+                        </svg>
+                        <p class="interesting-news-title">Noticias de interés</p>
+                    </div>
+                </div>
+                {% for childpage in page.interesting_news|slice:"5" %}
+                {% if childpage.id != page.id %}
+                <div class="interesting-news-wrapper p-3">
+                    {% image childpage.image original as image %}
+                    <img src="{{ image.url }}" class="interesting-news-img" alt="{{ childpage.title }}">
+                    <div class="d-flex align-items-center interesting-news-description">
+                        <a href="{{childpage.url}}">
+                            <div>{{childpage.title}}</div>
+                        </a>
+                    </div>
+                </div>
+                <hr class="ms-3 me-3 mb-0 mt-0">
+                {% endif %}
+                {% endfor %}
+                <p class="mb-2"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div style="height: 100px">
+        <div class="mh-100" style="width: 100px; height: 200px"></div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+<script>
+    AOS.init();
+</script>
+{% endblock extra_js %}

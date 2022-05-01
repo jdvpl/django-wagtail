@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load navigation_tags wagtailimages_tags wagtailcore_tags %}
+
+{% load static %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/noticia.css' %}" rel="stylesheet" />
+<link href="{% static 'css/gallery.css' %}" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+
+
+
+{% endblock extra_css %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="title-page">
+        Resultados FURAG tratados
+    </div>
+
+    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 animate__animated
+                            animate__zoomIn">
+        <strong class="title-page-news">{{ page.title }}</strong>
+        <p class="fs-6">
+            {{ page.date_published }}.
+                {% if page.authors %}
+                            {% for author in page.authors %}
+                                    {{ author.organization_title }}
+                            {% endfor %}
+                {% endif %}
+                , {{ page.city }}.
+            <br>
+            Sector: {% if page.sectors %}
+                        {% for sector in page.sectors %}
+                                {{ sector.sector_title }}
+                        {% endfor %}
+                    {% endif %}
+        </p>
+    </div>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+            <a href="{{ page.document_file.url }}">
+                {% image page.image fill-850x480 as image %}
+                <img src="{{ image.url }}" class="img-fluid " alt="{{ page.title }}">
+            </a>
+        </div>
+        
+    </div>
+
+</div>
+
+<div class="container">
+    <div style="height: 100px">
+        <div class="mh-100" style="width: 100px; height: 200px"></div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+<script>
+    AOS.init();
+</script>
+{% endblock extra_js %}

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/contratacion-accordion.css' %}" rel="stylesheet" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5 small-order-1 animate__animated animate__zoomIn">
+        <div class="ps-md-5 pe-md-5 intro-section">
+            <strong class="title-page-special">{{ page.title }}</strong>
+        </div>
+      </div>
+      {% if page.link_video != None and page.link_video|length > 0 %}
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+          <div class="video-responsive">
+              <iframe src="{{ page.link_video }}" frameborder="0" allowfullscreen></iframe>
+          </div>
+      </div>
+      {% else %}
+      {% image page.image original as intro_image %}
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+          <img class="img-fluid " src="{{ intro_image.url }}" alt="{{ page.alt_text }}" >
+      </div>
+      {% endif %}
+  </div>
+
+  <div class="container">
+    <div class="title-page">
+      {{ page.table_title }}
+    </div>
+    <div class="table-responsive mt-4">
+      <table class="table-bordered w-100 table table-hover">
+        <tr class="table-head">
+          <th>Nombre y Apellido</th>
+          <th>Correo</th>
+          <th>Celular</th>
+        </tr>
+        {% for element in page.table_estructura %}
+        {% for subitem in element.value.subitems %}
+        <tr>
+          <td class=" text-center">{{ subitem.name }}</td>
+          <td class=" text-center">{{ subitem.email }}</td>
+          <td class=" text-center">{{ subitem.phone }}</td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mmeoptionsmenu.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+
+<script>
+  AOS.init();
+</script>
+
+
+
+{% endblock extra_js %}

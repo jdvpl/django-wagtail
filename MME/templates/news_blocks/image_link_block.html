@@ -1,0 +1,26 @@
+{% load wagtailimages_tags %}
+
+
+<div class="row" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="col-xxl-5 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        {% image self.image fill-600x600 as image %}
+        <a href=" {{ self.url }}">Link aun requiere estilos</a>
+        <img src="{{ image.url }}" class="img-fluid " alt="...">
+    </div>
+    <div class="col-xxl-7 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <h4 class="news-subtitle">{{ self.heading_text }}</h4>
+        <p class="lh-sm news-justify-text">
+
+        </p>
+        <div class="image-paragraph_block">
+            {{ self.paragraph_block }}
+        </div>
+
+        {% if self.text %}
+        <p class="fs-4 lh-sm text-center">
+            <span class="quote">"</span> {{ self.text }}
+        </p>
+        {% endif %}
+    </div>
+</div>

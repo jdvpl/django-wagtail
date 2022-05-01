@@ -1,0 +1,32 @@
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="swiper-container-mme" data-aos="fade-up" data-aos-delay="100">
+    <div class="swiper-container mme-swiper sector-company">
+        <div class="swiper-wrapper">
+            {% for element in inf_entity %}
+                {% image element.value.image original as image %}
+                <div class="swiper-slide" data-bs-target="swiper-sector-company-{{ forloop.counter0 }}">
+                    <img src="{{ image.url }}" class="img-fluid" style="height:100px">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="swiper-button-next sector-company-next">
+        <i class="bi bi-chevron-compact-right swiper-button-icon"></i>
+    </div>
+    <div class="swiper-button-prev sector-company-prev">
+        <i class="bi bi-chevron-compact-left swiper-button-icon"></i>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <div class="tab-content" id="swiperContentSectorCompany">
+        {% for element in inf_entity %}
+            <div class="tab-pane swiper-tab fade mme-taps-content" id="swiper-sector-company-{{ forloop.counter0 }}" role="tabpanel" aria-labelledby="swiper-tab{{ forloop.counter0 }}">
+                <p >{{ element.value.description }}</p>
+                <a href="{{ element.value.url }}">{{ element.value.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

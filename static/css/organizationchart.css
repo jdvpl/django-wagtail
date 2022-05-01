@@ -1,0 +1,780 @@
+/* animation */
+
+.functionary-link:hover img {
+  animation: pulse;
+  animation-duration: 1s;
+  cursor: pointer;
+}
+
+/* animation */
+.oc-container {
+  position: relative;
+}
+.oc-container > a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: black;
+}
+
+.file-dw {
+  width: 50px;
+  height: 50px;
+  filter: var(--mme-gray-filter);
+  cursor: pointer;
+}
+.file-dw > image {
+  width: 50px;
+  height: 50px;
+}
+
+.file-dw:hover {
+  filter: var(--mme-green-filter);
+}
+
+/* ------------------------------------ ORGANIZATION CHART MOVIL ------------------------------------ */
+
+:root {
+  --width-outline-minister-320-479: 285px;
+  --height-outline-minister-320-479: 285px;
+  --width-outline-minister-image-320-479: 280px;
+  --height-outline-minister-image-320-479: 280px;
+  --width-minister-img-320-479: 250px;
+  --height-minister-img-320-479: 250px;
+
+  --width-outline-functionary-320-479: 185px;
+  --height-outline-functionary-320-479: 185px;
+  --width-outline-functionary-image-320-479: 180px;
+  --height-outline-functionary-image-320-479: 180px;
+  --width-functionary-img-320-479: 160px;
+  --height-functionary-img-320-479: 160px;
+}
+
+/* outlines */
+
+.outline-functionary-320-479 {
+  position: absolute;
+  width: var(--width-outline-functionary-320-479);
+  height: var(--height-outline-functionary-320-479);
+  top: -10px;
+  left: -10px;
+  z-index: -1;
+}
+
+.outline-functionary-320-479 > image {
+  width: var(--width-outline-functionary-image-320-479);
+  height: var(--width-outline-functionary-image-320-479);
+}
+
+.outline-minister-320-479 {
+  position: absolute;
+  width: var(--width-outline-minister-320-479);
+  height: var(--height-outline-minister-320-479);
+  top: -15px;
+  left: -15px;
+  z-index: -1;
+}
+
+.outline-minister-320-479 > image {
+  width: var(--width-outline-minister-image-320-479);
+  height: var(--height-outline-minister-image-320-479);
+}
+/* outlines */
+
+/* minister-functionary-description-320-479 */
+.minister-functionary-description-320-479 {
+  text-align: center;
+  width: 10rem;
+  margin-left: 3rem;
+  margin-top: 2rem;
+  line-height: 1 !important;
+}
+.minister-functionary-description-320-479 .divider {
+  border: 2px solid var(--mme-gray);
+  width: 10rem;
+  height: 0px;
+  background-color: var(--mme-gray);
+}
+
+.minister-functionary-description-320-479 .functionary-position {
+  width: 10rem;
+  height: 3.5rem;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.minister-functionary-description-320-479 .name {
+  margin-top: 4px;
+  text-decoration: underline;
+  color: var(--mme-blue);
+  width: 10rem;
+  font-size: 1.1rem;
+}
+/* minister-functionary-description-320-479 */
+
+/* functionary-description-second--320-479*/
+.functionary-description-second--320-479 {
+  position: absolute;
+  text-align: center;
+  width: 10rem;
+  margin-top: 2.4rem !important;
+  line-height: 1 !important;
+}
+
+.functionary-description-second--320-479 .divider {
+  border: 2px solid var(--mme-blue);
+  width: 10rem;
+  height: 0px;
+  margin-bottom: 0px;
+  background-color: var(--mme-blue);
+}
+.functionary-description-second--320-479 .divider-icon {
+  margin-top: -10px;
+  color: var(--mme-blue);
+}
+.functionary-description-second--320-479 .functionary-position {
+  width: 10rem;
+  height: 1.6rem;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.functionary-description-second--320-479 .name {
+  margin-top: 0px;
+  text-decoration: underline;
+  color: var(--mme-blue);
+  width: 10rem;
+  font-size: 1rem;
+}
+/* functionary-description-second--320-479*/
+
+/* mobile-320-479 */
+
+.minister-mobile-320-479 {
+  position: absolute;
+  top: 20px;
+  left: 20%;
+}
+
+.minister-mobile-320-479 > img {
+  width: var(--width-minister-img-320-479);
+  height: var(--height-minister-img-320-479);
+}
+
+.functionary-img-320-479 {
+  width: var(--width-functionary-img-320-479);
+  height: var(--height-functionary-img-320-479);
+}
+
+.viceminister-mines-mobile-320-479 {
+  position: absolute;
+  top: 520px;
+  left: 35%;
+}
+
+.viceminister-energy-mobile-320-479 {
+  position: absolute;
+  top: 850px;
+  left: 35%;
+}
+
+.general-secretary-mobile-320-479 {
+  position: absolute;
+  top: 1180px;
+  left: 35%;
+}
+
+.results-unit-group-mobile-320-479 {
+  position: absolute;
+  top: 1510px;
+  left: 35%;
+}
+
+.communication-press-group-mobile-320-479 {
+  position: absolute;
+  top: 1840px;
+  left: 35%;
+}
+
+.strategic-management-group-mobile-320-479 {
+  position: absolute;
+  top: 2170px;
+  left: 35%;
+}
+
+.legislative-affairs-group-mobile-320-479 {
+  position: absolute;
+  top: 2500px;
+  left: 35%;
+}
+
+.office-environmental-social-affairs-mobile-320-479 {
+  position: absolute;
+  top: 2830px;
+  left: 35%;
+}
+
+.office-regulatory-business-affairs-mobile-320-479 {
+  position: absolute;
+  top: 3160px;
+  left: 35%;
+}
+
+.legal-advisory-office-mobile-320-479 {
+  position: absolute;
+  top: 3490px;
+  left: 35%;
+}
+
+.internal-control-office-mobile-320-479 {
+  position: absolute;
+  top: 3820px;
+  left: 35%;
+}
+
+.international-planning-management-office-mobile-320-479 {
+  position: absolute;
+  top: 4150px;
+  left: 35%;
+}
+
+/* ------------------------------------ ORGANIZATION CHART MOVIL ------------------------------------ */
+
+/* ------------------------------------ ORGANIZATION CHART TABLET ------------------------------------ */
+
+:root {
+  --width-outline-minister-768-1023: 230px;
+  --height-outline-minister-768-1023: 230px;
+  --width-outline-minister-image-768-1023: 230px;
+  --height-outline-minister-image-768-1023: 230px;
+  --width-minister-img-768-1023: 200px;
+  --height-minister-img-768-1023: 200px;
+
+  --width-outline-functionary-768-1023: 160px;
+  --height-outline-functionary-768-1023: 160px;
+  --width-outline-functionary-image-768-1023: 160px;
+  --height-outline-functionary-image-768-1023: 160px;
+  --width-functionary-img: 140px;
+  --height-functionary-img: 140px;
+}
+
+/* outlines */
+.outline-functionary-768-1023 {
+  position: absolute;
+  width: var(--width-outline-functionary-768-1023);
+  height: var(--height-outline-functionary-768-1023);
+  top: -10px;
+  left: -10px;
+  z-index: -1;
+}
+
+.outline-functionary-768-1023 > image {
+  width: var(--width-outline-functionary-image-768-1023);
+  height: var(--height-outline-functionary-image-768-1023);
+}
+
+.outline-minister-768-1023 {
+  position: absolute;
+  width: var(--width-outline-minister-768-1023);
+  height: var(--height-outline-minister-768-1023);
+  top: -15px;
+  left: -15px;
+  z-index: -1;
+}
+
+.outline-minister-768-1023 > image {
+  width: var(--width-outline-minister-image-768-1023);
+  height: var(--height-outline-minister-image-768-1023);
+}
+
+/* outlines */
+
+/* functionary-description-768-1023 */
+.functionary-description-768-1023 {
+  text-align: center;
+  width: 11rem;
+  margin-left: 1rem;
+}
+.functionary-description-768-1023 .divider {
+  border: 2px solid var(--mme-gray);
+  width: 12rem;
+  height: 0px;
+  background-color: var(--mme-gray);
+  margin-bottom: 4px;
+
+}
+
+.functionary-description-768-1023 .functionary-position {
+  width: 10rem;
+  height: 4rem;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.functionary-description-768-1023 .name {
+  margin-top: 4px;
+  text-decoration: underline;
+  color: var(--mme-blue);
+  width: 10rem;
+  font-size: 0.9rem;
+}
+/* functionary-description-768-1023 */
+
+/* functionary-description-first-768-1023 */
+.functionary-description-first-768-1023 {
+  text-align: center;
+  width: 12rem;
+  margin-left: -1rem;
+}
+
+.functionary-description-first-768-1023 .divider {
+  border: 2px solid var(--mme-blue);
+  width: 11rem;
+  height: 0px;
+  margin-bottom: 0px;
+  background-color: var(--mme-blue);
+}
+.functionary-description-first-768-1023 .divider-icon {
+  margin-top: -10px;
+  color: var(--mme-blue);
+}
+.functionary-description-first-768-1023 .functionary-position {
+  width: 11rem;
+  height: 3rem;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.functionary-description-first-768-1023 .name {
+  margin-top: -8px;
+  margin-left: 5px;
+  text-decoration: underline;
+  color: var(--mme-blue);
+  width: 11rem;
+  font-size: 0.9rem;
+}
+/* functionary-description-first-768-1023 */
+
+/* functionary-description-second-768-1023*/
+.functionary-description-second-768-1023 {
+  position: absolute;
+  top: 10px;
+  left: 215px;
+  text-align: center;
+  width: 15rem;
+  margin-left: -4.2rem;
+}
+
+.functionary-description-second-768-1023 .divider {
+  border: 2px solid var(--mme-blue);
+  width: 15rem;
+  height: 0px;
+  margin-bottom: 0px;
+  background-color: var(--mme-blue);
+}
+.functionary-description-second-768-1023 .divider-icon {
+  margin-top: -10px;
+  color: var(--mme-blue);
+}
+.functionary-description-second-768-1023 .functionary-position {
+  width: 14rem;
+  height: 3rem;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.functionary-description-second-768-1023 .name {
+  margin-top: -8px;
+  margin-left: 0px;
+  text-decoration: underline;
+  color: var(--mme-blue);
+  width: 14rem;
+  font-size: 0.9rem;
+}
+/* functionary-description-second-768-1023*/
+
+/* tablet768-1023 */
+.minister-tablet768-1023 > img {
+  width: var(--width-minister-img-768-1023);
+  height: var(--height-minister-img-768-1023);
+}
+
+.functionary-img-768-1023 {
+  width: var(--width-functionary-img);
+  height: var(--height-functionary-img);
+}
+
+.minister-tablet768-1023 {
+  position: absolute;
+  top: 230px;
+  /* left: 40%; */
+}
+
+.viceminister-mines-tablet768-1023 {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+}
+
+.viceminister-energy-tablet768-1023 {
+  position: absolute;
+  top: 480px;
+  left: 40px;
+}
+
+.general-secretary-tablet768-1023 {
+  position: absolute;
+  top: 270px;
+  /* right: 100px; */
+}
+
+.results-unit-group-tablet768-1023 {
+  position: absolute;
+  top: 820px;
+  left: 25%;
+}
+
+.communication-press-group-tablet768-1023 {
+  position: absolute;
+  top: 980px;
+  right: 40%;
+}
+
+.strategic-management-group-tablet768-1023 {
+  position: absolute;
+  top: 1150px;
+  left: 25%;
+}
+
+.legislative-affairs-group-tablet768-1023 {
+  position: absolute;
+  top: 1300px;
+  right: 40%;
+}
+
+.office-environmental-social-affairs-tablet768-1023 {
+  position: absolute;
+  top: 1480px;
+  left: 25%;
+}
+
+.office-regulatory-business-affairs-tablet768-1023 {
+  position: absolute;
+  top: 1640px;
+  right: 40%;
+}
+
+.legal-advisory-office-tablet768-1023 {
+  position: absolute;
+  top: 1800px;
+  left: 25%;
+}
+
+.internal-control-office-tablet768-1023 {
+  position: absolute;
+  top: 1960px;
+  right: 40%;
+}
+
+.international-planning-management-office-tablet768-1023 {
+  position: absolute;
+  top: 2130px;
+  left: 25%;
+}
+
+/* ------------------------------------ ORGANIZATION CHART TABLET ------------------------------------ */
+
+/* ------------------------------------ ORGANIZATION CHART DESKTOP ------------------------------------ */
+
+:root {
+  --width-outline-minister-1366: 280px;
+  --height-outline-minister-1366: 280px;
+  --width-outline-minister-image-1366: 280px;
+  --height-outline-minister-image-1366: 280px;
+  --width-minister-img-1366: 250px;
+  --height-minister-img-1366: 250px;
+
+  --width-outline-functionary-1366: 190px;
+  --height-outline-functionary-1366: 190px;
+  --width-outline-functionary-image-1366: 190px;
+  --height-outline-functionary-image-1366: 190px;
+  --width-functionary-img-1366: 170px;
+  --height-functionary-img-1366: 170px;
+}
+
+/* outlines */
+
+.outline-functionary-1366 {
+  position: absolute;
+  width: var(--width-outline-functionary-1366);
+  height: var(--height-outline-functionary-1366);
+  top: -10px;
+  left: -10px;
+  z-index: -1;
+}
+
+.outline-functionary-1366 > image {
+  width: var(--width-outline-functionary-image-1366);
+  height: var(--height-outline-functionary-image-1366);
+}
+.outline-minister-1366 {
+  position: absolute;
+  width: var(--width-outline-minister-1366);
+  height: var(--width-outline-minister-1366);
+  top: -15px;
+  left: -15px;
+  z-index: -1;
+}
+
+.outline-minister-1366 > image {
+  width: var(--width-outline-minister-image-1366);
+  height: var(--height-outline-minister-image-1366);
+}
+
+/* outlines */
+
+/* minister-functionary-description-1366 */
+.minister-functionary-description-1366 {
+  text-align: center;
+  width: 15rem;
+  margin-left: 1rem;
+}
+.minister-functionary-description-1366 .divider {
+  border: 2px solid var(--mme-gray);
+  width: 14rem;
+  height: 0px;
+  background-color: var(--mme-gray);
+  margin-top: 0px;
+  margin-bottom: 4px;
+
+}
+
+.minister-functionary-description-1366 .functionary-position {
+  width: 14rem;
+  height: 3rem;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.minister-functionary-description-1366 .name {
+  margin-top: 4px;
+  text-decoration: underline;
+  color: var(--mme-blue);
+  width: 14rem;
+  font-size: 1rem;
+}
+/* minister-functionary-description-1366 */
+
+/* functionary-description-left-1366 */
+.functionary-description-left-1366 {
+  position: absolute;
+  top: 20px;
+  left: -120px;
+  text-align: center;
+  width: 12rem;
+  margin-left: -5rem;
+}
+
+.functionary-description-left-1366 .divider {
+  border: 2px solid var(--mme-blue);
+  width: 12rem;
+  height: 0px;
+  margin-bottom: 0px;
+  background-color: var(--mme-blue);
+}
+.functionary-description-left-1366 .divider-icon {
+  margin-top: -10px;
+  color: var(--mme-blue);
+}
+.functionary-description-left-1366 .functionary-position {
+  width: 12rem;
+  height: 3rem;
+  font-size: 0.79rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+}
+.functionary-description-left-1366 .name {
+  margin-top: -8px;
+  margin-left: 10px;
+  text-decoration: underline;
+  color: var(--mme-blue);
+  width: 12rem;
+  font-size: 0.79rem;
+}
+/* functionary-description-left-1366 */
+
+/* functionary-description-right-1366*/
+.functionary-description-right-1366 {
+  position: absolute;
+  top: 20px;
+  left: 215px;
+  text-align: center;
+  width: 12rem;
+  margin-left: -2rem;
+}
+
+.functionary-description-right-1366 .divider {
+  border: 2px solid var(--mme-blue);
+  width: 11rem;
+  height: 0px;
+  margin-bottom: 0px;
+  background-color: var(--mme-blue);
+}
+.functionary-description-right-1366 .divider-icon {
+  margin-top: -10px;
+  color: var(--mme-blue);
+}
+.functionary-description-right-1366 .functionary-position {
+  width: 11rem;
+  height: 3rem;
+  font-size: 0.79rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.functionary-description-right-1366 .name {
+  margin-top: -8px;
+  margin-left: -5px;
+  text-decoration: underline;
+  color: var(--mme-blue);
+  width: 11rem;
+  font-size: 0.79rem;
+}
+/* functionary-description-right-1366*/
+
+/* functionary-description-1366 */
+
+.functionary-description-1366 {
+  text-align: center;
+  width: 12rem;
+  margin-left: 0.5rem;
+}
+
+.functionary-description-1366 .divider {
+  border: 2px solid var(--mme-blue);
+  width: 11rem;
+  height: 0px;
+  margin-bottom: 0px;
+  background-color: var(--mme-blue);
+}
+.functionary-description-1366 .divider-icon {
+  margin-top: -10px;
+  color: var(--mme-blue);
+}
+.functionary-description-1366 .functionary-position {
+  width: 11rem;
+  height: 3rem;
+  font-size: 0.79rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.functionary-description-1366 .name {
+  margin-top: -8px;
+  text-decoration: underline;
+  color: var(--mme-blue);
+  width: 11rem;
+  font-size: 0.79rem;
+}
+/* functionary-description-1366 */
+
+/* desktop1400 */
+.minister-desktop1400 {
+  position: absolute;
+  top: 150px;
+  left: 525px;
+}
+
+.minister-desktop1400 > img {
+  width: var(--width-minister-img-1366);
+  height: var(--height-minister-img-1366);
+}
+
+.functionary-img-1366 {
+  width: var(--width-functionary-img-1366);
+  height: var(--height-functionary-img-1366);
+}
+
+.viceminister-mines-desktop1400 {
+  position: absolute;
+  top: 80px;
+  left: 170px;
+}
+
+.viceminister-energy-desktop1400 {
+  position: absolute;
+  top: 300px;
+  left: 170px;
+}
+
+.general-secretary-desktop1400 {
+  position: absolute;
+  top: 200px;
+  right: 170px;
+}
+
+.results-unit-group-desktop1400 {
+  position: absolute;
+  top: 630px;
+  left: 20px;
+}
+
+.communication-press-group-desktop1400 {
+  position: absolute;
+  top: 940px;
+  left: 165px;
+}
+
+.strategic-management-group-desktop1400 {
+  position: absolute;
+  top: 630px;
+  left: 300px;
+}
+
+.legislative-affairs-group-desktop1400 {
+  position: absolute;
+  top: 940px;
+  left: 440px;
+}
+
+.office-environmental-social-affairs-desktop1400 {
+  position: absolute;
+  top: 630px;
+  left: 570px;
+}
+
+.office-regulatory-business-affairs-desktop1400 {
+  position: absolute;
+  top: 940px;
+  left: 715px;
+}
+
+.legal-advisory-office-desktop1400 {
+  position: absolute;
+  top: 630px;
+  left: 850px;
+}
+
+.internal-control-office-desktop1400 {
+  position: absolute;
+  top: 940px;
+  left: 980px;
+}
+
+.international-planning-management-office-desktop1400 {
+  position: absolute;
+  top: 630px;
+  left: 1120px;
+}
+
+/* ------------------------------------ ORGANIZATION CHART DESKTOP ------------------------------------ */

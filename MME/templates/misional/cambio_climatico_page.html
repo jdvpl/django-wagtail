@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-participation.css' %}" rel="stylesheet" />
+<!--se toma css de prensa para los videos -->
+<link href="{% static 'css/press_room.css' %}" rel="stylesheet" />
+<style>
+ .richtext-image.right{
+  float:right;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.richtext-image.left{
+  float:left;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+br{
+  clear: both;
+}
+
+</style>
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5 small-order-1 animate__animated animate__zoomIn">
+        <div class="ps-5 pe-5 intro-section">
+            <strong class="title-page-special">{{ page.intro_title }}</strong>
+            <p>{{ page.intro|safe }} </p>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+      <div id="carouselHomeMME" class="carousel slide carousel-mme carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for element in page.slider %}
+              {% if forloop.counter0 == 0 %}
+              <button type="button" data-bs-target="#carouselHomeMME" data-bs-slide-to="{{ forloop.counter0 }}"
+                  class="active" aria-current="true" aria-label="Slide {{ forloop.counter0 }}"></button>
+              {% elif forloop.counter0 >= 1 %}
+              <button type="button" data-bs-target="#carouselHomeMME" data-bs-slide-to="{{ forloop.counter0 }}"
+                  aria-label="Slide {{ forloop.counter0 }}"></button>
+              {% endif %}
+            {% endfor %}
+        </div>
+        <div class="carousel-inner">
+            {% for element in page.slider %}
+              {% if forloop.counter0 == 0 %}
+                {% if element.value.video  %}
+                  <div class="carousel-item active" data-bs-interval="3000">
+                    <div  class="video-responsive">
+                      <iframe src="{{ element.value.video }}" frameborder="0"
+                       allowfullscreen></iframe>
+                    </div>
+                  </div>
+                {% else %}
+                  <div class="carousel-item active" data-bs-interval="3000">
+                      <a href="{{ element.value.url }}" title="{{ element.value.alt_text }}">
+                          {% image element.value.image fill-2000x1200-c100 as slider_image %}
+                          <img src="{{ slider_image.url }}" alt="{{ element.value.alt_text }}" class="img-fluid">
+                      </a>
+                  </div>
+                {% endif %}
+              {% elif forloop.counter0 >= 1 %}
+                {% if element.value.video  %}
+                  <div class="carousel-item " data-bs-interval="3000">
+                    <div  style="height:640px">
+                      <iframe src="{{ element.value.video }}" frameborder="0" height="640" width="100%" allowfullscreen></iframe>
+                    </div>
+                  </div>
+                {% else %}
+                  <div class="carousel-item" data-bs-interval="3000">
+                    <a href="{{ element.value.url }}" title="{{ element.value.alt_text }}">
+                        {% image element.value.image fill-2000x1200-c100 as slider_image %}
+                        <img src="{{ slider_image.url }}" alt="{{ element.value.alt_text }}" class="img-fluid">
+                    </a>
+                  </div>
+                {% endif %}
+
+              {% endif %}
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselHomeMME" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselHomeMME" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    </div>
+  </div>
+<!-- texto alternativo-->
+  <div class="container mt-4 mb-5">{{ page.alt_text }}</div>
+</div>
+
+
+<!-- PIGCCme -->
+<div class="container mt-4 mb-5">
+    <div class="title-page">
+      {{ page.second_title }}
+    </div>
+      <div class="container mt-4 mb-5 text-start">
+        {{ page.second_text | safe }}
+      </div>
+    </div>
+
+
+
+
+<!--tabs-->
+{% if page.first_tabs %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  
+  <nav class="mme-taps">
+    <div class="nav nav-tabs" id="nav-tab-others" role="tablist">
+      {% for element in page.first_tabs %}
+      {% if forloop.counter0 == 0 %}
+      <button class="nav-link active" id="others-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#others-tap{{ forloop.counter0 }}" type="button" role="tab" aria-controls="tramites"
+        aria-selected="true">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% else %}
+      <button class="nav-link" id="others-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#others-tap{{ forloop.counter0 }}" type="button" role="tab" aria-controls="medicion"
+        aria-selected="false">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent-others">
+    {% for element in page.first_tabs %}
+    {% if forloop.counter0 == 0 %}
+    <div class="tab-pane fade show active" id="others-tap{{ forloop.counter0 }}" role="tabpanel"
+      aria-labelledby="others-tap{{ forloop.counter0 }}">
+      <p class="mt-4">{{ element.value.description }}</p>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}">Mas información (+)</a>
+      {% endif %}
+    </div>
+    {% else %}
+    <div class="tab-pane fade" id="others-tap{{ forloop.counter0 }}" role="tabpanel"
+      aria-labelledby="others-tap{{ forloop.counter0 }}">
+      <p class="mt-4">{{ element.value.description }}</p>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}">Mas información (+)</a>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!--activos de conocimiento-->
+<div class="container mt-4 mb-5" style="clear:both;">
+  <div class="title-page">
+    {{ page.third_title }}
+  </div>
+
+  {{ page.intro_linkstxt }}
+
+
+  <!--enlaces-->
+  {% for element in page.first_links %}
+  <div class="row align-items-center link-section-container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1 ">
+      <img src="{{ element.value.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+    </div>
+    <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9 link-section-border-bottom">
+      <div class="pt-3 link-section-border-text">
+        <h4>{{ element.value.title }}</h4>
+        {{ element.value.description }}
+      </div>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}" type="button" class=" fs-4 link-section-border-button">Ver más</a>
+      {% endif %}
+      {% if element.value.document.url %}
+      <a href="{{ element.value.document.url }}" type="button" class=" fs-4 link-section-border-button">Ir al Decreto</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- videos -->
+        {% if page.videos_list %}
+        <div class="container mt-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="title-page">
+                {{ page.videos_list_title }}
+            </div>
+
+            <div class="video-container">
+                {% for childpage in page.videos_list.specific.children|slice:"4" %}
+                {% if forloop.counter0 == 0 %}
+                <div class="video-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="video-responsive">
+                        <iframe src="{{childpage.link_video}}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <h4 class="mt-3">{{childpage.title}}</h4>
+                </div>
+                {% endif %}
+                {% if forloop.counter0 >= 1 %}
+                <div class="video-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="video-responsive">
+                        <iframe src="{{childpage.link_video}}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <hr class="divider">
+                        <a href="{{ page.videos_list.url }}" class=" more-info-button">{{ page.videos_button_title }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mmeoptionsmenu.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/powerbi.min.js' %}"></script>
+
+
+<script>
+  AOS.init();
+  // Power BI endpoints
+  var boards = {
+    "boards": [
+      {
+        "url": "{{ page.link_pbi }}",
+        "id": "board_one"
+      },
+      {
+        "url": "{{ page.second_link_pbi }}",
+        "id": "board_two"
+      }
+    ]
+  }
+</script>
+<script type="text/javascript" src="{% static 'js/power_bi_boards.js' %}"></script>
+{% endblock extra_js %}

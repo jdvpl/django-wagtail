@@ -1,0 +1,554 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/auditoria-interna-accordion.css' %}" rel="stylesheet" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12  animate__animated animate__zoomIn">
+      <div>
+        <strong class="title-page-special">{{ page.title }}</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="title-page">
+    {{ page.how_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12  animate__animated animate__zoomIn">
+      <div class="num-columnas2">
+      <p>{{ page.how|richtext }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if page.link_list %}
+<div class="container mt-5">
+  <div class="title-page">
+    {{ page.systems_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12  animate__animated animate__zoomIn">
+      <p>{{ page.systems|richtext }}</p>
+    </div>
+  </div>
+  <div class="row mme-item-card-content ms-1">
+    {% for element in page.link_list %}
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-2 gy-4 mme-item-card d-flex align-items-center">
+      <div data-aos="fade-up" data-aos-delay="100" class="aos-init aos-animate m-auto">
+        {% if element.value.subitems %}
+        <a data-bs-toggle="modal" data-bs-target="#Modal{{ forloop.counter0 }}">
+          {% elif element.value.document.url %}
+          <a href="{{ element.value.document.url }}" class="remove-a-styles">
+            {% elif element.value.url %}
+            <a href="{{ element.value.url }}" class="remove-a-styles">
+              {% else %}
+              <a data-bs-toggle="modal" data-bs-target="#Modal{{ forloop.counter0 }}">
+                {% endif %}
+                <div>
+                  {% if element.value.icono.url %}
+                  <svg class="mme-item-card-icon rounded mx-auto d-block">
+                    <image xlink:href="{{ element.value.icono.url }}" />
+                  </svg>
+                  {% else %}
+                  {% image element.value.image original as intro_image %}
+                  <img src="{{ intro_image.url }}" alt="{{ page.alt_text }}" class="img-fluid my-5">
+                  {% endif %}
+                </div>
+                <div class="mme-item-text-content">
+                  <p class="text-center mme-item-card-text  lh-1 ">
+                    {{ element.value.title }}
+                  </p>
+                </div>
+              </a>
+      </div>
+    </div>
+    {% endfor %}
+
+    <!-- Modal -->
+    {% for element in page.link_list %}
+    {% if element.value.url == None and element.value.document.url == None %}
+    <div class="modal fade" id="Modal{{ forloop.counter0 }}" tabindex="-1" aria-labelledby="ModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="background-color: var(--mme-blue);color:white">
+          <div class="modal-header">
+            <h5 class="modal-title text-center" id="exampleModalLabel">
+              {{ element.value.title }}
+            </h5>
+            <button type="button" class="btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="background-color: white;color:black">
+            <p class="fs-5">
+              {{ element.value.description }}
+            </p>
+            {% if element.value.subitems %}
+            <div class="list-group">
+              {% for subitems in element.value.subitems %}
+              {% if subitems.url %}
+              <a class="list-group-item list-group-item-action" href="{{ subitems.url }}">{{ subitems.name }}</a>
+              {% elif subitems.document.url %}
+              <a class="list-group-item list-group-item-action" href="{{ subitems.document.url }}">{{ subitems.name
+                }}</a>
+              {% else %}
+              <a class="list-group-item list-group-item-action">{{ subitems.name }}</a>
+              {% endif %}
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <!-- Modal -->
+  </div>
+</div>
+{% endif %}
+
+
+<div class="container">
+  <div class="title-page">
+    {{ page.second_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4">
+      <div>
+        {{ page.second_intro|richtext }}
+      </div>
+    </div>
+    {% if page.second_link_pbi %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  ">
+      <div class="ratio ratio-16x9" id="board_one"></div>
+    </div>
+    {% else %}
+    {% image page.second_image original as intro_image %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 ">
+      <img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.second_alt_text }}">
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container">
+  <div class="title-page">
+    {{ page.chain_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12  animate__animated animate__zoomIn">
+<div class="num-columnas3">
+      <p>{{ page.chain_intro|richtext }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4 mb-5">
+  <div class="title-page">
+    {{ page.second_links_title }}
+  </div>
+  {% for element in page.second_links %}
+
+
+  <div class="row align-items-center link-section-container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1 ">
+      <img src="{{ element.value.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+    </div>
+    <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9 link-section-border-bottom">
+      <div class="fs-5 pt-3 link-section-border-text">
+        <h4>{{ element.value.title }}</h4>
+        {{ element.value.description }}
+      </div>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}" type="button" class=" fs-4 link-section-border-button">Conocer más</a>
+      {% endif %}
+      {% if element.value.document.url %}
+      <a href="{{ element.value.document.url }}" type="button" class=" fs-4 link-section-border-button">Descargar</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if page.menu_list %}
+<div class="container" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.menu_list_title }}
+  </div>
+  <div>
+    {{ page.menu_list_intro|richtext }}
+  </div>
+  <div class="wrapper-mme-menu">
+    <div class="mme-menu-options">
+      {% for element in page.menu_list %}
+      {% if forloop.counter0 == 0 %}
+      <div class="mme-menu-option show active" data-bs-target="content_item{{ forloop.counter0 }}">
+        {{ element.value.caption }}
+      </div>
+      <div class="mme-menu-content-movil">
+        <div class="mme-menu-content-item show active" id="movilcontent_item{{ forloop.counter0 }}">
+          <div class="row ">
+            <div class="col-sm-12 col-md-12">
+              <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+              <p class="fs-5 text-start">
+                {{ element.value.main_description }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="mme-menu-option" data-bs-target="content_item{{ forloop.counter0 }}">
+        {{ element.value.caption }}
+      </div>
+      <div class="mme-menu-content-movil">
+        <div class="mme-menu-content-item" id="movilcontent_item{{ forloop.counter0 }}">
+          <div class="row ">
+            <div class="col-sm-12 col-md-12">
+              <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+              <p class="fs-5 text-start">
+                {{ element.value.main_description }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+
+    </div>
+    <div class="mme-menu-content">
+      {% for element in page.menu_list %}
+      {% if forloop.counter0 == 0 %}
+      <div class="mme-menu-content-item show active" id="content_item{{ forloop.counter0 }}">
+        <div class="row ">
+          <div class="col-sm-12 col-md-12">
+            <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+            <p class="fs-5 text-start">
+              {{ element.value.main_description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="mme-menu-content-item" id="content_item{{ forloop.counter0 }}">
+        <div class="row ">
+          <div class="col-sm-12 col-md-12">
+            <strong class="content-item-title lh-sm text-start">{{ element.value.caption }}</strong>
+            <p class="fs-5 text-start">
+              {{ element.value.main_description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="container">
+  <div class="title-page">
+    {{ page.sicom_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 ">
+      {{ page.sicom_intro|richtext }}
+    </div>
+    {% image page.sicom_image original as intro_image %}
+    
+      <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 small-order-2 animate__animated animate__zoomIn">
+        <div class="video-ajustable">
+        <iframe src="{% static 'infograf/misional/marco_regulatorio/marco_regulatorio.html' %}" width="100%" height="200px" scrolling="no"></iframe>
+        </div>
+      <!--<img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.sicom_alt_text }}">-->
+    </div>
+  </div>
+</div>
+
+{% if page.bio_tabs_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.bio_title }}
+  </div>
+  <div>
+    {{ page.bio_intro|richtext }}
+  </div>
+  <nav class="mme-taps">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      {% for element in page.bio_tabs_list %}
+      {% if forloop.counter0 == 0 %}
+      <button class="nav-link show active" id="services-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap{{ forloop.counter0 }}" type="button" role="tab" aria-controls="tramites"
+        aria-selected="true">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% else %}
+      <button class="nav-link" id="services-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap{{ forloop.counter0 }}" type="button" role="tab" aria-controls="medicion"
+        aria-selected="false">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    {% for element in page.bio_tabs_list %}
+    {% if forloop.counter0 == 0 %}
+    <div class="tab-pane fade show show active" id="tap{{ forloop.counter0 }}" role="tabpanel"
+      aria-labelledby="tap{{ forloop.counter0 }}">
+      {% else %}
+      <div class="tab-pane fade" id="tap{{ forloop.counter0 }}" role="tabpanel"
+        aria-labelledby="tap{{ forloop.counter0 }}">
+        {% endif %}
+        <p class="mt-4">{{ element.value.description }}</p>
+        {% if element.value.url %}
+        <a href="{{ element.value.url }}">Mas información (+)</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="container">
+  <div class="title-page">
+    {{ page.price_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5 ">
+      {{ page.price_intro|richtext }}
+    </div>
+    {% image page.price_image original as intro_image %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 " style="background-color:#F2F6F9">
+      <img class="img-fluid mx-auto d-block"  src="{{ intro_image.url }}" alt="{{ page.price_alt_text }}">
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="title-page">
+    {{ page.history_price_title }}
+  </div>
+  <div class="row">
+    {% image page.history_price_image original as intro_image %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 " style="background-color:#F2F6F9">
+      <img class="img-fluid mx-auto d-block" src="{{ intro_image.url }}" alt="{{ page.history_price_alt_text }}">
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5">
+      {{ page.history_price_intro|richtext }}
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4 mb-5">
+  <div class="title-page">
+    {{ page.prices_links_title }}
+  </div>
+  {% for element in page.prices_links %}
+  <div class="row align-items-center link-section-container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1 ">
+      <img src="{{ element.value.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+    </div>
+    <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9 link-section-border-bottom">
+      <div class="fs-5 pt-3 link-section-border-text">
+        <h4>{{ element.value.title }}</h4>
+        {{ element.value.description }}
+      </div>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}" type="button" class=" fs-4 link-section-border-button">Conocer más</a>
+      {% endif %}
+      {% if element.value.document.url %}
+      <a href="{{ element.value.document.url }}" type="button" class=" fs-4 link-section-border-button">Descargar</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="container">
+  <div class="title-page">
+    {{ page.zone_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5 ">
+      {{ page.zone_intro|richtext }}
+    </div>
+    {% image page.zone_image original as intro_image %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 ">
+      <img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.zone_alt_text }}">
+    </div>
+  </div>
+</div>
+
+{% if page.vol_tabs_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.vol_title }}
+  </div>
+  <div>
+    {{ page.bio_intro|richtext }}
+  </div>
+  <nav class="mme-taps">
+    <div class="nav nav-tabs" id="nav-tab-vol" role="tablist">
+      {% for element in page.vol_tabs_list %}
+      {% if forloop.counter0 == 0 %}
+      <button class="nav-link show active" id="vol-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap-vol{{ forloop.counter0 }}" type="button" role="tab" aria-controls="tramites"
+        aria-selected="true">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% else %}
+      <button class="nav-link" id="vol-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap-vol{{ forloop.counter0 }}" type="button" role="tab" aria-controls="medicion"
+        aria-selected="false">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </nav>
+  <div class="tab-content" id="vol-nav-tabContent">
+    {% for element in page.vol_tabs_list %}
+    {% if forloop.counter0 == 0 %}
+    <div class="tab-pane fade show show active" id="tap-vol{{ forloop.counter0 }}" role="tabpanel"
+      aria-labelledby="tap{{ forloop.counter0 }}">
+      {% else %}
+      <div class="tab-pane fade" id="tap-vol{{ forloop.counter0 }}" role="tabpanel"
+        aria-labelledby="tap{{ forloop.counter0 }}">
+        {% endif %}
+        <p class="mt-4">{{ element.value.description }}</p>
+        {% if element.value.url %}
+        <a href="{{ element.value.url }}">Mas información (+)</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if page.plan_tabs_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.plan_title }}
+  </div>
+  <div>
+    {{ page.plan_intro|richtext }}
+  </div>
+  <div class="accordion container" id="accordionExample">
+    {% for element in page.plan_tabs_list %}
+    {% if forloop.counter0 == 0 %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ forloop.counter0 }}">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse{{ forloop.counter0 }}" aria-expanded="true" aria-controls="tramites">
+          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+        </button>
+      </h2>
+      <div id="collapse{{ forloop.counter0 }}" class="accordion-collapse collapse show"
+        aria-labelledby="heading{{ forloop.counter0 }}" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          {% for subitem in element.value.subitems %}
+          <div class="row">
+            <div class="col-sm-12">
+              <div>{{ subitem.description|richtext }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ forloop.counter0 }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseThree">
+          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+        </button>
+      </h2>
+      <div id="collapse{{ forloop.counter0 }}" class="accordion-collapse collapse"
+        aria-labelledby="heading{{ forloop.counter0 }}" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          {% for subitem in element.value.subitems %}
+          <div class="row">
+            <div class="col-sm-12">
+              <div>{{ subitem.description|richtext }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="container">
+  <div class="title-page">
+    {{ page.program_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      {{ page.program_intro|richtext }}
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/powerbi.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mmeoptionsmenu.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/swiper/swiper-bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-participation.js' %}"></script>
+
+<script>
+  AOS.init();
+  // Power BI endpoints
+  var boards = {
+    "boards": [
+      {
+        "url": "{{ page.second_link_pbi }}",
+        "id": "board_one"
+      },
+      {
+        "url": "{{ page.second_link_pbi }}",
+        "id": "board_two"
+      },
+      {
+        "url": "{{ page.third_link_pbi }}",
+        "id": "board_three"
+      }
+    ]
+  }
+</script>
+<script type="text/javascript" src="{% static 'js/power_bi_boards.js' %}"></script>
+{% endblock extra_js %}

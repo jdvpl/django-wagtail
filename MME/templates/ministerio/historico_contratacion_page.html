@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/contratacion-accordion.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container" data-aos="fade-up" data-aos-delay="100">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5  animate__animated animate__zoomIn">
+      <div class="ps-5 pe-5 intro-section">
+        <strong class="title-page-special">{{ page.intro_title }}</strong>
+        {{ page.intro|safe }}
+      </div>
+    </div>    
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      {% if page.historical_list %}
+      {% for block in page.historical_list %}
+      {% with parentID=forloop.counter0 %}
+      <div class="container mt-4">        
+        <div class="accordion container" id="accordion{{ parentID }}">
+          {% for element in block.value.subitems %}
+          {% if forloop.counter0 == 0 %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ parentID }}{{ forloop.counter0 }}">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse{{ parentID }}{{ forloop.counter0 }}" aria-expanded="true"
+                aria-controls="tramites">
+                {{ element.title }}
+              </button>
+            </h2>
+            <div id="collapse{{ parentID }}{{ forloop.counter0 }}"
+              class="accordion-collapse collapse show left-dotted-border"
+              aria-labelledby="heading{{ parentID }}{{ forloop.counter0 }}" data-bs-parent="#accordion{{ parentID }}">
+              <div class="accordion-body ">
+                <div class="row m-0 p-0">
+                  {{ element.description|richtext }}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ parentID }}{{ forloop.counter0 }}">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse{{ parentID }}{{ forloop.counter0 }}" aria-expanded="false"
+                aria-controls="collapseThree">
+                {{ element.title }}
+              </button>
+            </h2>
+            <div id="collapse{{ parentID }}{{ forloop.counter0 }}"
+              class="accordion-collapse collapse left-dotted-border"
+              aria-labelledby="heading{{ parentID }}{{ forloop.counter0 }}" data-bs-parent="#accordion{{ parentID }}">
+              <div class="accordion-body">
+                <div class="row m-0 p-0">
+                  {{ element.description|richtext }}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endwith %}
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mmeoptionsmenu.js' %}"></script>
+<script>
+  AOS.init();
+</script>
+{% endblock extra_js %}

@@ -1,0 +1,51 @@
+.accordion-button:not(.collapsed)::after {
+    background-color: var(--mme-blue);
+    padding:1.2rem !important;
+    border-radius: 50% !important;
+    content: "" !important;
+    margin-left: auto !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    align-self: center !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='currentColor' class='bi bi-dash-lg' viewBox='0 0 16 16'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z' fill='%23fff'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-size: 1.5rem !important;
+    background-position: center !important;
+    transition: transform 0.2s ease-in-out !important;
+  }
+  
+  .accordion-button::after {
+    background-color: var(--mme-blue);
+    padding:1.2rem !important;
+    border-radius: 50% !important;
+    content: "" !important;
+    margin-left: auto !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    align-self: center !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='currentColor' class='bi bi-plus-lg' viewBox='0 0 16 16'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z' fill='%23fff'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-size: 1.5rem !important;
+    background-position: center !important;
+    transition: transform 0.2s ease-in-out !important;
+  }
+  
+  .accordion-button:not(.collapsed) {
+    background-color: var(--bs-white) !important;
+    color: var(--mme-green);
+    font-weight: bold !important;
+  }
+  .accordion-button {
+    margin-bottom: 1rem !important;
+    background-color: #fff;
+    border: 2px solid var(--mme-green) !important;
+  }
+  
+  .accordion-item {
+    border: 0 !important;
+  }
+  
+  .accordion-button {
+    color: var(--mme-green);
+    font-weight: bold !important;
+  }

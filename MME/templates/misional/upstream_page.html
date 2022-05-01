@@ -1,0 +1,460 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/auditoria-interna-accordion.css' %}" rel="stylesheet" />
+<link href="{% static 'css/organizationchart.css' %}" rel="stylesheet" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12  animate__animated animate__zoomIn">
+      <div>
+        <strong class="title-page-special">{{ page.title }}</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="title-page">
+    {{ page.exploration_exploitation_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12  animate__animated animate__zoomIn">
+      <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+
+        <nav class="mme-taps">
+          <div class="nav nav-tabs" id="nav-tab-explo" role="tablist">
+            <button class="nav-link show active" id="explo-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+              data-bs-target="#tap-explo-0" type="button" role="tab" aria-controls="tramites" aria-selected="true">
+              <div class="d-flex align-items-center justify-content-center lh-sm">Exploración</div>
+            </button>
+            <button class="nav-link" id="explo-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+              data-bs-target="#tap-explo-1" type="button" role="tab" aria-controls="medicion" aria-selected="false">
+              <div class="d-flex align-items-center justify-content-center lh-sm">Explotación</div>
+            </button>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent-explo">
+          <div class="tab-pane fade show show active" id="tap-explo-0" role="tabpanel"
+            aria-labelledby="tap{{ forloop.counter0 }}">
+            <div class="row mt-3">
+              <div class="col-sm-2 ">
+                <img class="img-fluid" src="{{ page.exploration_icon.url }}">
+              </div>
+              <div class="col-sm-10 ">
+                {{ page.exploration_intro|richtext }}
+              </div>
+              <div class="col-sm-12 ">
+                {{ page.exploration_intro_two|richtext }}
+              </div>
+              <div class="col-sm-12 ">
+                {% if page.exploration_list %}
+                <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+                  <div class="accordion container" id="accordion-exploration">
+                    {% for element in page.exploration_list %}
+                    {% if forloop.counter0 == 0 %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="exploration{{ forloop.counter0 }}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#exploration-collapse{{ forloop.counter0 }}" aria-expanded="true"
+                          aria-controls="tramites">
+                          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}
+                          </div>
+                        </button>
+                      </h2>
+                      <div id="exploration-collapse{{ forloop.counter0 }}" class="accordion-collapse collapse show"
+                        aria-labelledby="exploration{{ forloop.counter0 }}" data-bs-parent="#accordion-exploration">
+                        <div class="accordion-body">
+                          {% for subitem in element.value.subitems %}
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <div>{{ subitem.description|richtext }}</div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                    {% else %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="exploration{{ forloop.counter0 }}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#exploration-collapse{{ forloop.counter0 }}" aria-expanded="false"
+                          aria-controls="collapseThree">
+                          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}
+                          </div>
+                        </button>
+                      </h2>
+                      <div id="exploration-collapse{{ forloop.counter0 }}" class="accordion-collapse collapse"
+                        aria-labelledby="exploration{{ forloop.counter0 }}" data-bs-parent="#accordion-exploration">
+                        <div class="accordion-body">
+                          {% for subitem in element.value.subitems %}
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <div>{{ subitem.description|richtext }}</div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-sm-12 ">
+                {{ page.exploration_intro_two|richtext }}
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="tap-explo-1" role="tabpanel" aria-labelledby="tap{{ forloop.counter0 }}">
+            <div class="row mt-3">
+              <div class="col-sm-2 ">
+                <img class="img-fluid" src="{{ page.exploitation_icon.url }}">
+              </div>
+              <div class="col-sm-10 ">
+                {{ page.exploitation_intro|richtext }}
+              </div>
+              <div class="col-sm-12 ">
+                {{ page.exploitation_intro_two|richtext }}
+              </div>
+              <div class="col-sm-12 ">
+                {% if page.exploitation_list %}
+                <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+                  <div class="accordion container" id="accordion-exploitation">
+                    {% for element in page.exploitation_list %}
+                    {% if forloop.counter0 == 0 %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="exploitation{{ forloop.counter0 }}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#exploitation-collapse{{ forloop.counter0 }}" aria-expanded="true"
+                          aria-controls="tramites">
+                          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}
+                          </div>
+                        </button>
+                      </h2>
+                      <div id="exploitation-collapse{{ forloop.counter0 }}" class="accordion-collapse collapse show"
+                        aria-labelledby="exploitation{{ forloop.counter0 }}" data-bs-parent="#accordion-exploitation">
+                        <div class="accordion-body">
+                          {% for subitem in element.value.subitems %}
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <div>{{ subitem.description|richtext }}</div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                    {% else %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="exploitation{{ forloop.counter0 }}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#exploitation-collapse{{ forloop.counter0 }}" aria-expanded="false"
+                          aria-controls="collapseThree">
+                          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}
+                          </div>
+                        </button>
+                      </h2>
+                      <div id="exploitation-collapse{{ forloop.counter0 }}" class="accordion-collapse collapse"
+                        aria-labelledby="exploitation{{ forloop.counter0 }}" data-bs-parent="#accordion-exploitation">
+                        <div class="accordion-body">
+                          {% for subitem in element.value.subitems %}
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <div>{{ subitem.description|richtext }}</div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-sm-12 ">
+                {{ page.exploitation_intro_three|richtext }}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% if page.certificates_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.certificates_title }}
+  </div>
+  <div>
+    {{ page.certificates_intro|richtext }}
+  </div>
+  <div class="accordion container" id="accordion-certificates">
+    {% for element in page.certificates_list %}
+    {% if forloop.counter0 == 0 %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="certificates{{ forloop.counter0 }}">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+          data-bs-target="#certificates-collapse{{ forloop.counter0 }}" aria-expanded="true" aria-controls="tramites">
+          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+        </button>
+      </h2>
+      <div id="certificates-collapse{{ forloop.counter0 }}" class="accordion-collapse collapse show"
+        aria-labelledby="certificates{{ forloop.counter0 }}" data-bs-parent="#accordion-certificates">
+        <div class="accordion-body">
+          {% for subitem in element.value.subitems %}
+          <div class="row">
+            <div class="col-sm-12">
+              <div>{{ subitem.description|richtext }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="certificates{{ forloop.counter0 }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#certificates-collapse{{ forloop.counter0 }}" aria-expanded="false"
+          aria-controls="collapseThree">
+          <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+        </button>
+      </h2>
+      <div id="certificates-collapse{{ forloop.counter0 }}" class="accordion-collapse collapse"
+        aria-labelledby="certificates{{ forloop.counter0 }}" data-bs-parent="#accordion-certificates">
+        <div class="accordion-body">
+          {% for subitem in element.value.subitems %}
+          <div class="row">
+            <div class="col-sm-12">
+              <div>{{ subitem.description|richtext }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+
+{% if page.form_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.form_title }}
+  </div>
+  <div>
+    {{ page.form_intro|richtext }}
+  </div>
+  <nav class="mme-taps">
+    <div class="nav nav-tabs" id="nav-tab-form" role="tablist">
+      {% for element in page.form_list %}
+      {% if forloop.counter0 == 0 %}
+      <button class="nav-link show active" id="form_list-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap-form{{ forloop.counter0 }}" type="button" role="tab" aria-controls="tramites"
+        aria-selected="true">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% else %}
+      <button class="nav-link" id="form_list-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap-form{{ forloop.counter0 }}" type="button" role="tab" aria-controls="medicion"
+        aria-selected="false">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent-form">
+    {% for element in page.form_list %}
+    {% if forloop.counter0 == 0 %}
+    <div class="tab-pane fade show show active" id="tap-form{{ forloop.counter0 }}" role="tabpanel"
+      aria-labelledby="tap{{ forloop.counter0 }}">
+      {% else %}
+      <div class="tab-pane fade" id="tap-form{{ forloop.counter0 }}" role="tabpanel"
+        aria-labelledby="tap{{ forloop.counter0 }}">
+        {% endif %}
+        <p class="mt-4">{{ element.value.description }}</p>
+        {% if element.value.url %}
+        <a href="{{ element.value.url }}">Mas información (+)</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="container mt-3 ">
+  <div class="title-page">
+    {{ page.slider_title }}
+  </div>
+  <div class="section-spacing ">
+    <div id="carouselHomeMME" class="carousel slide carousel-mme carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        {% for element in page.slider %}
+        {% if forloop.counter0 == 0 %}
+        <button type="button" data-bs-target="#carouselHomeMME" data-bs-slide-to="{{ forloop.counter0 }}" class="active"
+          aria-current="true" aria-label="Slide {{ forloop.counter0 }}"></button>
+        {% elif forloop.counter0 >= 1 %}
+        <button type="button" data-bs-target="#carouselHomeMME" data-bs-slide-to="{{ forloop.counter0 }}"
+          aria-label="Slide {{ forloop.counter0 }}"></button>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <div class="carousel-inner">
+        {% for element in page.slider %}
+        {% image element.value.image original as slider_image %}
+        {% if forloop.counter0 == 0 %}
+        <div class="carousel-item active" data-bs-interval="3000">
+          <a href="{{ element.value.url }}" title="{{ element.value.alt_text }}">
+            <img src="{{ slider_image.url }}" alt="{{ element.value.alt_text }}" class="img-carousel">
+          </a>
+          {% if element.value.paragraph_block %}
+          <div class="widget-info">
+            {{ element.value.paragraph_block|richtext }}
+          </div>
+          {% endif %}
+        </div>
+        {% elif forloop.counter0 >= 1 %}
+        <div class="carousel-item" data-bs-interval="3000">
+          <a href="{{ element.value.url }}" title="{{ element.value.alt_text }}">
+            <img src="{{ slider_image.url }}" alt="{{ element.value.alt_text }}" class="img-carousel">
+          </a>
+          {% if element.value.paragraph_block %}
+          <div class="widget-info">
+            {{ element.value.paragraph_block|richtext }}
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselHomeMME" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselHomeMME" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="title-page">
+    {{ page.myths_title }}
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-6 ">
+      {% image page.myths_image_one original as myths_image_one %}
+      <img class="img-fluid" src="{{ myths_image_one.url }}">
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-6 ">
+      {% image page.myths_image_two original as intro_image %}
+      <img class="img-fluid" src="{{ intro_image.url }}">
+    </div>
+  </div>
+</div>
+
+{% if page.tabs %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.tabs_title }}
+  </div>
+
+  <nav class="mme-taps">
+    <div class="nav nav-tabs" id="nav-tab-vol" role="tablist">
+      {% for element in page.tabs %}
+      {% if forloop.counter0 == 0 %}
+      <button class="nav-link show active" id="vol-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap{{ forloop.counter0 }}" type="button" role="tab" aria-controls="tramites"
+        aria-selected="true">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% else %}
+      <button class="nav-link" id="vol-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap{{ forloop.counter0 }}" type="button" role="tab" aria-controls="medicion"
+        aria-selected="false">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </nav>
+  <div class="tab-content" id="vol-nav-tabContent">
+    {% for element in page.tabs %}
+    {% if forloop.counter0 == 0 %}
+    <div class="tab-pane fade show show active" id="tap{{ forloop.counter0 }}" role="tabpanel"
+      aria-labelledby="tap{{ forloop.counter0 }}">
+      {% else %}
+      <div class="tab-pane fade" id="tap{{ forloop.counter0 }}" role="tabpanel"
+        aria-labelledby="tap{{ forloop.counter0 }}">
+        {% endif %}
+        <div>
+          {{ element.value.intro|richtext }}
+        </div>
+        <div class="table-responsive">
+          <table class="table-bordered w-100 table">
+            <tr class="table-head">
+              <th>Sección</th>
+              <th>Fecha de emisión</th>
+              <th>Documento</th>
+            </tr>
+            {% for subitem in element.value.subitems %}
+            <tr>
+              <td class=" text-right">{{ subitem.description|richtext }}</td>
+              <td class=" text-center">{{ subitem.date }}</td>
+              <td class=" text-center"> <a href="{{subitem.document.url }}">
+                  <svg id="btnCapturar" class="file-dw">
+                    <image xlink:href="/static/images/archivo-pdf.svg">
+                    </image>
+                  </svg>
+                </a> </td>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+<script>
+  AOS.init();
+
+</script>
+
+{% endblock extra_js %}

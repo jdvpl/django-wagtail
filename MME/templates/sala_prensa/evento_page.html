@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load navigation_tags wagtailimages_tags wagtailcore_tags %}
+
+{% load static %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/noticia.css' %}" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+
+
+
+{% endblock extra_css %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="title-page">
+        Eventos y espacios ciudadanos
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-xxl-8 col-xl-7 col-lg-12  col-md-12 col-sm-12  animate__animated
+        animate__zoomIn">
+
+            <div class="row">
+                <div class="col-xxl-12 col-xl-12 col-lg-12 align-items-center image-zoom-container">
+                    <div class="zoom-container">
+                        {% image page.image fill-1920x600 as image %}
+                        <img src="{{ image.url }}" class="img-fluid " alt="{{ page.title }}">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xxl-4 col-xl-5 col-lg-12 col-md-12 col-sm-12 ps-4 animate__animated
+        animate__zoomIn">
+            <strong class="title-page-news"> {{ page.title }} </strong>
+            <p class="fs-6">
+                {{ page.date_published }}.
+                {% if page.authors %}
+                            {% for author in page.authors %}
+                                    {{ author.organization_title }}
+                            {% endfor %}
+                {% endif %}
+                , {{ page.city }}.
+                <br>
+                Sector: {% if page.sectors %}
+                            {% for sector in page.sectors %}
+                                    {{ sector.sector_title }}
+                            {% endfor %}
+                        {% endif %}
+                </p>
+
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-xxl-12 col-xl-12 col-lg-12  col-md-12 col-sm-12">
+            <p class="fs-4 lh-sm news-justify-text">
+                {{ page.introduction }}
+            </p>
+           
+            {{ page.body }}
+
+            
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+    <div style="height: 100px">
+        <div class="mh-100" style="width: 100px; height: 200px"></div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+<script>
+    AOS.init();
+</script>
+{% endblock extra_js %}

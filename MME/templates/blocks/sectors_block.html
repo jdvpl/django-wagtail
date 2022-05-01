@@ -1,0 +1,7 @@
+{% load wagtailcore_tags %}
+
+{% for sector in sectors %} 
+    <option value="{{ forloop.counter }}">{{ sector }}</option>                  
+{% endfor %}
+
+           

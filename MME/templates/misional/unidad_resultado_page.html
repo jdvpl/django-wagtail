@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+{% load navigation_tags wagtailimages_tags wagtailcore_tags %}
+
+{% load static %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/noticia.css' %}" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/press_room.css' %}" rel="stylesheet" />
+
+
+
+{% endblock extra_css %}
+
+{% block content %}
+
+<div class="container">
+  <div class="title-page">
+      Noticias
+  </div>
+
+  <div class="row">
+      <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12">
+          <div class="row mt-3">
+              <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12  animate__animated animate__zoomIn">
+                  <div class="row">
+                      <div class="col-xxl-12 col-xl-12 col-lg-12 align-items-center image-zoom-container">
+                          <div class="zoom-container">
+                              {% image page.image original as image %}
+                              <img src="{{ image.url }}" class="img-fluid " alt="{{ page.title }}">
+                          </div>
+                      </div>
+                  </div>
+      
+              </div>
+              <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-4 animate__animated animate__zoomIn">
+                  <strong class="title-page-news"> {{ page.title }} </strong>
+                  <p class="fs-6">
+                      {{ page.date_published }}.
+                      {% if page.authors %}
+                                  {% for author in page.authors %}
+                                          {{ author.organization_title }}
+                                  {% endfor %}
+                      {% endif %}
+                      , {{ page.city }}.
+                      <br>
+                      Sector: {% if page.sectors %}
+                                  {% for sector in page.sectors %}
+                                          {{ sector.sector_title }}
+                                  {% endfor %}
+                              {% endif %}
+                      </p>
+      
+              </div>
+          </div>
+          <div class="row mt-3">
+              <div class="col-xxl-12 col-xl-12 col-lg-12  col-md-12 col-sm-12">
+                  <p class="fs-4 lh-sm news-justify-text">
+                      {{ page.introduction }}
+                  </p>
+                 
+                  {{ page.body }}
+      
+                  
+              </div>
+          </div>
+
+          <div class="sharing-wrapper d-flex align-items-center p-2">
+                  <div class="col-2  col-sm-4 sharing-item">
+                      <p>Compartir:</p>
+                  </div>
+                  <div class=" sharing-item">
+                      <a href="https://api.whatsapp.com/send?text={{ page.title }} {{ request.META.HTTP_HOST }}{{ page.url }}" target="_blank">
+                          <svg class="sharing-svg">
+                              <image xlink:href="{% static 'assets/whatsapp.svg' %}" />
+                          </svg>
+                      </a>
+                  </div>
+                  <div class="sharing-item">
+                      <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.META.HTTP_HOST }}{{ page.url }}" target="_blank">
+                          <svg class="sharing-svg">
+                              <image xlink:href="{% static 'assets/facebook.svg' %}" />
+                          </svg>
+                      </a>
+                  </div>
+                  <div class="sharing-item">
+                      <a href="https://twitter.com/intent/tweet?text={{ page.title }} {{ request.META.HTTP_HOST }}{{ page.url }}" target="_blank">
+                          <svg class="sharing-svg">
+                              <image xlink:href="{% static 'assets/twitter.svg' %}" />
+                          </svg>
+                      </a>
+                  </div>
+          </div>
+      </div>
+      <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 mt-3">
+          <div class="interesting-news-container">
+              <div class="interesting-news-header">
+                  <div class="d-flex justify-content-start align-items-center">
+                      <svg class="interesting-news-svg">
+                          <image xlink:href="{% static 'images/prensa/opciones.svg' %}" />
+                      </svg>
+                      <p class="interesting-news-title">Noticias de interés</p>
+                  </div>
+              </div>
+              {% for childpage in page.interesting_news|slice:"5" %}
+              {% if childpage.id != page.id %}
+              <div class="interesting-news-wrapper p-3">
+                  {% image childpage.image original as image %}
+                  <img src="{{ image.url }}" class="interesting-news-img" alt="{{ childpage.title }}">
+                  <div class="d-flex align-items-center interesting-news-description">
+                      <a href="{{childpage.url}}">
+                          <div>{{childpage.title}}</div>
+                      </a>
+                  </div>
+              </div>
+              <hr class="ms-3 me-3 mb-0 mt-0">
+              {% endif %}
+              {% endfor %}
+              <p class="mb-2"></p>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4  animate__animated animate__zoomIn">
+        <div class="ps-md-5 pe-md-5 intro-section">
+          <strong class="title-page-special">{{ page.intro_title }}</strong>
+          {{ page.intro|safe }}
+        </div>
+      </div>
+      {% if page.link_pbi != None and page.link_pbi|length > 0 %} -->
+      <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  animate__animated animate__zoomIn">
+        <div class="ratio ratio-16x9" id="board_one"></div>
+      </div> -->
+      <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  animate__animated animate__zoomIn">
+      <div class="ratio ratio-16x9">
+        <iframe class="" src="{{page.link_pbi}}" frameborder="0" allowFullScreen="true"></iframe>
+      </div>
+    </div>
+      {% else %}
+      {% image page.image original as intro_image %}
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 animate__animated animate__zoomIn ">
+        <img class="img-fluid w-100" src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  
+  <div class="container mt-2 lista-anidada">
+    {{ page.intro_two|richtext }}
+  </div> -->
+
+
+  <!-- <div class="container mt-4 mb-5">
+    {% for element in page.link_list %}
+    <div class="row align-items-center link-section-container mt-5" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1 ">
+            <img src="{{ element.value.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+        </div>
+        <div class="col-sm-12 col-md-9 col-lg-9 col-xl-10 col-xxl-10 link-section-border-bottom">
+            <div class="fs-5 pt-3 link-section-border-text">
+                <h4>{{ element.value.title }}</h4>
+                {{ element.value.description }}
+                
+            </div>
+            {% if element.value.url %}
+            <a href="{{ element.value.url }}" type="button" class=" fs-4 link-section-border-button">{{ element.value.title_button }}</a>
+            {% endif %}
+            {% if element.value.document.url %}
+            <a href="{{ element.value.document.url }}" type="button"
+                class=" fs-4 link-section-border-button">{{ element.value.title_button }}</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div> -->
+
+
+<!-- 
+<div class="container  ">
+
+    <div class="row d-flex justify-content-center">
+
+      <div class="col-xxl-4 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3 miscellaneous-item">
+                <div class="title-page"> Noticias </div>
+        <div class="row">
+            {% for childpage in page.interesting_news|slice:"5" %}
+            {% if childpage.id != page.id %}
+            <a href="{{childpage.url}}" class="link-second-news">
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12  news-list">
+                    <div class="news-list-title">{{childpage.title}}</div>
+                    <p class="news-list-subtitle">
+                        {{ childpage.date_published }}.
+                        {% if childpage.authors %}
+                        {% for author in childpage.authors %}
+                        {{ author.organization_title }}
+                        {% endfor %}
+                        {% endif %}
+                        , {{ childpage.city }}.
+                    </p>
+                </div>
+            </a>
+            
+            <hr>
+            {% endif %}
+            {% endfor %}
+            {% for link in page.news_list %}
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-5">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <hr class="divider">
+                        <a href="{{ link.value.url }}" class="more-info-button">{{link.value.caption}}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    <div class="col-xxl-4 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3 miscellaneous-item" data-aos="fade-up"
+      data-aos-delay="300">
+      <div class="title-page">
+        Redes
+      </div>
+      <div>
+        <a class="twitter-timeline" data-height="700" data-width="400"
+          href="https://twitter.com/MinEnergiaCo?ref_src=twsrc%5Etfw">Tweets por
+          MinEnergiaCo</a>
+      </div>
+    </div>
+    {% if page.image_title %}
+    <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3 miscellaneous-item" data-aos="fade-up"
+      data-aos-delay="200">
+      <div class="title-page">
+        {{ page.image_title }}
+      </div>
+      {% image page.infographic original as image %}
+      <img src="{{ image.url }}" class="d-block w-100">
+    </div>
+    {% endif %}
+    </div>
+</div> -->
+
+
+
+
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<script>
+    AOS.init();
+</script>
+{% endblock extra_js %}

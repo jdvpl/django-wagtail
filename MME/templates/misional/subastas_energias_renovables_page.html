@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/press_room.css' %}" rel="stylesheet" />
+
+{% endblock extra_css %}
+<style>
+    #twitter-widget-0 {
+        max-width: 100% !important;
+    }
+</style>
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4  animate__animated animate__zoomIn">
+            <div class="ps-md-5 pe-md-5 intro-section">
+                <strong class="title-page-special">{{ page.intro_title }}</strong>
+                {{ page.intro|safe }}
+            </div>
+        </div>
+        {% if page.link_pbi != None and page.link_pbi|length > 0 %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8  animate__animated animate__zoomIn">
+            <div class="ratio ratio-16x9" id="board_one"></div>
+        </div>
+        {% else %}
+        {% image page.image original as intro_image %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 animate__animated animate__zoomIn ">
+            <img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="container mt-3">
+    {{ page.intro_two|richtext }}
+</div>
+
+
+<div class="container mt-2" data-aos="fade-up" data-aos-delay="100">
+    <div class="row d-flex justify-content-center">
+
+        {% if page.news_list %}
+        <div class="col-xxl-4 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3 miscellaneous-item" data-aos="fade-up"
+            data-aos-delay="100">
+            <div class="title-page">
+                {{ page.news_list_title }}
+            </div>
+            {% for childpage in page.news_list.specific.children|slice:"4" %}
+            <div class="d-flex justify-content-between align-items-center presentations-item ">
+                <a href="{{childpage.url}}">
+                    <h4 class="presentations-title">{{childpage.title}}</h4>
+                </a>
+            </div>
+            {% endfor %}
+            <div class="d-flex justify-content-between align-items-center miscellaneous-more">
+                <hr class="divider">
+                <a href="{{page.news_list.url}}" class=" more-info-button-large">{{ page.news_button_title }}</a>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="col-xxl-4 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3 miscellaneous-item" data-aos="fade-up"
+            data-aos-delay="300">
+            <div class="title-page">
+                Redes
+            </div>
+            <div>
+                <a class="twitter-timeline" data-height="700" data-width="400"
+                    href="https://twitter.com/MinEnergiaCo?ref_src=twsrc%5Etfw">Tweets por
+                    MinEnergiaCo</a>
+            </div>
+        </div>
+        {% if page.subasta_list %}
+        <div class="col-xxl-4 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3 miscellaneous-item" data-aos="fade-up"
+            data-aos-delay="100">
+            <div class="title-page">
+                {{ page.subasta_list_title }}
+            </div>
+            {% for childpage in page.subasta_list.specific.children|slice:"4" %}
+            <div class="d-flex justify-content-between align-items-center presentations-item ">
+                <a href="{{childpage.url}}">
+                    <h4 class="presentations-title">{{childpage.title}}</h4>
+                </a>
+            </div>
+            {% endfor %}
+            <div class="d-flex justify-content-between align-items-center miscellaneous-more">
+                <hr class="divider">
+                <a href="{{page.subasta_list.url}}" class=" more-info-button-large">{{ page.subasta_button_title }}</a>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'pb/powerbi.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/press_room.js' %}"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<script>
+    AOS.init();
+    // Power BI endpoints
+    var boards = {
+        "boards": [
+            {
+                "url": "{{ page.link_pbi }}",
+                "id": "board_one"
+            }
+        ]
+    }
+</script>
+<script type="text/javascript" src="{% static 'js/power_bi_boards.js' %}"></script>
+
+{% endblock extra_js %}

@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<style>
+  .div_botton_button {
+    right: 0;
+  }
+
+  .description-content {
+    height: max-content !important;
+    padding-bottom: 5rem !important;
+  }
+
+  .media-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .row-custom {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  .row-custom .col-image {
+    width: 150px;
+  }
+
+  .row-custom .col-description {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: calc(100% - 150px);
+  }
+
+  .link-section-border-bottom {
+    margin: 0 !important;
+    right: 0;
+  }
+
+  .link-section-border-button-menu-options {
+    transform: translateY(-50%) !important;
+    left: unset !important;
+    right: 0 !important;
+  }
+
+  @media(max-width: 753px) {
+
+    .row-custom .col-image,
+    .row-custom .col-description {
+      width: 100%;
+    }
+
+    .row-custom p::before {
+      display: none;
+    }
+
+    .link-section-border-button-menu-options {
+      position: relative !important;
+      display: block;
+      margin: 0 auto;
+      left: unset !important;
+      right: unset !important;
+    }
+  }
+</style>
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row parent_botton_button">
+    <div class="col-sm-12 col-md-12 col-lg-12  animate__animated animate__zoomIn">
+      <div class="intro-section description-content">
+        <strong class="title-page-special">{{ page.intro_title }}</strong>
+        {{ page.intro|safe }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if page.items_list %}
+<div class="container mt-4 mb-5" data-aos="fade-up" data-aos-delay="100">
+  <div class="wrapper-mme-menu">
+    <div class="mme-menu-options">
+      {% for element in page.items_list %}
+      {% if forloop.counter0 == 0 %}
+      <div class="mme-menu-option show active" data-bs-target="content_item{{ forloop.counter0 }}">
+        {{ element.value.title }}
+      </div>
+      <div class="mme-menu-content-movil my-5">
+        <div class="mme-menu-content-item show active" id="movilcontent_item{{ forloop.counter0 }}">
+          <div class="row ">
+            <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8">
+              <strong class="content-item-title lh-sm text-start">{{ element.value.title }}</strong>
+              <div>{{ element.value.description|safe }}</div>
+              <div>
+                {% if element.value.subitems %}
+                {% for subitem in element.value.subitems %}
+
+                <div class="row-custom align-items-center link-section-container mt-5" data-aos="fade-up"
+                  data-aos-delay="100">
+                  <div class="col-image">
+                    <img src="{{ subitem.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+                  </div>
+                  <div class="col-description link-section-border-bottom">
+                    <p class="fw-bold">{{ subitem.title }}</p>
+                    <p class="mb-5">{{ subitem.description }}</p>
+                    <a href="{{ subitem.url }}" type="button"
+                      class=" fs-5 link-section-border-button-menu-options">Solicitar</a>
+                  </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="mme-menu-option" data-bs-target="content_item{{ forloop.counter0 }}">
+        {{ element.value.title }}
+      </div>
+      <div class="mme-menu-content-movil my-5">
+        <div class="mme-menu-content-item" id="movilcontent_item{{ forloop.counter0 }}">
+          <div class="row ">
+            <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8">
+              <strong class="content-item-title lh-sm text-start">{{ element.value.title }}</strong>
+              <div>{{ element.value.description|safe }}</div>
+              <div>
+                {% if element.value.subitems %}
+                {% for subitem in element.value.subitems %}
+                <div class="row-custom align-items-center link-section-container mt-5" data-aos="fade-up"
+                  data-aos-delay="100">
+                  <div class="col-image ">
+                    <img src="{{ subitem.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+                  </div>
+                  <div class="col-description link-section-border-bottom">
+                    <p class="fw-bold">{{ subitem.title }}</p>
+                    <p class="mb-5">{{ subitem.description }}</p>
+                    <a href="{{ subitem.url }}" type="button"
+                      class=" fs-5 link-section-border-button-menu-options">Solicitar</a>
+                  </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+
+    </div>
+    <div class="mme-menu-content">
+      {% for element in page.items_list %}
+      {% if forloop.counter0 == 0 %}
+      <div class="mme-menu-content-item show active" id="content_item{{ forloop.counter0 }}">
+        <div class="row ">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <strong class="content-item-title lh-sm text-start">{{ element.value.title }}</strong>
+            <div>{{ element.value.description|safe }}</div>
+            <div>
+              {% if element.value.subitems %}
+              {% for subitem in element.value.subitems %}
+              <div class="row-custom align-items-center link-section-container mt-5" data-aos="fade-up"
+                data-aos-delay="100">
+                <div class="col-image ">
+                  <img src="{{ subitem.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+                </div>
+
+                <div class="col-description link-section-border-bottom">
+                  <p class="fw-bold">{{ subitem.title }}</p>
+                  <p class="mb-5">{{ subitem.description }}</p>
+                  <a href="{{ subitem.url }}" type="button"
+                    class=" fs-5 link-section-border-button-menu-options">Solicitar</a>
+                </div>
+              </div>
+              {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="mme-menu-content-item" id="content_item{{ forloop.counter0 }}">
+        <div class="row ">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <strong class="content-item-title lh-sm text-start">{{ element.value.title }}</strong>
+            <div>{{ element.value.description|safe }}</div>
+            <div>
+              {% if element.value.subitems %}
+              {% for subitem in element.value.subitems %}
+              <div class="row-custom align-items-center link-section-container mt-5" data-aos="fade-up"
+                data-aos-delay="100">
+                <div class="col-image ">
+                  <img src="{{ subitem.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+                </div>
+                <div class="col-description">
+                  <p class="fw-bold">{{ subitem.title }}</p>
+                  <p class="mb-5">{{ subitem.description }}</p>
+                  <a href="{{ subitem.url }}" type="button"
+                    class=" fs-5 link-section-border-button-menu-options">Solicitar</a>
+                </div>
+              </div>
+              {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-12">
+            <p class="mt-3 text-start">
+              {{ element.value.second_description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mmeoptionsmenu.js' %}"></script>
+<script>
+  AOS.init();
+</script>
+{% endblock extra_js %}

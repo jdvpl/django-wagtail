@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 animate__animated animate__zoomIn">
+      <div class="intro-section">
+        <strong class="title-page-special">{{ page.intro_title }}</strong>
+        <p>{{ page.intro|richtext }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script>
+        AOS.init();
+    </script>
+{% endblock extra_js %}

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+<link href="{% static 'css/calendar/flatpickr.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/calendar/monthSelectstyle.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/calendar/material_blue.css' %}" rel="stylesheet" type="text/css">
+
+<link href="{% static 'css/press_room_subpage.css' %}" rel="stylesheet"  type="text/css">
+<link href="{% static 'css/dataTables.bootstrap5.min.css' %}" rel="stylesheet"  type="text/css">
+
+<style>
+    #tabledataset {
+        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 1200px) {
+        #tabledataset {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+
+
+</style>
+
+{% endblock extra_css %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="title-page">
+        Galería
+    </div>
+    
+    {# search block is defined in MME\templates\blocks\search_block.html #}
+    {% include "blocks/search_block.html" with parent=site_root calling_page=self %}
+
+    <div class="container mt-4">
+        <table id="dataset" class="" style="width:100%">
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tabledataset">
+                {% if posts %}
+                {% for blog in posts %}
+                    <tr>
+                        <td>
+                            <a href="{{ blog.url }}">
+                                <div class="container mt-4">
+                                    <div class="row">
+                                        <div class="col-xxl-6 col-xl-6 col-lg-4 col-md-12 col-sm-12">
+                                            {% image blog.image fill-850x450-c50 as image %}
+                                            <img src="{{ image.url }}" class="img-fluid" alt="{{ image.alt }}">
+                                        </div>
+                                        <div class="col-xxl-6 col-xl-6 col-lg-8  col-md-12 col-sm-12">
+                                            <h5 class="news-subtitle news-list-item-title"> {{ blog.title }} </h5>
+                                            <hr class="divider-gallery">
+                                            <p class="fs-6">
+                                                {{ blog.date_published }}.
+                                                {% if blog.authors %}
+                                                            {% for author in blog.authors %}
+                                                                    {{ author.organization_title }}
+                                                            {% endfor %}
+                                                {% endif %}
+                                                , {{ blog.city }}.
+                                                <br>
+                                                Sector: {% if blog.sectors %}
+                                                            {% for sector in blog.sectors %}
+                                                                    {{ sector.sector_title }}
+                                                            {% endfor %}
+                                                {% endif %}
+                                            </p>
+                                        </div>
+        
+                                    </div>
+                                </div>
+                            </a>
+        
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-12">
+                    <p>Lo sentimos, aun no tenemos noticias registradas.</p>
+                </div>
+            {% endif %}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+<script src="{% static 'js/calendar/flatpickr.js' %}"></script>
+<script src="{% static 'js/calendar/es.js' %}"></script>
+<script src="{% static 'js/calendar/rangePlugin.js' %}"></script>
+<script src="{% static 'js/calendar/monthSelect.js' %}"></script>
+<script src="{% static 'js/calendar/modernizr.js' %}"></script>
+
+<script src="{% static 'js/datatables/dataTablesCore.js' %}"></script>
+<script src="{% static 'js/datatables/dataTables.min.js' %}"></script>
+<script src="{% static 'js/datatables/dataTables.bootstrap5.min.js' %}"></script>
+<script src="{% static 'js/press_room_subpage.js' %}"></script>
+
+<script>
+    AOS.init();
+    let page="{{'sala_prensa.GaleriaPage'|safe}}";
+    let pageitems="{{10 |safe}}";
+</script>
+{% endblock extra_js %}

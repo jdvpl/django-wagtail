@@ -1,0 +1,40 @@
+
+{% load menu_tags %}
+
+
+{% for item in menu_items %}
+    <li>
+        <hr class="mme-dropdown-divider">
+    </li>
+    <li>
+        {% if item.has_children_in_menu %}
+            {% if item.text == "Estructura Organizacional" or item.text == "Estratégico" or item.text == "Gestión" %}
+            <a class="dropdown-item d-flex justify-content-between align-items-center">
+                <text>{{ item.text }}</text>
+                <div class="dropdown-icon">
+                    <i class="bi bi-play-fill"></i>
+                </div>
+            </a>
+            {% else %}
+            <a class="dropdown-item d-flex justify-content-between align-items-center" href="{{ item.href }}">
+                <text>{{ item.text }}</text>
+                <div class="dropdown-icon">
+                    <i class="bi bi-play-fill"></i>
+                </div>
+            </a>
+            {% endif %}
+            
+            <ul class="submenu dropdown-menu mme-dropdown-menu">
+                {% sub_menu item %}
+            </ul>
+        {% else %}
+            <li>
+                <a class="dropdown-item" href="{{ item.href }}">{{ item.text }}</a>
+            </li>
+        {% endif %}
+    </li>
+{% endfor %}
+    <li>
+        <hr class="mme-dropdown-divider">
+    </li>
+

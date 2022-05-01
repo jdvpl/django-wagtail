@@ -1,0 +1,51 @@
+{% load menu_tags %}
+
+<ul class="navbar-nav mme-navbar-nav">
+{{menu_items}}
+{% for item in menu_items %}
+    <li class="nav-item dropdown mme-nav-item {{item.active_class}}">
+        {% if item.text == "Ministerio" %}
+        <a class="nav-link dropdown  d-flex justify-content-between align-items-center menu-title" data-bs-toggle="dropdown">
+            <text>{{ item.text }}</text>
+            <div class="dropdown-icon">
+                <i class="bi bi-play-fill"></i>
+            </div>
+        </a>
+        {% else %}
+        <a class="nav-link dropdown  d-flex justify-content-between align-items-center menu-title" href="{{ item.href }}" data-bs-toggle="dropdown">
+            <text>{{ item.text }}</text>
+            <div class="dropdown-icon">
+                <i class="bi bi-play-fill"></i>
+            </div>
+        </a>
+        {% endif %}
+
+        <ul class="dropdown-menu mme-dropdown-menu mme-main-menu">
+            {% if item.handle %}
+                {% if item.text == "Ministerio" %}
+                <li>
+                    <div class="dropdown-item-img">
+                        <a>
+                            <img src="{{ item.handle }}">
+                        </a>
+                    </div>
+                </li>
+                {% else %}
+                <li>
+                    <div class="dropdown-item-img">
+                        <a href="{{ item.href }}">
+                            <img src="{{ item.handle }}">
+                        </a>
+                    </div>
+                </li>
+                {% endif %}
+                
+            {% endif %}    
+            
+            {% if item.has_children_in_menu %}
+                {% sub_menu item %}
+            {% endif %}
+        </ul>
+    </li>
+{% endfor %}
+</ul>

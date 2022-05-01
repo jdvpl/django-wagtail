@@ -1,0 +1,36 @@
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="swiper-container-mme" data-aos="fade-up" data-aos-delay="100">
+    <div class="swiper-container mme-swiper related-company-mobil">
+        <div class="swiper-wrapper">
+            {% for element in sector_company %}
+                {% image element.value.image original as image %}
+                <div class="swiper-slide" data-bs-target="swiper-related-company-mobil-{{ forloop.counter0 }}">
+                    <img src="{{ image.url }}" class="img-fluid" style="height:100px">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="swiper-button-next related-company-mobil-next">
+        <i class="bi bi-chevron-compact-right swiper-button-icon"></i>
+    </div>
+    <div class="swiper-button-prev related-company-mobil-prev">
+        <i class="bi bi-chevron-compact-left swiper-button-icon"></i>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <div class="tab-content" id="swiperContentRelatedCompanyMobil">
+        {% for element in sector_company %}
+            <div class="tab-pane swiper-tab fade mme-taps-content" id="swiper-related-company-mobil-{{ forloop.counter0 }}" role="tabpanel" aria-labelledby="swiper-tab{{ forloop.counter0 }}">
+                <p><strong>Empresa: </strong>{{ element.value.name }}</p>
+                <p><strong>Representante Legal: </strong>{{ element.value.represent }}</p>
+                <p><strong>Correo Electrónico: </strong>{{ element.value.mail }}</p>
+                <div class="row">
+                    <a href="{{ element.value.url }}">Ir al sitio web (+)</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

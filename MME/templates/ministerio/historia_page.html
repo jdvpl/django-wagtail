@@ -1,0 +1,290 @@
+{#--------------------------------------------------------#}
+{# Define extends and load #}
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{#--------------------------------------------------------#}
+{# Define extra #}
+{% block extra_css %}
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+{% block body_class %}template-homepage{% endblock %}
+{#--------------------------------------------------------#}
+{# Define content #}
+{% block content %}
+
+
+<div class="container">
+    <div style="height: 50px">
+
+    </div>
+
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5 animate__animated animate__zoomIn ">
+            <div class="ps-5 pe-5 intro-section">
+                <strong class="title-page-special">{{ page.intro_title }}</strong>
+                {{ page.intro|safe }}
+            </div>
+        </div>
+        {% if page.link_video != None and page.link_video|length > 0 %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7  animate__animated animate__zoomIn" >
+            <div class="video-responsive">
+                <iframe src="{{ page.link_video }}" frameborder="0"  allowfullscreen></iframe>
+            </div>
+        </div>
+        {% else %}
+        {% image page.image fill-1089x776 as intro_image %}
+        <div class="col-sm-12 col-md-12 col-lg-7 animate__animated animate__zoomIn">
+            <img class="img-fluid" src="{{ intro_image.url }}">
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container container-mme-justify mt-4 ministers-list">
+    <div class="title-page ">
+        Ministros de la Entidad
+    </div>
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                type="button" role="tab" aria-controls="nav-home" aria-selected="true"><span>Actual</span></button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                type="button" role="tab" aria-controls="nav-profile"
+                aria-selected="false"><span>Predecesores</span></button>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            {% for element in page.time_period %}
+            <div class="mt-2">
+                {% with parentID=forloop.counter0 %}
+                {% if forloop.counter0 == 0 %}
+                <div class="container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="row">
+                        {% for ministro in element.value.ministros %}
+                        <div class="col-sm-12 col-md-12 col-xl-4 text-center">
+                            {% image ministro.image original as ministro_image %}
+                            <img src="{{ ministro_image.url }}" alt="{{ ministro.alt_text }}"
+                                class="img-fluid rounded-circle border border-5" style="height: 19rem; width: 19rem" />
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-xl-8">
+                            <strong class="title-page-special">{{ ministro.name }}</strong>
+
+                            <p>{{ element.value.title }}</p>
+                            {{ ministro.paragraph_block }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endwith %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="accordion" id="accordionMinisters">
+                {% for element in page.time_period %}
+                <div class="mt-2">
+
+                    {% with parentID=forloop.counter0 %}
+                    {% if forloop.counter0 == 1 %}
+                    <div class="accordion-header" id="headingOne">
+                        <button type="button" class="accordion-button-hisoria pb-0 mb-0" data-bs-toggle="collapse"
+                            data-bs-target="#collapse{{ forloop.counter0 }}" aria-expanded="true"
+                            aria-controls="collapse{{ forloop.counter0 }}">
+                            <div class="d-flex justify-content-start">
+                                <img src="{% static 'assets/next.svg' %}" style="width: 42px; height: 42px"
+                                    class="accordion-button-hisoria-icon" />
+                                <p class="ms-3 fs-4">
+                                    {{ element.value.title }}
+                                </p>
+                            </div>
+                        </button>
+                    </div>
+                    <div id="collapse{{ forloop.counter0 }}" class="accordion-collapse collapse show"
+                        aria-labelledby="heading{{ forloop.counter0 }}" data-bs-parent="#accordionMinisters"
+                        style="background-color:white!important">
+                        <div class="accordion-body left-dotted-border ms-4 mt-0 pt-0"
+                            style="background-color:white!important">
+                            <div class="container">
+                                <div class="row">
+                                    {% for ministro in element.value.ministros %}
+                                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 pb-3">
+                                        <!-- Card -->
+                                        <div class="text-center ministro-card shadow-lg pt-3 rounded"
+                                            data-bs-toggle="modal"
+                                            data-bs-target='#Modal{{ parentID }}{{ forloop.counter0 }}'>
+                                            {% image ministro.image original as ministro_image %}
+                                            <img src="{{ ministro_image.url }}" class="rounded-circle border border-5"
+                                                alt="{{ ministro.alt_text }}" style="height: 9rem; width: 9rem" />
+                                            <div class="card-body">
+                                                <h6 class="card-title m-0">
+                                                    {{ ministro.name }}
+                                                </h6>
+                                                <p class="card-text">
+                                                    {{ ministro.period }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!-- Card -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id='Modal{{ parentID }}{{ forloop.counter0 }}'
+                                            tabindex="-1"
+                                            aria-labelledby="ModalLabel{{ parentID }}{{ forloop.counter0 }}"
+                                            aria-hidden="true">
+
+                                            <div
+                                                class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                                                <div
+                                                    class="modal-content border border-0 shadow-lg p-3 mb-5 bg-body rounded">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"
+                                                            id="ModalLabel{{ parentID }}{{ forloop.counter0 }}">
+                                                            {{ ministro.name }}
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-sm-12 col-md-12 col-xl-4">
+                                                                    {% image ministro.image original as ministro_image %}
+                                                                    <img src="{{ ministro_image.url }}"
+                                                                        alt="{{ ministro.alt_text }}"
+                                                                        class="img-fluid rounded-circle border border-5"
+                                                                        style="height: 19rem; width: 19rem" />
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-12 col-xl-8">
+                                                                    <p class="fs-5">
+                                                                        Periodo: {{ ministro.period }}
+                                                                    </p>
+                                                                    <p>
+                                                                        {{ ministro.paragraph_block }}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal -->
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% elif forloop.counter0 >= 2 %}
+                    <div class="accordion-header" id="headingOne">
+                        <button type="button" class="accordion-button-hisoria pb-0 mb-0" data-bs-toggle="collapse"
+                            data-bs-target="#collapse{{ forloop.counter0 }}" aria-expanded="true"
+                            aria-controls="collapse{{ forloop.counter0 }}">
+                            <div class="d-flex justify-content-start">
+                                <img src="{% static 'assets/next.svg' %}" style="width: 42px; height: 42px"
+                                    class="accordion-button-hisoria-icon" />
+                                <p class="ms-3 fs-4">
+                                    {{ element.value.title }}
+                                </p>
+                            </div>
+                        </button>
+                    </div>
+                    <div id="collapse{{ forloop.counter0 }}" class="accordion-collapse collapse"
+                        aria-labelledby="heading{{ forloop.counter0 }}" data-bs-parent="#accordionMinisters"
+                        style="background-color:white!important">
+                        <div class="accordion-body left-dotted-border ms-4 mt-0 pt-0"
+                            style="background-color:white!important">
+                            <div class="container">
+                                <div class="row">
+                                    {% for ministro in element.value.ministros %}
+                                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3 pb-4">
+                                        <!-- Card -->
+                                        <div class="text-center ministro-card shadow pt-3 rounded"
+                                            data-bs-toggle="modal"
+                                            data-bs-target='#Modal{{ parentID }}{{ forloop.counter0 }}'>
+                                            {% image ministro.image original as ministro_image %}
+                                            <img src="{{ ministro_image.url }}" class="rounded-circle border border-5"
+                                                alt="{{ ministro.alt_text }}" style="height: 9rem; width: 9rem" />
+                                            <div class="card-body">
+                                                <h6 class="card-title m-0">
+                                                    {{ ministro.name }}
+                                                </h6>
+                                                <p class="card-text">
+                                                    {{ ministro.period }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!-- Card -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id='Modal{{ parentID }}{{ forloop.counter0 }}'
+                                            tabindex="-1"
+                                            aria-labelledby="ModalLabel{{ parentID }}{{ forloop.counter0 }}"
+                                            aria-hidden="true">
+
+                                            <div
+                                                class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                                                <div
+                                                    class="modal-content border border-0 shadow p-3 mb-5 bg-body rounded">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"
+                                                            id="ModalLabel{{ parentID }}{{ forloop.counter0 }}">
+                                                            {{ ministro.name }}
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-sm-12 col-md-12 col-xl-4">
+                                                                    {% image ministro.image original as ministro_image %}
+                                                                    <img src="{{ ministro_image.url }}"
+                                                                        alt="{{ ministro.alt_text }}"
+                                                                        class="img-fluid rounded-circle border border-5"
+                                                                        style="height: 19rem; width: 19rem" />
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-12 col-xl-8">
+                                                                    <p class="fs-5">
+                                                                        Periodo: {{ ministro.period }}
+                                                                    </p>
+                                                                    <p>
+                                                                        {{ ministro.paragraph_block }}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal -->
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<div style="height: 50px">
+    <div class="mh-100" style="width: 100px; height: 200px"></div>
+</div>
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script>
+    AOS.init();
+</script>
+{% endblock extra_js %}

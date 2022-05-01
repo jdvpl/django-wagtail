@@ -1,0 +1,7 @@
+{% load wagtailcore_tags %}
+
+{% for link in links %}
+    <a href="{{ link.value.url }}" target="_blank">{{ link.value.caption }}</a>
+{% endfor %}
+
+

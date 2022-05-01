@@ -1,0 +1,33 @@
+body { margin: 0 !important; padding: 0 !important; width: 100%; height:100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !important; }
+.container { position: relative; overflow: hidden; height: 55vw; background-image:url(control_interno.jpg); background-size: cover; }
+input { display: none; }
+p { margin: 0; }
+.button { color: white; font-weight: bold; font-size: 18px; background-color: #e83d4a; display: block; padding: 5px 10px; border-radius: 100%; cursor: pointer; animation: fadein .5s; animation: pulse 1.5s infinite; }
+.content { background: white; padding: 0.5rem 0.5rem 1.5rem 0.5rem; text-align: center; display: none; margin-top:15%; margin-left:25%; margin-right:25%; border-radius: 8px; box-shadow: 0 4px 2px -2px rgba(211,47,47,0); }
+.cross { font-weight: bold; }
+#b1 { position: absolute; left: 12%; top: 34%; }
+#b2 { position: absolute; left: 58%; top: 5%; }
+#b3 { position: absolute; left: 79%; top: 24.5%; }
+#b4 { position: absolute; left: 79%; top: 60%; }
+#b5 { position: absolute; left: 42%; top: 24%; }
+#input1:checked ~ #content1,
+#input2:checked ~ #content2,
+#input3:checked ~ #content3,
+#input4:checked ~ #content4,
+#input5:checked ~ #content5 { display: block !important; animation: fadein .5s; }
+input:checked ~ label .button { display: none !important; animation: fadeout .5s; }
+.button:hover { color: #e83d4a; background: white; }
+.cta { display: inline-block; background: #e83d4a; color: white; padding: 10px 20px; margin-top: 48px; border-radius: 24px; text-decoration: none; transition: all .3s ease; }
+.cta:hover { text-decoration: underline !important; box-shadow: 0 0 0 6px rgba(232, 61, 74, 0.4); }
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeout {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pulse {
+  from { box-shadow: 0 0 0 0px rgba(232, 61, 74); }
+  to { box-shadow: 0 0 0 15px rgba(0, 0, 0, 0); }
+}

@@ -1,0 +1,19 @@
+
+{% load static navigation_tags %}
+
+<div class="container-fluid gov-container mb-3">
+    <div class="gov-item d-flex justify-content-end">
+        <a href="https://www.gov.co" target="_blank">
+            <img src="{% static 'images/logo_header.png' %}">
+        </a>
+    </div>
+    <div class="gov-item">
+        <a href="https://www.gov.co" target="_blank">
+            El Estado no tiene porqué ser aburrido ¡conoce a gov.co!
+        </a>
+    </div>
+    <div class="gov-item">
+        {# gov links is defined in apps\common\templatetags\navigation_tags.py #}
+        {% get_gov_bar %}
+    </div>
+</div>

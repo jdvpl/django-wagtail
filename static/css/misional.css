@@ -1,0 +1,255 @@
+/*Misional*/
+
+.col-title{
+    padding-left: 50px;
+    padding-right: 50px;
+
+}
+
+.title-page-short {
+    border-bottom: none;
+    font-family: "Work Sans", sans-serif;
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: var(--mme-blue);
+    display: block;
+}
+
+.title-page-short:after {
+    display: block;
+    clear: both;
+    content: "";
+    position: relative;
+    left: 0;
+    bottom: 0;
+    max-width: 4.3rem;
+    height: 1px;
+    width: 50%;
+    border-bottom: 3pt solid var(--mme-green);
+}
+
+.description-g{
+    margin-top: 10px;
+    text-align: left;
+    font-size: 18pt;
+    line-height: normal;
+}
+
+.img-adapt{
+    width: 908px;
+    height: 511px;
+    vertical-align: middle;
+}
+
+.card-box{
+    box-shadow: 0 0 6px 0 #3d404c;
+    padding: 20px;
+    height: 100%;
+}
+
+.title-card-short {
+    border-bottom: none;
+    font-family: "Work Sans", sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: var(--mme-blue);
+    display: block;
+}
+
+.misional-cont{
+    display: flex;
+    flex-direction: row;
+}
+
+.main-card-cont{
+    margin: 40px;
+}
+
+.text-card{
+    text-align: left;
+    line-height: normal;
+    margin-top: 20px;
+}
+
+.text-card p{
+    margin-bottom: 0;
+}
+
+.more-card{
+    margin-top: 20px;
+}
+
+@media (min-width: 1366px){
+    .title-page{
+        font-family: "Work Sans", sans-serif;
+        font-size: 40pt !important;
+        font-weight: bold;
+        border: 0;
+        line-height: normal;
+    }
+
+    .img-adapt{
+        width: 100%;
+        height: auto;
+    }
+
+    .description-g p{
+        margin-top: 10px;
+        text-align: left;
+        font-size: 18pt;
+        line-height: normal;
+    }
+
+    .img-report-size{
+        margin: 20px 0 20px 0;
+        width: 100%;
+        max-height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .img-report-adapt{
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        filter: brightness(0.3) sepia(100%) hue-rotate(190deg) saturate(450%);
+    }
+
+    .report-caption{
+        position: absolute;
+        display: flex;
+        bottom: 3em;
+        left: auto;
+        right: auto;
+        z-index: 1000;
+        height: 200px;
+        width: 60%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .a-caption{
+        display: flex;
+        bottom: 3em;
+        left: auto;
+        right: auto;
+        z-index: 1000;
+        height: 200px;
+        width: 60%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .report-caption.img-hand{
+        vertical-align: middle;
+    }
+
+    .img-hand{
+        height: 150px;
+        left: -50%;
+        top: 10%;
+
+    }
+
+    .rep-txt{
+        color: white;
+        font-size: 18pt;
+        display: flex;
+        align-items: center;
+        position: absolute;
+    }
+}
+.breadcrumb-item.active {
+    border-bottom: none !important;
+}
+/*Tablet 1 version*/
+@media (min-width: 1024px) and (max-width: 1365px){
+    .col-title{
+        width: 100%;
+    }
+
+    .col-img{
+        width: 100%;
+    }
+
+    .img-adapt{
+        width: 100%;
+    }
+
+    .col-item{
+        width: 33.3%;
+    }
+}
+
+/*Tablet 2 version*/
+@media (min-width: 768px) and (max-width: 1023px){
+    .col-title{
+        width: 100%;
+    }
+
+    .col-img{
+        width: 100%;
+    }
+
+    .img-adapt{
+        width: 100%;
+    }
+
+    .col-item{
+        width: 50%;
+    }
+}
+
+/*Movil 1 version*/
+@media (min-width: 480px) and (max-width: 767px){
+    .col-title{
+        width: 100%;
+    }
+
+    .col-img{
+        width: 100%;
+    }
+
+    .img-adapt{
+        width: 100%;
+    }
+
+    .col-item{
+        width: 100%;
+    }
+
+    .main-card-cont{
+        margin-left: 70px;
+        margin-right: 70px;
+    }
+}
+
+/*Movil 2 version*/
+@media (min-width: 320px) and (max-width: 479px){
+    .col-title{
+        width: 100%;
+    }
+
+    .col-img{
+        width: 100%;
+    }
+
+    .img-adapt{
+        width: 100%;
+        height: auto;
+    }
+
+    .col-item{
+        width: 100%;
+    }
+
+    .title-card-short {
+        font-size: 1.2rem;
+    }
+
+}

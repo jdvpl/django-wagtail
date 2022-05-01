@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5 small-order-1 animate__animated animate__zoomIn">
+      <div class="ps-md-5 pe-md-5 intro-section">
+        <strong class="title-page-special">{{ page.intro_title }}</strong>
+        {{ page.intro|safe }}
+      </div>
+    </div>
+    {% if page.link_video != None and page.link_video|length > 0 %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+      <div class="video-responsive">
+        <iframe src="{{ page.link_video }}" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    {% else %}
+    {% image page.image original as intro_image %}
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 small-order-2 animate__animated animate__zoomIn">
+      <img class="img-fluid " src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<div class="container mt-4 mb-5" data-aos="fade-up" data-aos-delay="100">
+  <div>
+    {{ page.intro_one|richtext }}
+  </div>
+  {% for element in page.second_links %}
+  <div class="row align-items-center link-section-container mt-5">
+    <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1 ">
+      <img src="{{ element.value.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+    </div>
+    <div class="col-sm-12 col-md-9 col-lg-9 col-xl-10 col-xxl-10 link-section-border-bottom">
+      <div class="fs-5 pt-3 link-section-border-text">
+        <h4>{{ element.value.title }}</h4>
+        {{ element.value.description }}
+      </div>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}" type="button" class=" fs-4 link-section-border-button">Ver más</a>
+      {% endif %}
+      {% if element.value.document.url %}
+      <a href="{{ element.value.document.url }}" type="button" class=" fs-4 link-section-border-button">Consultar</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="container mt-4 mb-5">
+  <div class="title-page">
+    {{ page.resolutions_title }}
+  </div>
+  {% for element in page.resolutions_list %}
+  <div class="row align-items-center link-section-container mt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1 ">
+      <img src="{{ element.value.icono.url }}" class="rounded mx-auto d-block" style="width:150px">
+    </div>
+    <div class="col-sm-12 col-md-9 col-lg-9 col-xl-10 col-xxl-10 link-section-border-bottom">
+      <div class="fs-5 pt-3 link-section-border-text">
+        <h4>{{ element.value.title }}</h4>
+        {{ element.value.description }}
+      </div>
+      {% if element.value.url %}
+      <a href="{{ element.value.url }}" type="button" class=" fs-4 link-section-border-button">Ver más</a>
+      {% endif %}
+      {% if element.value.document.url %}
+      <a href="{{ element.value.document.url }}" type="button" class=" fs-4 link-section-border-button">Consultar
+        Resolución</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if page.tab_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.tab_list_title }}
+  </div>
+  <div>
+    {{ page.intro_tab|richtext }}
+  </div>
+  <nav class="mme-taps">
+    <div class="nav nav-tabs" id="nav-tab-form" role="tablist">
+      {% for element in page.tab_list %}
+      {% if forloop.counter0 == 0 %}
+      <button class="nav-link show active" id="tab_list-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap-form{{ forloop.counter0 }}" type="button" role="tab" aria-controls="tramites"
+        aria-selected="true">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% else %}
+      <button class="nav-link" id="tab_list-tab-{{ forloop.counter0 }}" data-bs-toggle="tab"
+        data-bs-target="#tap-form{{ forloop.counter0 }}" type="button" role="tab" aria-controls="medicion"
+        aria-selected="false">
+        <div class="d-flex align-items-center justify-content-center lh-sm">{{ element.value.title }}</div>
+      </button>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent-form">
+    {% for element in page.tab_list %}
+    {% if forloop.counter0 == 0 %}
+    <div class="tab-pane fade show show active" id="tap-form{{ forloop.counter0 }}" role="tabpanel"
+      aria-labelledby="tap{{ forloop.counter0 }}">
+      {% else %}
+      <div class="tab-pane fade" id="tap-form{{ forloop.counter0 }}" role="tabpanel"
+        aria-labelledby="tap{{ forloop.counter0 }}">
+        {% endif %}
+        <p class="mt-4">{{ element.value.description }}</p>
+        {% if element.value.url %}
+        <a href="{{ element.value.url }}">Mas información (+)</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="container-fluid pt-5">
+  <div class="row" data-aos="fade-up" data-aos-delay="100">
+    <a href="{{ page.featured_link }}">
+      <div class="col-sm-12 col-md-12 col-lg-12 text-over-image-container">
+        {% image page.image_link fill-1920x375 as link_image %}
+        <img src="{{link_image.url }}" class="cropped-link">
+        <div class="text-over-image-border">
+          <h2 class="text-over-image-text"> {{ page.text_link|safe }} </h2>
+        </div>
+        <svg class="text-over-image-icon">
+          <image xlink:href="{% static 'assets/seleccionar.svg' %}" />
+        </svg>
+
+      </div>
+    </a>
+  </div>
+</div>
+
+{% if page.retie_list %}
+<div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+  <div class="title-page">
+    {{ page.retie_list_title }}
+  </div>
+  <div>
+    {{ page.retie_intro|richtext }}
+  </div>
+  <div class="table-responsive">
+    <table class="table-bordered w-100 table table-hover">
+      <tr class="table-head">
+        <th>Resoluciones</th>
+        <th>Descripción</th>
+      </tr>
+      {% for subitem in page.retie_list %}
+      <tr>
+        <td class=" text-right"><a href="{{subitem.value.document.url }}">
+            {{ subitem.value.document.title }}
+          </a></td>
+        <td class=" text-right">{{ subitem.value.intro|richtext }}</td>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+</div>
+{% endif %}
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+<script>
+  AOS.init();
+</script>
+{% endblock extra_js %}

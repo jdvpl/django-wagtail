@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/press_room.css' %}" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+
+
+{% endblock extra_css %}
+
+{% block content %}
+
+<div class="container">
+    <strong class="title-page-special">{{ page.title }}</strong>
+</div>
+
+
+
+<div class="container mt-2" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="row">
+
+        {% if page.presentations_list %}
+        <div class="col-xxl-6 col-xl-6 col-md-12 col-sm-12 mt-3 miscellaneous-item" data-aos="fade-up"
+            data-aos-delay="100">
+            <div class="title-page">
+                {{ page.presentations_title }}
+            </div>
+            {% for childpage in page.presentations_list.specific.children|slice:"4" %}
+            <div class="d-flex justify-content-between align-items-center presentations-item ">
+                <a href="{{childpage.url}}">
+                    <h4 class="presentations-title">{{childpage.title}}</h4>
+                </a>
+            </div>
+            {% endfor %}
+            <div class="d-flex justify-content-between align-items-center miscellaneous-more">
+                <hr class="divider">
+                <a href="{{page.presentations_list.url}}" class=" more-info-button-large">{{ page.presentations_button_title }}</a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if page.results_list %}
+
+        <div class="col-xxl-6 col-xl-6 col-md-12 col-sm-12 mt-3 miscellaneous-item" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="title-page">
+                {{ page.results_title }}
+            </div>
+            {% for childpage in page.results_list.specific.children|slice:"4" %}
+            <div class="d-flex justify-content-between align-items-center presentations-item ">
+                <a href="{{childpage.url}}">
+                    <h4 class="results-title">{{childpage.title}}</h4>
+                </a>
+            </div>
+            {% endfor %}
+            <div class="d-flex justify-content-between align-items-center miscellaneous-more">
+                <hr class="divider">
+                <a href="{{page.results_list.url}}" class=" more-info-button-large">{{ page.results_button_title }}</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/press_room.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/light-gallery.js' %}"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+{% endblock extra_js %}

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags navigation_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+<link href="{% static 'css/aos.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/swiper/swiper-sector-company.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5  animate__animated animate__zoomIn">
+            <div class="ps-5 pe-5 intro-section">
+                <strong class="title-page-special">{{ page.intro_title }}</strong>
+                {{ page.intro|safe }}
+            </div>
+        </div>
+        {% if page.link_video != None and page.link_video|length > 0 %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7  animate__animated animate__zoomIn">
+            <div>
+                <iframe src="{{ page.link_video }}" frameborder="0" height="550" width="100%" allowfullscreen></iframe>
+            </div>
+        </div>
+        {% else %}
+        {% image page.image original as intro_image %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7 animate__animated animate__zoomIn ">
+            <img class="img-fluid" src="{{ intro_image.url }}" alt="{{ page.alt_text }}">
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if page.elements %}
+<div class="container mt-5" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="row justify-content-evenly flex-wrap flex-lg-nowrap">
+        {% for element in page.elements %}
+        <!--adaptado para 2 columnas-->
+        <div class="element-card col-sm-12 col-md-5 col-lg-4 col-xl-4">
+
+            <div class="p-4">
+                <div class="d-flex justify-content-start">
+                    <svg class="mme-item-card-icon ">
+                        <image xlink:href="{{ element.value.svg_image.url }}" alt="element.value.alt_text" />
+                    </svg>
+                </div>
+                <p class="cards-slider-title text-start mt-4">{{ element.value.name }}</p>
+                <div class="cards-slider-text text-start">
+                    {{ element.value.paragraph_block|safe }}
+                </div>
+                {% if element.value.url %}
+                <div class="d-flex justify-content-between align-items-center">
+                    <hr class="divider">
+                    <a href="{{ element.value.url }}" class="btn cards-slider-room-button">Ver más</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="container mt-4 mb-4">
+    <div class="title-page">
+        {{ page.elements_title }}
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    {# informaiton_systems_block are defined in MME\templates\blocks\informaiton_systems_block.html #}
+    {% get_information_systems %}
+
+</div>
+
+
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper/swiper-affiliated-entities.js' %}"></script>
+<script>
+    AOS.init();
+</script>
+{% endblock extra_js %}

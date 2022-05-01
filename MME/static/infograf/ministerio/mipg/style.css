@@ -1,0 +1,29 @@
+body { margin: 0 !important; padding: 0 !important; width: 100%; height:100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !important; }
+.container { position: relative; overflow: hidden; height: 55vw; background-image:url(mipg.jpg); background-size: cover; }
+input { display: none; }
+p { margin: 0; }
+.button { color: white; font-weight: bold; font-size: 18px; background-color: #fe9700; display: block; padding: 10px 16px; border-radius: 100%; cursor: pointer; animation: fadein .5s; animation: pulse 1.5s infinite; }
+.content { background: white; padding: 0.5rem 0.5rem 1rem 0.5rem; text-align: left; display: none; margin-top:5%; margin-left:5%; margin-right:5%; border-radius: 8px; box-shadow: 2px 2px 2px 2px rgba(200,200,200,5); }
+.cross { font-weight: bold; }
+#b1 { position: absolute; left: 23%; top: 17%; }
+#b2 { position: absolute; left: 13%; top: 67%; }
+#b3 { position: absolute; left: 85%; top: 67%; }
+#input1:checked ~ #content1,
+#input2:checked ~ #content2,
+#input3:checked ~ #content3 { display: block !important; animation: fadein .5s; }
+input:checked ~ label .button { display: none !important; animation: fadeout .5s; }
+.button:hover { color: #fe9700; background: white; }
+.cta { display: inline-block; background: #fe9700; color: white; padding: 12px 24px; margin-top: 48px; border-radius: 24px; text-decoration: none; transition: all .3s ease; }
+.cta:hover { text-decoration: underline !important; box-shadow: 0 0 0 6px rgba(254, 151, 0, 0.4); }
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeout {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pulse {
+  from { box-shadow: 0 0 0 0px rgba(254, 151, 0); }
+  to { box-shadow: 0 0 0 15px rgba(0, 0, 0, 0); }
+}
